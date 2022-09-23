@@ -1,8 +1,8 @@
-# MeetUp
+# Meetup Clone
 
 ## Database Schema Design
 
-<a href="https://drive.google.com/uc?export=view&id=1GayECEwv5HExrUeUSSXTIK_GrEseaxqQ"><img src="https://drive.google.com/uc?export=view&id=1GayECEwv5HExrUeUSSXTIK_GrEseaxqQ" style="width: 650px; max-width: 100%; height: auto" title="MeetUp Schema" />
+<a href="https://drive.google.com/uc?export=view&id=1MSi_hCNcEse2H9ATh97g7lfCP6tOGiwt"><img src="https://drive.google.com/uc?export=view&id=1MSi_hCNcEse2H9ATh97g7lfCP6tOGiwt" style="width: 650px; max-width: 100%; height: auto" title="MeetUp Schema" />
 
 ## API Documentation
 
@@ -55,7 +55,7 @@ Returns the information about the current user that is logged in.
 - Request
 
   - Method: GET
-  - URL: /api/my-meetup
+  - URL: /api/session
   - Body: none
 
 - Successful Response
@@ -83,7 +83,7 @@ information.
 - Request
 
   - Method: POST
-  - URL: /api/my-meetup
+  - URL: /api/session
   - Headers:
     - Content-Type: application/json
   - Body:
@@ -153,7 +153,7 @@ user's information.
 - Request
 
   - Method: POST
-  - URL: /api/currentUser
+  - URL: /api/users
   - Headers:
     - Content-Type: application/json
   - Body:
@@ -269,7 +269,7 @@ Returns all the groups.
 - Request
 
   - Method: GET
-  - URL: /api/users/my-meetup/groups
+  - URL: /api/groups/current
   - Body: none
 
 - Successful Response
@@ -452,8 +452,8 @@ Create and return a new image for a group specified by id.
 - Require proper authorization: Current User must be the organizer for the group
 - Request
 
-  - Method: PUT
-  - URL: /api/groups/:groupId/image
+  - Method: POST
+  - URL: /api/groups/:groupId/images
   - Headers:
     - Content-Type: application/json
   - Body:
@@ -1143,7 +1143,7 @@ Creates and returns a new event for a group specified by its id
 Create and return a new image for an event specified by id.
 
 - Require Authentication: true
-- Require proper authorization: Current User must be an attendee of the event
+- Require proper authorization: Current User must be an attendee, host, or co-host of the event
 - Request
 
   - Method: POST
@@ -1435,7 +1435,7 @@ Request a new membership for a group specified by id.
 - Request
 
   - Method: POST
-  - URL: /api/groups/:groupId/members
+  - URL: /api/groups/:groupId/membership
   - Headers:
     - Content-Type: application/json
   - Body: none
@@ -1449,7 +1449,6 @@ Request a new membership for a group specified by id.
 
     ```json
     {
-      "groupId": 1,
       "memberId": 2,
       "status": "pending"
     }
@@ -1512,7 +1511,7 @@ Change the status of a membership for a group specified by id.
 - Request
 
   - Method: PUT
-  - URL: /api/groups/:groupId/members/memberId
+  - URL: /api/groups/:groupId/membership
   - Headers:
     - Content-Type: application/json
   - Body:
@@ -1612,7 +1611,7 @@ Delete a membership to a group specified by id.
 - Request
 
   - Method: DELETE
-  - URL: /api/groups/:groupId/members/memberId
+  - URL: /api/groups/:groupId/membership
   - Headers:
     - Content-Type: application/json
   - Body:
@@ -1782,15 +1781,14 @@ Returns the attendees of an event specified by its id.
 
 ### Request to Attend an Event based on the Event's id
 
-? Request attendance for an event specified by id.
-// NOT SURE
+Request attendance for an event specified by id.
 
 - Require Authentication: true
 - Require Authorization: Current User must be a member of the group
 - Request
 
-  - Method: GET
-  - URL:
+  - Method: POST
+  - URL: /api/events/:eventId/attendance
   - Headers:
     - Content-Type: application/json
   - Body: none
@@ -1804,7 +1802,6 @@ Returns the attendees of an event specified by its id.
 
     ```json
     {
-      "eventId": 1,
       "userId": 2,
       "status": "pending"
     }
@@ -1863,7 +1860,7 @@ Change the status of an attendance for an event specified by id.
 - Request
 
   - Method: PUT
-  - URL: /api/events/:eventId/attendees/:attendeeId
+  - URL: /api/events/:eventId/attendance
   - Headers:
     - Content-Type: application/json
   - Body:
@@ -1871,7 +1868,7 @@ Change the status of an attendance for an event specified by id.
     ```json
     {
       "userId": 2,
-      "status": "member"
+      "status": "attending"
     }
     ```
 
@@ -1887,7 +1884,7 @@ Change the status of an attendance for an event specified by id.
       "id": 1,
       "eventId": 1,
       "userId": 2,
-      "status": "member"
+      "status": "attending"
     }
     ```
 
@@ -1943,7 +1940,7 @@ Delete an attendance to an event specified by id.
 - Request
 
   - Method: DELETE
-  - URL: /api/events/:eventId/attendees
+  - URL: /api/events/:eventId/attendance
   - Headers:
     - Content-Type: application/json
   - Body:
@@ -2021,7 +2018,7 @@ Delete an existing image for a Group.
 - Request
 
   - Method: DELETE
-  - URL: /api/images/:imageId
+  - URL: /api/group-images/:imageId
   - Body: none
 
 - Successful Response
@@ -2062,7 +2059,7 @@ Delete an existing image for an Event.
 - Request
 
   - Method: DELETE
-  - URL: /api/events/:eventId/images/:imageId
+  - URL: /api/event-images/:imageId
   - Body: none
 
 - Successful Response
@@ -2101,10 +2098,10 @@ Return events filtered by query parameters.
 - Request
 
   - Method: GET
-  - URL: /api/events?page=2&size=2&name=string
+  - URL: /api/events
   - Query Parameters
-    - page: integer, minimum: 0, maximum: 10, default: 0
-    - size: integer, minimum: 0, maximum: 20, default: 20
+    - page: integer, minimum: 1, maximum: 10, default: 1
+    - size: integer, minimum: 1, maximum: 20, default: 20
     - name: string, optional
     - type: string, optional
     - startDate: string, optional
@@ -2176,8 +2173,8 @@ Return events filtered by query parameters.
       "message": "Validation Error",
       "statusCode": 400,
       "errors": {
-        "page": "Page must be greater than or equal to 0",
-        "size": "Size must be greater than or equal to 0",
+        "page": "Page must be greater than or equal to 1",
+        "size": "Size must be greater than or equal to 1",
         "name": "Name must be a string",
         "type": "Type must be 'Online' or 'In Person'",
         "startDate": "Start date must be a valid datetime"
