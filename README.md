@@ -153,7 +153,7 @@ user's information.
 - Request
 
   - Method: POST
-  - URL: /api/users
+  - URL: /api/currentUser
   - Headers:
     - Content-Type: application/json
   - Body:
