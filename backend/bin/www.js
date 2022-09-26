@@ -4,6 +4,7 @@
 // Import environment variables
 require("dotenv").config();
 
+// by default, it will import the index file
 const { port } = require("../config");
 
 const app = require("../app");
