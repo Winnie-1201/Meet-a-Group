@@ -13,11 +13,13 @@ const validateSignup = [
   check("firstName")
     .exists({ checkFalsy: true })
     .withMessage("Please provide a first name"),
-  check("firstName").isAlpha.withMessage("Please provide a valid first name."),
+  check("firstName")
+    .isAlpha()
+    .withMessage("Please provide a valid first name."),
   check("lastName")
     .exists({ checkFalsy: true })
     .withMessage("Please provide a last name"),
-  check("lastName").isAlpha.withMessage("Please provide a valid last name."),
+  check("lastName").isAlpha().withMessage("Please provide a valid last name."),
   check("username").not().isEmail().withMessage("Username cannot be an email."),
   check("password")
     .exists({ checkFalsy: true })
