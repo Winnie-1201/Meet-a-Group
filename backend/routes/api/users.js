@@ -35,4 +35,5 @@ router.post("/", validateSignup, async (req, res) => {
     user,
   });
 });
+
 module.exports = router;
