@@ -29,7 +29,10 @@ module.exports = (sequelize, DataTypes) => {
         onDelete: "CASCADE",
         hooks: true,
       });
-      Group.belongsTo(models.User, { foreignKey: "organizerId" });
+      Group.belongsTo(models.User, {
+        foreignKey: "organizerId",
+        as: "Organizer",
+      });
     }
   }
   Group.init(

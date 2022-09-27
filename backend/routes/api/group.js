@@ -5,7 +5,7 @@ const {
   Group,
   User,
   GroupImage,
-  Membership,
+  Venue,
   sequelize,
 } = require("../../db/models");
 const { requireAuth } = require("../../utils/auth");
@@ -182,4 +182,39 @@ router.get("/current", requireAuth, async (req, res, next) => {
   res.json(result);
 });
 
+// Get details of a group from an id;
+router.get("/:groupId", async (req, res, next) => {
+  const id = req.params.groupId;
+  const group = await Group.findByPk(id, {
+    include: [
+      {
+        model: GroupImage,
+        attributes: ["id", "url", "preview"],
+      },
+      {
+        model: User,
+        as: "Organizer",
+        attributes: ["id", "firstName", "lastName"],
+      },
+      {
+        model: Venue,
+      },
+    ],
+    group: "organizerId",
+    attributes: [
+      "id",
+      "organizerId",
+      "name",
+      "about",
+      "type",
+      "private",
+      "city",
+      "state",
+      "createdAt",
+      "updatedAt",
+      [sequelize.fn("COUNT"), "numMembers"],
+    ],
+  });
+  res.json(group);
+});
 module.exports = router;
