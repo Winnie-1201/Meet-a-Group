@@ -48,7 +48,6 @@ router.get("/", async (req, res, next) => {
       "updatedAt",
       [sequelize.fn("COUNT"), "numMembers"],
     ],
-    // attributes: [[sequelize.fn("COUNT"), "numMembers"]],
   });
 
   let result = {};
@@ -87,8 +86,38 @@ router.post("/", requireAuth, validateGroup, async (req, res, next) => {
     city,
     state,
   });
-  //   console.log(req.user.id);
   res.json(newGroup);
+});
+
+// Add an image to a group based onthe gorup's id
+router.post("/:groupId/images", requireAuth, async (req, res, next) => {
+  const groupId = req.params.groupId;
+  console.log(groupId);
+  const { url, preview } = req.body;
+  const group = await Group.findByPk(groupId);
+
+  if (!group) {
+    // const err = new Error("Group couldn't be found");
+    // err.status = 404;
+    res.json({
+      message: "Group couldn't be found",
+      statusCode: 404,
+    });
+  } else {
+    let newImage = await GroupImage.create({
+      groupId,
+      url,
+      preview,
+    });
+
+    newImage = newImage.toJSON();
+    let result = {};
+    result.id = newImage.id;
+    result.url = newImage.url;
+    result.preview = newImage.preview;
+
+    res.json(result);
+  }
 });
 
 module.exports = router;
