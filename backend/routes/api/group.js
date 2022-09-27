@@ -1,7 +1,13 @@
 const express = require("express");
 const router = express.Router();
 
-const { Group, User, GroupImage, sequelize } = require("../../db/models");
+const {
+  Group,
+  User,
+  GroupImage,
+  Membership,
+  sequelize,
+} = require("../../db/models");
 const { requireAuth } = require("../../utils/auth");
 const { handleValidationErrors } = require("../../utils/validation");
 const { check } = require("express-validator");
@@ -56,7 +62,7 @@ router.get("/", async (req, res, next) => {
   for (let i = 0; i < groups.length; i++) {
     let group = groups[i].toJSON();
     let id = group.id;
-    console.log(id);
+
     const image = await GroupImage.findOne({
       where: {
         id,
@@ -118,6 +124,62 @@ router.post("/:groupId/images", requireAuth, async (req, res, next) => {
 
     res.json(result);
   }
+});
+
+// Get all groups joined or organized by the current user;
+router.get("/current", requireAuth, async (req, res, next) => {
+  const currUserId = req.user.id;
+  //   const groupsJoin = await Membership.findAll({
+  //     // where: { userId: currUserId },
+  //   });
+  const groups = await Group.findAll({
+    where: { organizerId: currUserId },
+  });
+
+  let result = {};
+  result.Groups = [];
+
+  for (let i = 0; i < groups.length; i++) {
+    let group = groups[i].toJSON();
+    let groupId = group.id;
+
+    let groupJoin = await Group.findByPk(groupId, {
+      include: {
+        model: User,
+        attributes: [],
+      },
+      group: "organizerId",
+      attributes: [
+        "id",
+        "organizerId",
+        "name",
+        "about",
+        "type",
+        "private",
+        "city",
+        "state",
+        "createdAt",
+        "updatedAt",
+        [sequelize.fn("COUNT"), "numMembers"],
+      ],
+    });
+
+    groupJoin = groupJoin.toJSON();
+    const image = await GroupImage.findOne({
+      where: {
+        groupId,
+        preview: true,
+      },
+    });
+    if (!image) {
+      groupJoin.previewImage = null;
+    } else {
+      groupJoin.previewImage = image.toJSON().url;
+    }
+    console.log(groupJoin);
+    result.Groups.push(groupJoin);
+  }
+  res.json(result);
 });
 
 module.exports = router;
