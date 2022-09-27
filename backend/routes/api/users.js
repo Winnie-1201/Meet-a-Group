@@ -28,20 +28,47 @@ const validateSignup = [
   handleValidationErrors,
 ];
 // Sign up
-router.post("/", validateSignup, async (req, res) => {
+router.post("/", validateSignup, async (req, res, next) => {
   const { firstName, lastName, email, username, password } = req.body;
-  const user = await User.signup({
-    firstName,
-    lastName,
-    email,
-    username,
-    password,
+
+  const emailFound = await User.findAll({
+    where: { email },
   });
 
-  await setTokenCookie(res, user);
-  return res.json({
-    user,
-  });
+  if (emailFound.length) {
+    const err = new Error("User already exists");
+    // err.message = "User already exists";
+    err.errors = {
+      email: "User with that email already exists.",
+    };
+    err.status = 403;
+    next(err);
+  }
+  // else if (!email || !firstName || !lastName) {
+  //   const err = new Error("Validation error");
+  //   err.status = 400;
+  //   err.errors = {
+  //     email: "Invalid email",
+  //     firstName: "First Name is required",
+  //     lastName: "Last Name is required",
+  //   };
+  //   next(err);
+  // }
+  else {
+    const user = await User.signup({
+      firstName,
+      lastName,
+      email,
+      username,
+      password,
+    });
+
+    const token = await setTokenCookie(res, user);
+    return res.json({
+      user,
+      token,
+    });
+  }
 });
 
 module.exports = router;
