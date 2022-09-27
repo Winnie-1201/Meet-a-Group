@@ -40,10 +40,9 @@ router.post("/", validateLogin, async (req, res, next) => {
   }
   const token = await setTokenCookie(res, user);
 
-  return res.json({
-    user,
-    token,
-  });
+  let result = user.toJSON();
+  result.token = token;
+  return res.json(result);
 });
 
 // Log out
@@ -58,9 +57,7 @@ router.delete("/", (_req, res) => {
 router.get("/", restoreUser, (req, res) => {
   const { user } = req;
   if (user) {
-    return res.json({
-      user: user.toSafeObject(),
-    });
+    return res.json(user.toSafeObject());
   } else return res.json({});
 });
 

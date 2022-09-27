@@ -14,7 +14,7 @@ const eventImages = [
   {
     eventId: 3,
     url: "image-url-3",
-    preview: "false",
+    preview: false,
   },
   // {
   //   eventId: 1,
