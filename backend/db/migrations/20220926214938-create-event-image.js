@@ -13,6 +13,7 @@ module.exports = {
         allowNull: false,
         references: {
           model: "Events",
+          key: "id",
         },
         onDelete: "CASCADE",
       },
