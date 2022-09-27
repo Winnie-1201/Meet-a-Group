@@ -21,19 +21,28 @@ const validateLogin = [
 // Log in
 router.post("/", validateLogin, async (req, res, next) => {
   const { credential, password } = req.body;
+  if (!credential || !password) {
+    const err = new Error("Validation Error");
+    err.status = 400;
+    err.errors = {
+      email: "Email is required",
+      password: "Password is required",
+    };
+  }
   const user = await User.login({ credential, password });
 
   if (!user) {
-    const err = new Error("Login failed");
+    const err = new Error("Invalid Credentials");
     err.status = 401;
     err.title = "Login failed";
     err.errors = ["The provided credentials were invalid."];
     return next(err);
   }
-  await setTokenCookie(res, user);
+  const token = await setTokenCookie(res, user);
 
   return res.json({
     user,
+    token,
   });
 });
 
