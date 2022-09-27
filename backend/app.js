@@ -6,6 +6,7 @@ const csurf = require("csurf");
 const helmet = require("helmet");
 const cookieParser = require("cookie-parser");
 const { ValidationError } = require("sequelize");
+const routes = require("./routes");
 
 const { environment } = require("./config");
 const isProduction = environment === "production";
@@ -47,7 +48,6 @@ app.use(
   })
 );
 
-const routes = require("./routes");
 app.use(routes);
 
 // Catch unhandled requests and forward to error handler.
@@ -79,4 +79,5 @@ app.use((err, _req, res, _next) => {
     stack: isProduction ? null : err.stack,
   });
 });
+
 module.exports = app;
