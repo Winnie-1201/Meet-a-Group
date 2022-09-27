@@ -221,4 +221,30 @@ router.get("/:groupId", async (req, res, next) => {
     res.json(group);
   }
 });
+
+// Edit a group;
+router.put("/:groupId", requireAuth, validateGroup, async (req, res, next) => {
+  const id = req.params.groupId;
+  const { name, about, type, private, city, state } = req.body;
+
+  const group = await Group.findByPk(id);
+
+  if (!group) {
+    res.status(404).json({
+      message: "Group couldn't be found",
+      statusCode: 404,
+    });
+  } else {
+    group.update({
+      name,
+      about,
+      type,
+      private,
+      city,
+      state,
+    });
+    res.json(group);
+  }
+});
+
 module.exports = router;
