@@ -33,11 +33,29 @@ const validateGroup = [
   check("state").exists({ checkFalsy: true }).withMessage("State is required"),
   handleValidationErrors,
 ];
+
+const validateVenue = [
+  check("address")
+    .exists({ checkFalsy: true })
+    .withMessage("Street address is required"),
+  check("city").exists({ checkFalsy: true }).withMessage("City is required"),
+  check("state").exists({ checkFalsy: true }).withMessage("State is required"),
+  check("lat")
+    .exists({ checkFalsy: true })
+    .isDecimal()
+    .withMessage("Latitude is not valid"),
+  check("lng")
+    .exists({ checkFalsy: true })
+    .isDecimal()
+    .withMessage("Longitude is not valid"),
+  handleValidationErrors,
+];
 // get all groups;
 router.get("/", async (req, res, next) => {
   const groups = await Group.findAll({
     include: {
       model: User,
+      as: "Organizer",
       attributes: [],
     },
     group: "organizerId",
@@ -143,6 +161,7 @@ router.get("/current", requireAuth, async (req, res, next) => {
     let groupJoin = await Group.findByPk(groupId, {
       include: {
         model: User,
+        as: "Organizer",
         attributes: [],
       },
       group: "organizerId",
@@ -246,5 +265,34 @@ router.put("/:groupId", requireAuth, validateGroup, async (req, res, next) => {
     res.json(group);
   }
 });
+
+// Create a new Venue for a group specified by its id;
+router.post(
+  "/:groupId/venues",
+  requireAuth,
+  validateVenue,
+  async (req, res, next) => {
+    const { address, city, state, lat, lng } = req.body;
+    const groupId = req.params.groupId;
+
+    const group = await Group.findByPk(groupId);
+    if (!group) {
+      res.status(404).json({
+        message: "Group couldn't be found",
+        statusCode: 404,
+      });
+    } else {
+      const newVenue = await Venue.create({
+        groupId,
+        address,
+        city,
+        state,
+        lat,
+        lng,
+      });
+      res.json(newVenue);
+    }
+  }
+);
 
 module.exports = router;
