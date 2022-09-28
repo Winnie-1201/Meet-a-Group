@@ -54,30 +54,7 @@ const validateVenue = [
 ];
 // get all groups;
 router.get("/", async (req, res, next) => {
-  const groups = await Group.findAll({
-    // include: {
-    //   model: User,
-    //   as: "Organizer",
-    //   attributes: [],
-    // },
-    // attributes: {
-    //   include: [
-    //     [sequelize.fn("COUNT"), sequelize.col("Organizer.id"), "numMembers"],
-    //   ],
-    // },
-    // group: ["Group.organizerId"],
-    //   "id",
-    //   "organizerId",
-    //   "name",
-    //   "about",
-    //   "type",
-    //   "private",
-    //   "city",
-    //   "state",
-    //   "createdAt",
-    //   "updatedAt",
-    // attributes: [[sequelize.fn("COUNT"), "numMembers"]],
-  });
+  const groups = await Group.findAll();
 
   let result = {};
   result.Groups = [];
@@ -159,9 +136,6 @@ router.post("/:groupId/images", requireAuth, async (req, res, next) => {
 // Get all groups joined or organized by the current user;
 router.get("/current", requireAuth, async (req, res, next) => {
   const currUserId = req.user.id;
-  //   const groupsJoin = await Membership.findAll({
-  //     // where: { userId: currUserId },
-  //   });
   const groups = await Group.findAll({
     where: { organizerId: currUserId },
   });
@@ -173,27 +147,7 @@ router.get("/current", requireAuth, async (req, res, next) => {
     let group = groups[i].toJSON();
     let groupId = group.id;
 
-    let groupJoin = await Group.findByPk(groupId, {
-      include: {
-        model: User,
-        as: "Organizer",
-        attributes: [],
-      },
-      group: "organizerId",
-      attributes: [
-        "id",
-        "organizerId",
-        "name",
-        "about",
-        "type",
-        "private",
-        "city",
-        "state",
-        "createdAt",
-        "updatedAt",
-        [sequelize.fn("COUNT"), "numMembers"],
-      ],
-    });
+    let groupJoin = await Group.findByPk(groupId);
 
     groupJoin = groupJoin.toJSON();
     const image = await GroupImage.findOne({
@@ -207,6 +161,15 @@ router.get("/current", requireAuth, async (req, res, next) => {
     } else {
       groupJoin.previewImage = image.toJSON().url;
     }
+    const numMembers = await Membership.findAll({
+      where: {
+        groupId: id,
+        status: {
+          [Op.in]: ["member", "co-host"],
+        },
+      },
+    });
+    group.numMembers = numMembers.length;
     result.Groups.push(groupJoin);
   }
   res.json(result);
