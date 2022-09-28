@@ -163,7 +163,7 @@ router.get("/current", requireAuth, async (req, res, next) => {
     }
     const numMembers = await Membership.findAll({
       where: {
-        currUserId,
+        userId: currUserId,
         status: {
           [Op.in]: ["member", "co-host"],
         },
