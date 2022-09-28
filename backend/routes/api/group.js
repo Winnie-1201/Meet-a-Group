@@ -178,7 +178,17 @@ router.get("/current", requireAuth, async (req, res, next) => {
 // Get details of a group from an id;
 router.get("/:groupId", async (req, res, next) => {
   const id = req.params.groupId;
-  const group = await Group.findByPk(id, {
+
+  const numMembers = await Membership.findAll({
+    where: {
+      groupId: id,
+      status: {
+        [Op.in]: ["member", "co-host"],
+      },
+    },
+  });
+
+  let group = await Group.findByPk(id, {
     include: [
       {
         model: GroupImage,
@@ -193,20 +203,6 @@ router.get("/:groupId", async (req, res, next) => {
         model: Venue,
       },
     ],
-    group: "organizerId",
-    attributes: [
-      "id",
-      "organizerId",
-      "name",
-      "about",
-      "type",
-      "private",
-      "city",
-      "state",
-      "createdAt",
-      "updatedAt",
-      [sequelize.fn("COUNT"), "numMembers"],
-    ],
   });
 
   if (!group) {
@@ -215,6 +211,8 @@ router.get("/:groupId", async (req, res, next) => {
       statusCode: 404,
     });
   } else {
+    group = group.toJSON();
+    group.numMembers = numMembers;
     res.json(group);
   }
 });
