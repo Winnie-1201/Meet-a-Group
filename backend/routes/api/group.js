@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const { Op } = require("sequelize");
 
 const {
   Group,
@@ -54,18 +55,17 @@ const validateVenue = [
 // get all groups;
 router.get("/", async (req, res, next) => {
   const groups = await Group.findAll({
-    include: {
-      model: User,
-      as: "Organizer",
-      attributes: [],
-    },
-
-    attributes: {
-      include: [
-        [sequelize.fn("COUNT"), sequelize.col("Organizer.id"), "numMembers"],
-      ],
-    },
-    group: ["Group.organizerId"],
+    // include: {
+    //   model: User,
+    //   as: "Organizer",
+    //   attributes: [],
+    // },
+    // attributes: {
+    //   include: [
+    //     [sequelize.fn("COUNT"), sequelize.col("Organizer.id"), "numMembers"],
+    //   ],
+    // },
+    // group: ["Group.organizerId"],
     //   "id",
     //   "organizerId",
     //   "name",
@@ -76,7 +76,6 @@ router.get("/", async (req, res, next) => {
     //   "state",
     //   "createdAt",
     //   "updatedAt",
-
     // attributes: [[sequelize.fn("COUNT"), "numMembers"]],
   });
 
@@ -98,6 +97,15 @@ router.get("/", async (req, res, next) => {
     } else {
       group.previewImage = image.toJSON().url;
     }
+
+    const numMembers = await group.countMembers({
+      where: {
+        status: {
+          [Op.in]: ["member", "co-host"],
+        },
+      },
+    });
+    group.numMembers = numMembers;
     result.Groups.push(group);
   }
 
