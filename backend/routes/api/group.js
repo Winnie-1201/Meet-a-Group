@@ -98,7 +98,7 @@ router.get("/", async (req, res, next) => {
       group.previewImage = image.toJSON().url;
     }
 
-    const numMembers = await group.countMembers({
+    const numMembers = await group.countMembership({
       where: {
         status: {
           [Op.in]: ["member", "co-host"],
