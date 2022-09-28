@@ -212,7 +212,7 @@ router.get("/:groupId", async (req, res, next) => {
     });
   } else {
     group = group.toJSON();
-    group.numMembers = numMembers;
+    group.numMembers = numMembers.length;
     res.json(group);
   }
 });
