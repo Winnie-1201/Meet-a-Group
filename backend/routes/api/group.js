@@ -8,7 +8,9 @@ const {
   GroupImage,
   Venue,
   Membership,
+  Attendance,
   Event,
+  EventImage,
   sequelize,
 } = require("../../db/models");
 const { requireAuth } = require("../../utils/auth");
@@ -123,6 +125,61 @@ router.get("/", async (req, res, next) => {
     });
     group.numMembers = numMembers.length;
     result.Groups.push(group);
+  }
+
+  res.json(result);
+});
+
+// Get all events of a group specified by its id;
+router.get("/:groupId/events", async (req, res, next) => {
+  const groupId = req.params.groupId;
+
+  const events = await Event.scope("allEvents").findAll({
+    where: { groupId },
+    include: [
+      {
+        model: Group,
+        attributes: ["id", "name", "city", "state"],
+      },
+      {
+        model: Venue,
+        attributes: ["id", "city", "state"],
+      },
+    ],
+  });
+
+  const group = await Group.findByPk(groupId);
+  if (!group) {
+    res.status(404).json({
+      message: "Group couldn't be found",
+      statusCode: 404,
+    });
+  }
+
+  let result = {};
+  result.Events = [];
+
+  for (let i = 0; i < events.length; i++) {
+    const event = events[i].toJSON();
+
+    const image = await EventImage.findOne({
+      where: {
+        eventId: event.id,
+        preview: true,
+      },
+    });
+
+    const attendees = await Attendance.findAll({
+      where: {
+        eventId: event.id,
+        status: "member",
+      },
+    });
+
+    event.numAttending = attendees.length;
+    event.previewImage = image === null ? null : image.toJSON().url;
+
+    result.Events.push(event);
   }
 
   res.json(result);
