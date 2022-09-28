@@ -8,6 +8,7 @@ const {
   GroupImage,
   Venue,
   Membership,
+  Event,
   sequelize,
 } = require("../../db/models");
 const { requireAuth } = require("../../utils/auth");
@@ -52,6 +53,43 @@ const validateVenue = [
     .withMessage("Longitude is not valid"),
   handleValidationErrors,
 ];
+
+const validateEvent = [
+  check("venueId")
+    .custom(async (value) => {
+      const venue = await Venue.findByPk(value);
+      if (venue) return true;
+      else return false;
+    })
+    .withMessage("Venue does not exist"),
+  check("name")
+    .exists({ checkFalsy: true })
+    .isLength({ min: 5 })
+    .withMessage("Name must be at least characters"),
+  check("type")
+    .exists({ checkFalsy: true })
+    .isIn(["Online", "In person"])
+    .withMessage("Type must be 'Online' or 'In person'"),
+  check("capacity")
+    .isInt({ min: 1 })
+    .withMessage("Capacity must be an integer"),
+  check("price").isNumeric().withMessage("Price is invalid"),
+  check("description")
+    .exists({ checkFalsy: true })
+    .withMessage("Description is required"),
+  check("startDate")
+    .exists({ checkFalsy: true })
+    .isAfter()
+    .withMessage("Start date must be in the future"),
+  check("endDate")
+    .exists({ checkFalsy: true })
+    .custom((value, { req }) => {
+      return new Date(value) - new Date(req.body.startDate) >= 0;
+    })
+    .withMessage("End date is less than start date"),
+  handleValidationErrors,
+];
+
 // get all groups;
 router.get("/", async (req, res, next) => {
   const groups = await Group.findAll();
@@ -325,5 +363,69 @@ router.get("/:groupId/venues", requireAuth, async (req, res, next) => {
     next(err);
   }
 });
+
+// Create an event for a group specified by its id;
+router.post(
+  "/:groupId/events",
+  requireAuth,
+  validateEvent,
+  async (req, res, next) => {
+    const groupId = req.params.groupId;
+    const userId = req.user.id;
+    const {
+      venueId,
+      name,
+      type,
+      capacity,
+      price,
+      description,
+      startDate,
+      endDate,
+    } = req.body;
+
+    const group = await Group.findByPk(groupId);
+    if (!group) {
+      res.status(404).json({
+        message: "Group couldn't be found",
+        statusCode: 404,
+      });
+    }
+
+    const cohost = await Membership.findAll({
+      where: {
+        userId: userId,
+        groupId,
+        status: "co-host",
+      },
+    });
+
+    if (group.organizerId === userId || cohost.length) {
+      const newEvent = await Event.create({
+        groupId,
+        venueId,
+        name,
+        type,
+        capacity,
+        price,
+        description,
+        startDate,
+        endDate,
+      });
+
+      res.json({
+        id: newEvent.id,
+        groupId: newEvent.groupId,
+        venueId,
+        name,
+        type,
+        capacity,
+        price,
+        description,
+        startDate,
+        endDate,
+      });
+    }
+  }
+);
 
 module.exports = router;
