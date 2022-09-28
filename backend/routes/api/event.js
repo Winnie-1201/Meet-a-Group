@@ -54,6 +54,50 @@ const validateEvent = [
   handleValidationErrors,
 ];
 
+// Get all events;
+router.get("/", async (req, res, next) => {
+  const events = await Event.scope("allEvents").findAll({
+    include: [
+      {
+        model: Group,
+        attributes: ["id", "name", "city", "state"],
+      },
+      {
+        model: Venue,
+        attributes: ["id", "city", "state"],
+      },
+    ],
+  });
+
+  let result = {};
+  result.Events = [];
+
+  for (let i = 0; i < events.length; i++) {
+    const event = events[i].toJSON();
+
+    const image = await EventImage.findOne({
+      where: {
+        eventId: event.id,
+        preview: true,
+      },
+    });
+
+    const attendees = await Attendance.findAll({
+      where: {
+        eventId: event.id,
+        status: "member",
+      },
+    });
+
+    event.numAttending = attendees.length;
+    event.previewImage = image === null ? null : image.toJSON().url;
+
+    result.Events.push(event);
+  }
+
+  res.json(result);
+});
+
 // Add an image to an event based on the event's id;
 router.post("/:eventId/images", requireAuth, async (req, res, next) => {
   const eventId = req.params.eventId;
