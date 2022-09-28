@@ -169,7 +169,7 @@ router.get("/current", requireAuth, async (req, res, next) => {
         },
       },
     });
-    group.numMembers = numMembers.length;
+    groupJoin.numMembers = numMembers.length;
     result.Groups.push(groupJoin);
   }
   res.json(result);
