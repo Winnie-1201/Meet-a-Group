@@ -573,7 +573,6 @@ router.put(
 
     const member = await Membership.findOne({
       where: {
-        // groupId,
         userId: memberId,
       },
     });
@@ -581,22 +580,11 @@ router.put(
     const currMember = await Membership.findOne({
       where: {
         groupId,
-        // userId,
         status: "co-host",
       },
     });
-
-    // const curr = await Membership.findOne({
-    //   where: { groupId },
-    // });
-
     const preStatus = member.toJSON().status;
 
-    // console.log("preStatue", preStatus);
-    // console.log("status", status);
-    // console.log(userId, group.toJSON().organizerId);
-    // console.log(currMember);
-    // console.log(curr);
     if (
       status === "member" &&
       preStatus === "pending" &&
