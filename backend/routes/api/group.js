@@ -424,6 +424,10 @@ router.post(
         startDate,
         endDate,
       });
+    } else {
+      const err = new Error("The current user does not have access.");
+      err.status = 403;
+      next(err);
     }
   }
 );
