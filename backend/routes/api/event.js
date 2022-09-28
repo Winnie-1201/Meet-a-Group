@@ -98,6 +98,43 @@ router.get("/", async (req, res, next) => {
   res.json(result);
 });
 
+// Get details of an event specified by its id;
+router.get("/:eventId", async (req, res, next) => {
+  const eventId = req.params.eventId;
+  let events = await Event.findByPk(eventId, {
+    include: [
+      {
+        model: Group,
+        attributes: ["id", "name", "private", "city", "state"],
+      },
+      {
+        model: Venue,
+        attributes: ["id", "address", "city", "state", "lat", "lng"],
+      },
+      {
+        model: EventImage,
+        attributes: ["id", "url", "preview"],
+      },
+    ],
+  });
+
+  if (!events) {
+    res.status(404).json({
+      message: "Event couldn't be found",
+      statusCode: 404,
+    });
+  }
+
+  const attendees = await Attendance.findAll({
+    where: { eventId },
+  });
+
+  events = events.toJSON();
+  events.numAttending = attendees.length;
+
+  res.json(events);
+});
+
 // Add an image to an event based on the event's id;
 router.post("/:eventId/images", requireAuth, async (req, res, next) => {
   const eventId = req.params.eventId;
