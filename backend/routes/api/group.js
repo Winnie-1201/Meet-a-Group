@@ -59,20 +59,23 @@ router.get("/", async (req, res, next) => {
       as: "Organizer",
       attributes: [],
     },
-    group: "organizerId",
-    attributes: [
-      "id",
-      "organizerId",
-      "name",
-      "about",
-      "type",
-      "private",
-      "city",
-      "state",
-      "createdAt",
-      "updatedAt",
-      [sequelize.fn("COUNT"), "numMembers"],
-    ],
+
+    attributes: {
+      include: [[sequelize.fn("COUNT"), "numMembers"]],
+    },
+    group: ["Group.organizerId"],
+    //   "id",
+    //   "organizerId",
+    //   "name",
+    //   "about",
+    //   "type",
+    //   "private",
+    //   "city",
+    //   "state",
+    //   "createdAt",
+    //   "updatedAt",
+
+    // attributes: [[sequelize.fn("COUNT"), "numMembers"]],
   });
 
   let result = {};
