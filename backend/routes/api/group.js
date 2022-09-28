@@ -319,4 +319,36 @@ router.post(
   }
 );
 
+// Get all venues for a group specified by its id;
+router.get("/:groupId/venues", requireAuth, async (req, res, next) => {
+  const groupId = req.params.groupId;
+  const currUserId = req.user.id;
+
+  const group = await Group.findByPk(groupId);
+  if (!group) {
+    res.status(404).json({
+      message: "Group couldn't be found",
+      statusCode: 404,
+    });
+  }
+
+  const cohost = await Membership.findAll({
+    where: {
+      userId: currUserId,
+      groupId,
+      status: "co-host",
+    },
+  });
+  if (group.organizerId === currUserId || cohost.length) {
+    const Venues = await Venue.findAll();
+    res.json({
+      Venues,
+    });
+  } else {
+    const err = new Error("The current user does not have access.");
+    err.status = 403;
+    next(err);
+  }
+});
+
 module.exports = router;
