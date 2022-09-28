@@ -6,6 +6,7 @@ const {
   User,
   GroupImage,
   Venue,
+  Membership,
   sequelize,
 } = require("../../db/models");
 const { requireAuth } = require("../../utils/auth");
@@ -274,6 +275,7 @@ router.post(
   async (req, res, next) => {
     const { address, city, state, lat, lng } = req.body;
     const groupId = req.params.groupId;
+    const userId = req.user.id;
 
     const group = await Group.findByPk(groupId);
     if (!group) {
@@ -281,7 +283,15 @@ router.post(
         message: "Group couldn't be found",
         statusCode: 404,
       });
-    } else {
+    }
+    const cohost = await Membership.findAll({
+      where: {
+        groupId,
+        status: "co-host",
+        userId,
+      },
+    });
+    if (group.organizerId === userId || cohost.length) {
       const newVenue = await Venue.create({
         groupId,
         address,
@@ -290,7 +300,21 @@ router.post(
         lat,
         lng,
       });
-      res.json(newVenue);
+
+      let result = {};
+      result.id = newVenue.id;
+      result.groupId = newVenue.groupId;
+      result.address = newVenue.address;
+      result.city = newVenue.city;
+      result.state = newVenue.state;
+      result.lat = newVenue.lat;
+      result.lng = newVenue.lng;
+
+      res.json(result);
+    } else {
+      const err = new Error("The current user does not have access.");
+      err.status = 403;
+      next(err);
     }
   }
 );
