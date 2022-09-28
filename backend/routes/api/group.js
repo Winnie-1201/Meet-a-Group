@@ -92,6 +92,24 @@ const validateEvent = [
   handleValidationErrors,
 ];
 
+const validateMember = [
+  check("status")
+    .exists({ checkFalsy: true })
+    .custom((value) => {
+      return value !== "pending";
+    })
+    .withMessage("Cannot change a membership status to pending"),
+  check("id")
+    .exists({ checkFalsy: true })
+    .custom(async (value, { req }) => {
+      const membership = await Membership.findOne({
+        where: { userId: value },
+      });
+      return membership !== null;
+    })
+    .withMessage("User couldn't be found"),
+];
+
 // get all groups;
 router.get("/", async (req, res, next) => {
   const groups = await Group.findAll();
@@ -529,10 +547,78 @@ router.post("/:groupId/membership", requireAuth, async (req, res, next) => {
       status: "pending",
     });
     res.json({
-      memberId: newMember.id,
+      memberId: newMember.userId,
       status: newMember.status,
     });
   }
 });
+
+// Change the status of a membership for a group specified by id;
+router.put(
+  "/:groupId/membership",
+  requireAuth,
+  validateMember,
+  async (req, res, next) => {
+    const groupId = req.params.groupId;
+    const userId = req.user.id;
+    const { memberId, status } = req.body;
+
+    const group = await Group.findByPk(groupId);
+    if (!group) {
+      res.status(404).json({
+        message: "Group couldn't be found",
+        statusCode: 404,
+      });
+    }
+
+    const member = await Membership.findOne({
+      where: {
+        groupId,
+        // userId: memberId,
+      },
+    });
+    const currMember = await Membership.findOne({
+      where: {
+        groupId,
+        userId,
+        status: "co-host",
+      },
+    });
+    console.log(member);
+    const preStatus = member.toJSON().status;
+
+    if (
+      status === "member" &&
+      preStatus === "pending" &&
+      (userId === group.toJSON().organizerId || currMember)
+    ) {
+      member.update({
+        userId: memberId,
+        status: status,
+      });
+      res.json({
+        memberId: member.userId,
+        status,
+      });
+    } else if (
+      status === "co-host" &&
+      preStatus === "member" &&
+      userId === group.toJSON().organizerId
+    ) {
+      member.update({
+        userId: memberId,
+        status: status,
+      });
+      res.json({
+        memberId: member.userId,
+        status,
+      });
+    } else {
+      const err = new Error("The current user does not have access.");
+      err.status = 403;
+      next(err);
+    }
+  }
+);
 
 module.exports = router;
