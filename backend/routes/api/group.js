@@ -106,7 +106,7 @@ router.get("/", async (req, res, next) => {
         },
       },
     });
-    group.numMembers = numMembers;
+    group.numMembers = numMembers.length;
     result.Groups.push(group);
   }
 
