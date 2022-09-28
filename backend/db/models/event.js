@@ -55,6 +55,11 @@ module.exports = (sequelize, DataTypes) => {
             ],
           },
         },
+        updateEvents: {
+          attributes: {
+            exclude: [],
+          },
+        },
       },
     }
   );

@@ -135,6 +135,62 @@ router.get("/:eventId", async (req, res, next) => {
   res.json(events);
 });
 
+// Edit an event specified by its id;
+router.put("/:eventId", requireAuth, validateEvent, async (req, res, next) => {
+  const eventId = req.params.eventId;
+  const userId = req.user.id;
+
+  const {
+    venueId,
+    name,
+    type,
+    capacity,
+    price,
+    description,
+    startDate,
+    endDate,
+  } = req.body;
+
+  const event = await Event.findByPk(eventId);
+  const venue = await Venue.findByPk(venueId);
+  if (!event) {
+    res.status(404).json({
+      message: "Event couldn't be found",
+      statusCode: 404,
+    });
+  } else if (!venue) {
+    res.status(404).json({
+      message: "Venue couldn't be found",
+      statusCode: 404,
+    });
+  } else {
+    const groupId = event.toJSON().groupId;
+    const group = await Group.findByPk(groupId);
+
+    const cohost = await Membership.findAll({
+      where: { groupId },
+    });
+
+    if (group.toJSON().organizerId === userId || cohost.length) {
+      event.update({
+        venueId,
+        name,
+        type,
+        capacity,
+        price,
+        description,
+        startDate,
+        endDate,
+      });
+      res.json(event);
+    } else {
+      const err = new Error("The current user does not have access");
+      err.status(403);
+      next(err);
+    }
+  }
+});
+
 // Add an image to an event based on the event's id;
 router.post("/:eventId/images", requireAuth, async (req, res, next) => {
   const eventId = req.params.eventId;
