@@ -292,4 +292,66 @@ router.post("/:eventId/attendance", requireAuth, async (req, res, next) => {
   }
 });
 
+// Change the status of an attendance for an event specified by id;
+router.put("/:eventId/attendance", requireAuth, async (req, res, next) => {
+  const { userId, status } = req.body;
+  const eventId = req.params.eventId;
+  const currUserId = req.user.id;
+
+  if (status === "pending") {
+    res.status(400).json({
+      message: "Cannot change an attendance status to pending",
+      statusCode: 400,
+    });
+  }
+
+  const event = await Event.findByPk(eventId);
+  if (!event) {
+    res.status(404).json({
+      message: "Event couldn't be found",
+      statusCode: 404,
+    });
+  }
+
+  const attendance = await Attendance.findOne({
+    where: {
+      eventId,
+      userId,
+    },
+  });
+  if (!attendance) {
+    res.status(404).json({
+      message: "Attendance between the user and the event does not exist",
+      statusCode: 404,
+    });
+  }
+
+  const cohost = await Membership.findOne({
+    where: {
+      groupId: event.toJSON().groupId,
+      userId: currUserId,
+      status: "co-host",
+    },
+  });
+
+  const group = await Group.findByPk(event.toJSON().groupId);
+
+  if (currUserId === group.toJSON().organizerId || cohost) {
+    attendance.update({
+      userId,
+      status,
+    });
+    res.json({
+      id: attendance.id,
+      eventId,
+      userId,
+      status,
+    });
+  } else {
+    const err = new Error("The current user does not have access.");
+    err.status = 403;
+    next(err);
+  }
+});
+
 module.exports = router;
