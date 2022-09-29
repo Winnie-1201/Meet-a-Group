@@ -477,7 +477,7 @@ router.delete("/:eventId/attendance", requireAuth, async (req, res, next) => {
   const attendance = await Attendance.findOne({
     where: {
       eventId,
-      memberId,
+      userId: memberId,
     },
   });
 
