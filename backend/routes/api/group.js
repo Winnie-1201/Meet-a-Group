@@ -574,8 +574,16 @@ router.put(
     const member = await Membership.findOne({
       where: {
         userId: memberId,
+        groupId,
       },
     });
+
+    if (!member) {
+      res.status(404).json({
+        message: "Membership between the user and the group does not exits",
+        statusCode: 404,
+      });
+    }
 
     const currMember = await Membership.findOne({
       where: {
@@ -584,6 +592,7 @@ router.put(
       },
     });
     const preStatus = member.toJSON().status;
+    console.log(status, preStatus);
 
     if (
       status === "member" &&
