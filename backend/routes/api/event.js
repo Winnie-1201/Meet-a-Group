@@ -426,7 +426,7 @@ router.get("/:eventId/attendees", async (req, res, next) => {
 router.delete("/:eventId/attendance", requireAuth, async (req, res, next) => {
   const eventId = req.params.eventId;
   const currUserId = req.user.id;
-  const { userId } = req.body;
+  const { memberId } = req.body;
 
   const event = await Event.findByPk(eventId);
   if (!event) {
@@ -439,7 +439,7 @@ router.delete("/:eventId/attendance", requireAuth, async (req, res, next) => {
   const attendance = await Attendance.findOne({
     where: {
       eventId,
-      userId,
+      memberId,
     },
   });
 
