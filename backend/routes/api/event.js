@@ -14,9 +14,10 @@ const {
 } = require("../../db/models");
 const { requireAuth } = require("../../utils/auth");
 const { handleValidationErrors } = require("../../utils/validation");
-const { check } = require("express-validator");
+const { check, query } = require("express-validator");
 const e = require("express");
 const user = require("../../db/models/user");
+// const { query } = require("express");
 
 const validateEvent = [
   check("venueId")
@@ -54,8 +55,41 @@ const validateEvent = [
   handleValidationErrors,
 ];
 
+const validateQuery = [
+  query("page")
+    .optional()
+    .isIn({ min: 0 })
+    .withMessage("Page must be greater than or equal to 1"),
+  query("size")
+    .optional()
+    .isIn({ min: 0 })
+    .withMessage("Size must be greater than or equal to 1"),
+  query("name").optional().isString().withMessage("Name must be a string"),
+  query("type")
+    .optional()
+    .isIn(["Online", "In person"])
+    .withMessage("Type must be 'Online' or 'In person'"),
+  query("startDate")
+    .optional()
+    .isAfter()
+    .withMessage("Start date must be a valid datetime"),
+];
+
 // Get all events;
-router.get("/", async (req, res, next) => {
+router.get("/", validateQuery, async (req, res, next) => {
+  let { page, size, name, type, startDate } = req.query;
+
+  page = page === undefined ? 1 : page;
+  size = size === undefined ? 20 : size;
+
+  const limit = size;
+  const offset = size * (page - 1);
+
+  let where = {};
+  if (name) where.name = name;
+  if (type) where.type = type;
+  if (startDate) where.startDate = startDate;
+
   const events = await Event.scope("allEvents").findAll({
     include: [
       {
@@ -67,6 +101,9 @@ router.get("/", async (req, res, next) => {
         attributes: ["id", "city", "state"],
       },
     ],
+    where,
+    limit,
+    offset,
   });
 
   let result = {};
