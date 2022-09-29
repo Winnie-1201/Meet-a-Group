@@ -354,4 +354,72 @@ router.put("/:eventId/attendance", requireAuth, async (req, res, next) => {
   }
 });
 
+// Get all attendees of an event specified by its id;
+router.get("/:eventId/attendees", async (req, res, next) => {
+  const eventId = req.params.eventId;
+  const currUserId = req.user.id;
+
+  const event = await Event.findByPk(eventId);
+  if (!event) {
+    res.status(404).json({
+      message: "Event couldn't be found",
+      statusCode: 404,
+    });
+  }
+
+  const cohost = await Membership.findOne({
+    where: {
+      groupId: event.toJSON().groupId,
+      userId: currUserId,
+      status: "co-host",
+    },
+  });
+
+  const group = await Group.findByPk(event.toJSON().groupId);
+
+  let result = {};
+  result.Attendees = [];
+
+  if (currUserId === group.toJSON().organizerId || cohost) {
+    const attendees = await Attendance.findAll({
+      where: { eventId },
+    });
+
+    for (let i = 0; i < attendees.length; i++) {
+      const userId = attendees[i].toJSON().userId;
+      const attendeeInfo = await User.findByPk(userId, {
+        include: {
+          model: Attendance,
+          attributes: ["status"],
+        },
+        attributes: ["id", "firstName", "lastName"],
+      });
+      result.Attendees.push(attendeeInfo);
+    }
+    res.json(result);
+  } else {
+    const attendees = await Attendance.findAll({
+      where: { eventId },
+    });
+
+    for (let i = 0; i < attendees.length; i++) {
+      const userId = attendees[i].toJSON().userId;
+      const attendeeInfo = await User.findByPk(userId, {
+        include: {
+          model: Attendance,
+          where: {
+            status: {
+              [Op.not]: "pending",
+            },
+          },
+          attributes: ["status"],
+        },
+        attributes: ["id", "firstName", "lastName"],
+      });
+      result.Attendees.push(attendeeInfo);
+    }
+    res.json(result);
+  }
+});
+
 module.exports = router;
