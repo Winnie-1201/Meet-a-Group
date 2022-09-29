@@ -7,6 +7,7 @@ const groupsRouter = require("./group.js");
 const venueRouter = require("./venue.js");
 const eventRouter = require("./event.js");
 const groupImgRouter = require("./group-image.js");
+const eventImgRouter = require("./event-image.js");
 
 // Connect restoreUser middleware to the API router
 // If current user session is valid, set req.user to the user in the database
@@ -23,6 +24,8 @@ router.use("/venues", venueRouter);
 router.use("/events", eventRouter);
 
 router.use("/group-images", groupImgRouter);
+
+router.use("/event-images", eventImgRouter);
 
 router.post("/test", (req, res) => {
   res.json({ requestBody: req.body });
