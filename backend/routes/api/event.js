@@ -435,10 +435,6 @@ router.delete("/:eventId/attendance", requireAuth, async (req, res, next) => {
       statusCode: 404,
     });
   }
-  // console.log(eventId);
-  // const test = await Attendance.findAll();
-  // console.log(currUserId);
-  // console.log(test);
 
   const attendance = await Attendance.findOne({
     where: {
