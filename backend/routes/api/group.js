@@ -619,4 +619,69 @@ router.put(
   }
 );
 
+// Get all members of a gorup specified by its id;
+router.get("/:groupId/members", async (req, res, next) => {
+  const groupId = req.params.groupId;
+  const userId = req.user.id;
+
+  const group = await Group.findByPk(groupId);
+  if (!group) {
+    res.status(404).json({
+      message: "Group couldn't be found",
+      statusCode: 404,
+    });
+  }
+
+  const cohost = await Membership.findOne({
+    where: {
+      groupId,
+      status: "co-host",
+    },
+  });
+
+  let result = {};
+  result.Members = [];
+
+  if (userId === group.toJSON().organizerId || cohost) {
+    const members = await Membership.findAll({
+      where: { groupId },
+    });
+
+    for (let i = 0; i < members.length; i++) {
+      const memberId = members[i].toJSON().userId;
+      const userInfo = await User.findByPk(memberId, {
+        include: {
+          model: Membership,
+          attributes: ["status"],
+        },
+        attributes: ["id", "firstName", "lastName"],
+      });
+      result.Members.push(userInfo);
+    }
+    res.json(result);
+  } else {
+    const members = await Membership.findAll({
+      where: { groupId },
+    });
+
+    for (let i = 0; i < members.length; i++) {
+      const memberId = members[i].toJSON().userId;
+      const userInfo = await User.findByPk(memberId, {
+        include: {
+          model: Membership,
+          where: {
+            status: {
+              [Op.not]: "pending",
+            },
+          },
+          attributes: ["status"],
+        },
+        attributes: ["id", "firstName", "lastName"],
+      });
+      result.Members.push(userInfo);
+    }
+    res.json(result);
+  }
+});
+
 module.exports = router;
