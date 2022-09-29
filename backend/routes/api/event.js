@@ -73,6 +73,7 @@ const validateQuery = [
     .optional()
     .isAfter()
     .withMessage("Start date must be a valid datetime"),
+  handleValidationErrors,
 ];
 
 // Get all events;
