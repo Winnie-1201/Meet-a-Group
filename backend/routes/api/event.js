@@ -233,4 +233,63 @@ router.post("/:eventId/images", requireAuth, async (req, res, next) => {
   }
 });
 
+// Request attendance for an event specified by id;
+router.post("/:eventId/attendance", requireAuth, async (req, res, next) => {
+  const currUserId = req.user.id;
+  const eventId = req.params.eventId;
+  // const { userId, status } = req.body;
+
+  const event = await Event.findByPk(eventId);
+  if (!event) {
+    res.status(404).json({
+      message: "Event couldn't be found",
+      statusCode: 404,
+    });
+  }
+
+  const groupId = event.toJSON().groupId;
+  const member = await Membership.findOne({
+    where: {
+      groupId,
+      userId: currUserId,
+      status: "member",
+    },
+  });
+
+  if (member) {
+    const currAttend = await Attendance.findOne({
+      where: {
+        eventId,
+        userId: currUserId,
+      },
+    });
+    console.log(currAttend);
+    if (currAttend && currAttend.toJSON().status === "pending") {
+      res.status(400).json({
+        message: "Attendance has already been requested",
+        statusCode: 400,
+      });
+    } else if (currAttend && currAttend.toJSON().status === "member") {
+      res.status(400).json({
+        message: "User is already an attendee of the event",
+        statusCode: 400,
+      });
+    } else {
+      const newAttend = await Attendance.create({
+        eventId,
+        userId: currUserId,
+        status: "pending",
+      });
+      res.json({
+        userId: newAttend.userId,
+        status: "pending",
+      });
+    }
+  } else {
+    const err = new Error("The current user does not have access.");
+    err.status = 403;
+    next(err);
+  }
+});
+
 module.exports = router;
