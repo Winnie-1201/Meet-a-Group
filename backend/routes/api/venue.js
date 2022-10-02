@@ -1,14 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const {
-  Group,
-  User,
-  GroupImage,
-  Venue,
-  Membership,
-  sequelize,
-} = require("../../db/models");
+const { Group, Venue, Membership } = require("../../db/models");
 const { requireAuth } = require("../../utils/auth");
 const { handleValidationErrors } = require("../../utils/validation");
 const { check } = require("express-validator");
@@ -30,14 +23,13 @@ const validateVenue = [
   handleValidationErrors,
 ];
 
+// Edit a venue;
 router.put("/:venueId", requireAuth, validateVenue, async (req, res, next) => {
   const venueId = req.params.venueId;
   const userId = req.user.id;
   const { address, city, state, lat, lng } = req.body;
 
-  const venue = await Venue.findByPk(venueId, {
-    attributes: ["id", "groupId", "address", "city", "state", "lat", "lng"],
-  });
+  const venue = await Venue.findByPk(venueId);
   if (!venue) {
     res.status(404).json({
       message: "Venue couldn't be found",

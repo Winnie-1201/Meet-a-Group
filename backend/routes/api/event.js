@@ -10,14 +10,12 @@ const {
   Membership,
   Event,
   Attendance,
-  sequelize,
 } = require("../../db/models");
 const { requireAuth } = require("../../utils/auth");
 const { handleValidationErrors } = require("../../utils/validation");
 const { check, query } = require("express-validator");
 const e = require("express");
 const user = require("../../db/models/user");
-// const { query } = require("express");
 
 const validateEvent = [
   check("venueId")

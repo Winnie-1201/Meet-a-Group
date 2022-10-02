@@ -1,18 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const { Op } = require("sequelize");
 
-const {
-  Group,
-  User,
-  GroupImage,
-  Venue,
-  Membership,
-  Attendance,
-  Event,
-  EventImage,
-  sequelize,
-} = require("../../db/models");
+const { Group, Membership, Event, EventImage } = require("../../db/models");
 const { requireAuth } = require("../../utils/auth");
 
 // Delete an image for a group;

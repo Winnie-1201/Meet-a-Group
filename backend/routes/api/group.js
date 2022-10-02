@@ -11,7 +11,6 @@ const {
   Attendance,
   Event,
   EventImage,
-  sequelize,
 } = require("../../db/models");
 const { requireAuth } = require("../../utils/auth");
 const { handleValidationErrors } = require("../../utils/validation");
@@ -215,7 +214,7 @@ router.post("/", requireAuth, validateGroup, async (req, res, next) => {
     city,
     state,
   });
-  res.json(newGroup);
+  res.status(201).json(newGroup);
 });
 
 // Add an image to a group based onthe gorup's id
