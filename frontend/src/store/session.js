@@ -2,6 +2,7 @@ import { csrfFetch } from "./csrf";
 
 const LOAD = "user/loadSession";
 const REMOVE = "user/removeSession";
+// const RESTORE = "user/restoreSession"
 
 // regular action creator returning the current user information
 const load = (user) => {
@@ -17,6 +18,13 @@ const remove = () => {
   };
 };
 
+// const restore = (user) => {
+//     return {
+//         type: RESTORE,
+//         user
+//     }
+// }
+
 // thunk action for login;
 export const loginSession = (user) => async (dispatch) => {
   const { credential, password } = user;
@@ -30,6 +38,17 @@ export const loginSession = (user) => async (dispatch) => {
       password,
     }),
   });
+
+  if (response.ok) {
+    const user = await response.json();
+    dispatch(load(user));
+    return response;
+  }
+};
+
+// thunk action for restoring current user session;
+export const restoreUser = () => async (dispatch) => {
+  const response = await fetch("/api/session");
 
   if (response.ok) {
     const user = await response.json();
