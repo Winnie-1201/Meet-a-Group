@@ -129,7 +129,7 @@ module.exports = (sequelize, DataTypes) => {
       scopes: {
         currentUser: {
           attributes: {
-            exclude: ["username", "hashedPassword", "createdAt", "updatedAt"],
+            exclude: ["hashedPassword", "createdAt", "updatedAt"],
           },
         },
         loginUser: {
