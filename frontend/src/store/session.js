@@ -3,6 +3,7 @@ import { csrfFetch } from "./csrf";
 const LOAD = "user/loadSession";
 const REMOVE = "user/removeSession";
 // const RESTORE = "user/restoreSession"
+const ADD = "user/addSession";
 
 // regular action creator returning the current user information
 const load = (user) => {
@@ -17,6 +18,12 @@ const remove = () => {
     type: REMOVE,
   };
 };
+
+// const add = (user) => {
+//     return  {
+//         type: ADD,
+//     }
+// }
 
 // const restore = (user) => {
 //     return {
@@ -53,6 +60,30 @@ export const restoreUser = () => async (dispatch) => {
   if (response.ok) {
     const user = await response.json();
     dispatch(load(user));
+    return response;
+  }
+};
+
+// thunk action for signing up a new user
+export const signup = (user) => async (dispatch) => {
+  const { firstName, lastName, email, username, password } = user;
+  const response = await csrfFetch("/api/users", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      firstName,
+      lastName,
+      email,
+      username,
+      password,
+    }),
+  });
+
+  if (response.ok) {
+    const data = await response.json();
+    dispatch(load(data));
     return response;
   }
 };

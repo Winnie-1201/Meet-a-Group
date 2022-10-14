@@ -1,0 +1,70 @@
+/* TODO Add site wide styles */
+
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap");
+
+html,
+body,
+input,
+textarea,
+button,
+select,
+a {
+  font-family: "Open Sans";
+  font-size: 16px;
+}
+
+button {
+  border: 0;
+  border-radius: 10px;
+  background: none;
+  font-weight: 700;
+  padding: 0.5em 1em;
+  text-transform: uppercase;
+  transition: background-color 0.25s, color 0.25s;
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: default;
+}
+
+button:hover {
+  background-color: rgb(43, 226, 61);
+  color: white;
+}
+
+form {
+  flex: 0 0 400px;
+}
+
+input {
+  border: 1px grey solid;
+  /* border-bottom: 2px solid #ccc; */
+  /* box-sizing: border-box; */
+  display: block;
+  outline: 0;
+  padding: 5px;
+  margin: 5px;
+  width: 80%;
+}
+
+.login-form input {
+  margin-bottom: 2em;
+}
+
+input:focus {
+  border-bottom-color: rgb(117, 225, 133);
+}
+
+.edit-form-holder {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  border: 1px black solid;
+  padding: 3px;
+  border-radius: 5px;
+}
+
+.edit-form-holder {
+  margin-top: 20px;
+}
