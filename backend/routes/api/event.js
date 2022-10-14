@@ -273,7 +273,6 @@ router.post("/:eventId/images", requireAuth, async (req, res, next) => {
 router.post("/:eventId/attendance", requireAuth, async (req, res, next) => {
   const currUserId = req.user.id;
   const eventId = req.params.eventId;
-  // const { userId, status } = req.body;
 
   const event = await Event.findByPk(eventId);
   if (!event) {
@@ -299,7 +298,7 @@ router.post("/:eventId/attendance", requireAuth, async (req, res, next) => {
         userId: currUserId,
       },
     });
-    console.log(currAttend);
+
     if (currAttend && currAttend.toJSON().status === "pending") {
       res.status(400).json({
         message: "Attendance has already been requested",
