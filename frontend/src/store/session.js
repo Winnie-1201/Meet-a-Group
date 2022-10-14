@@ -3,7 +3,7 @@ import { csrfFetch } from "./csrf";
 const LOAD = "user/loadSession";
 const REMOVE = "user/removeSession";
 // const RESTORE = "user/restoreSession"
-const ADD = "user/addSession";
+// const ADD = "user/addSession";
 
 // regular action creator returning the current user information
 const load = (user) => {
@@ -59,6 +59,7 @@ export const restoreUser = () => async (dispatch) => {
 
   if (response.ok) {
     const user = await response.json();
+    // console.log("user in thunk!!", user);
     dispatch(load(user));
     return response;
   }
