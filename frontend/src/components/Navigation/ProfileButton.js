@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import * as sessionActions from "../../store/session";
-import "./Navigation.css";
+import "./ProfileButton.css";
 
 const ProfileButton = ({ user }) => {
   const [openMenu, setOpenMenu] = useState(false);
