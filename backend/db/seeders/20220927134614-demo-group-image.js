@@ -5,17 +5,17 @@
 const groupImages = [
   {
     groupId: 1,
-    url: "https://drive.google.com/file/d/1GVhu4nN0O_UwKBSC0jEtES-LcPLjIaJ4/view?usp=sharing",
+    url: "http://drive.google.com/uc?export=view&id=1mQx88tWT6d0t73_CN9xy8bwfvByyNHJT",
     preview: true,
   },
   {
     groupId: 2,
-    url: "https://drive.google.com/file/d/1bpiL3ALmKm3CRogwSGkqHMnRKrnm7VDm/view?usp=sharing",
+    url: "http://drive.google.com/uc?export=view&id=1FI6hmtrNCK_5EbbAS7o0Zc6lCcI1Xvr6",
     preview: true,
   },
   {
     groupId: 3,
-    url: "https://drive.google.com/file/d/1wGwNUwdMBEjM4x2MzRirh_lJ8XN7lVZB/view?usp=sharing",
+    url: "http://drive.google.com/uc?export=view&id=1wGwNUwdMBEjM4x2MzRirh_lJ8XN7lVZB",
     preview: true,
   },
   // {
