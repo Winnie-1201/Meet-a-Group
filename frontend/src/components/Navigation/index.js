@@ -21,28 +21,50 @@ const Navigation = () => {
   //   return <NavLink to="/" />;
   // };
 
-  if (currentUser) {
-    return (
-      <>
-        <NavLink to="/">Home</NavLink>
-        <ProfileButton user={currentUser} />
-      </>
-    );
-  } else {
-    return (
-      <>
-        <NavLink to="/" className="nav-link">
-          Home
-        </NavLink>
-        <NavLink to="/login" className="nav-link">
-          Log in
-        </NavLink>
-        <NavLink to="/signup" className="nav-link">
-          Sign up
-        </NavLink>
-      </>
-    );
-  }
+  return (
+    <>
+      <NavLink to="/" className="nav-link">
+        Home
+      </NavLink>
+      {currentUser && <ProfileButton user={currentUser} />}
+      <NavLink to="/login" className="nav-link">
+        Log in
+      </NavLink>
+      <NavLink to="/signup" className="nav-link">
+        Sign up
+      </NavLink>
+      {/* feature one Read: to get all groups */}
+      <NavLink to="/groups" className="nav-link">
+        Groups
+      </NavLink>
+      {/* <div>
+        <img src="http://drive.google.com/uc?export=view&id=1s2m4KUrp0d0BzPucsrYs8XXJSEU7FJ5u"></img>
+      </div> */}
+    </>
+  );
+
+  // if (currentUser) {
+  //   return (
+  //     <>
+  //       <NavLink to="/">Home</NavLink>
+  //       <ProfileButton user={currentUser} />
+  //     </>
+  //   );
+  // } else {
+  //   return (
+  //     <>
+  //       <NavLink to="/" className="nav-link">
+  //         Home
+  //       </NavLink>
+  //       <NavLink to="/login" className="nav-link">
+  //         Log in
+  //       </NavLink>
+  //       <NavLink to="/signup" className="nav-link">
+  //         Sign up
+  //       </NavLink>
+  //     </>
+  //   );
+  // }
 
   //   return (
   //     <nav className="nav-bar">
