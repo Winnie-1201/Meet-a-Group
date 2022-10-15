@@ -43,35 +43,39 @@ const LoginFormPage = ({ user }) => {
   };
 
   return (
-    <section className="edit-form-holder centered middled">
-      <form className="login-form" onSubmit={handleSubmit}>
+    // <section className="edit-form-holder centered middled">
+    <form className="login-form" onSubmit={handleSubmit}>
+      {errors.length > 0 && (
         <ul>
           {errors.map((error, idx) => (
             <li key={idx}>{error}</li>
           ))}
         </ul>
-        <label className="form-label">
-          Username or Email
-          <input
-            type="text"
-            placeholder="Username or Email"
-            value={credential}
-            onChange={getCredential}
-          />
-        </label>
-        <label className="form-label">
-          Passwor
-          <input
-            type="text"
-            placeholder="Password"
-            value={password}
-            onChange={getPassword}
-            required
-          />
-        </label>
-        <button type="submit">Log in</button>
-      </form>
-    </section>
+      )}
+      <i className="fa-solid fa-cannabis fa-xl" />
+      <h2>Log in</h2>
+      <label>
+        Username or email
+        <input
+          type="text"
+          // placeholder="Username or Email"
+          value={credential}
+          onChange={getCredential}
+        />
+      </label>
+      <label>
+        Password
+        <input
+          type="text"
+          // placeholder="Password"
+          value={password}
+          onChange={getPassword}
+          required
+        />
+      </label>
+      <button type="submit">Log in</button>
+    </form>
+    // </section>
   );
 };
 

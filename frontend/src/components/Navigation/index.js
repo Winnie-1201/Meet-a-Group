@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import * as sessionActions from "../../store/session";
 import ProfileButton from "./ProfileButton";
+import "./Navigation.css";
 
 const Navigation = () => {
   const dispatch = useDispatch();
@@ -30,9 +31,15 @@ const Navigation = () => {
   } else {
     return (
       <>
-        <NavLink to="/">Home</NavLink>
-        <NavLink to="/signup">Sign Up</NavLink>
-        <NavLink to="/login">Login</NavLink>
+        <NavLink to="/" className="nav-link">
+          Home
+        </NavLink>
+        <NavLink to="/login" className="nav-link">
+          Log in
+        </NavLink>
+        <NavLink to="/signup" className="nav-link">
+          Sign up
+        </NavLink>
       </>
     );
   }
