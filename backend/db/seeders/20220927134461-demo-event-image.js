@@ -3,17 +3,17 @@
 const eventImages = [
   {
     eventId: 1,
-    url: "image-url-1",
+    url: "https://drive.google.com/file/d/1urmijsNQnIaCXBrtHz9EV5QRvmV9kfdt/view?usp=sharing",
     preview: true,
   },
   {
     eventId: 2,
-    url: "image-url-2",
+    url: "https://drive.google.com/file/d/1QFULo-ZCutEfzNEmeaGEv8dQdLyLAbtc/view?usp=sharing",
     preview: true,
   },
   {
     eventId: 3,
-    url: "image-url-3",
+    url: "https://drive.google.com/file/d/1s2m4KUrp0d0BzPucsrYs8XXJSEU7FJ5u/view?usp=sharing",
     preview: false,
   },
   // {

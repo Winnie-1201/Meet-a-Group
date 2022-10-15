@@ -1,11 +1,11 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
-import * as sessionActions from "../../store/session";
+// import * as sessionActions from "../../store/session";
 import ProfileButton from "./ProfileButton";
 import "./Navigation.css";
 
 const Navigation = () => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const currentUser = useSelector((state) => state.session.user);
   //   let logout = false;
   //   let signup = true;
@@ -15,11 +15,11 @@ const Navigation = () => {
   //     signup = false;
   //     login = false;
   //   }
-  const handleLogout = (e) => {
-    e.preventDefault();
-    dispatch(sessionActions.logout());
-    return <NavLink to="/" />;
-  };
+  // const handleLogout = (e) => {
+  //   e.preventDefault();
+  //   dispatch(sessionActions.logout());
+  //   return <NavLink to="/" />;
+  // };
 
   if (currentUser) {
     return (
