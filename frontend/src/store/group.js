@@ -2,7 +2,7 @@ import { csrfFetch } from "./csrf";
 import { createImg } from "./image";
 
 const LOAD = "groups/getGroups";
-const LOAD_CURR = "groups/getCurrentGroups";
+// const LOAD_CURR = "groups/getCurrentGroups";
 const CREATE = "groups/createGroup";
 // const CREATE_IMG = "groups/createImage";
 const REMOVE = "groups/removeGroup";
@@ -16,12 +16,12 @@ const load = (groups) => {
   };
 };
 
-const loadCurr = (groups) => {
-  return {
-    type: LOAD_CURR,
-    groups,
-  };
-};
+// const loadCurr = (groups) => {
+//   return {
+//     type: LOAD_CURR,
+//     groups,
+//   };
+// };
 
 const create = (group) => {
   return {
@@ -62,7 +62,7 @@ export const getGroupByUserThunk = () => async (dispatch) => {
   if (response.ok) {
     const groups = await response.json();
     // console.log("get current groups thunk", groups);
-    dispatch(loadCurr(groups.Groups));
+    dispatch(load(groups.Groups));
     return groups;
   }
 };
@@ -88,8 +88,8 @@ export const createGroup = (group, image) => async (dispatch) => {
   if (response.ok) {
     const groupData = await response.json();
     const groupId = groupData.id;
-    dispatch(create(group));
-    dispatch(createImg(image, groupId));
+    await dispatch(create(group));
+    await dispatch(createImg(image, groupId));
 
     // const imgData = await newImg.json()
     console.log("create group thunk!!", groupData);
@@ -152,10 +152,7 @@ const groupsReducer = (state = initialState, action) => {
   let newState;
   switch (action.type) {
     case LOAD:
-      //   const allGroups = {};
       newState = {};
-      // console.log(action.groups);
-
       action.groups.forEach((group) => {
         // console.log(group);
         newState[group.id] = group;
@@ -168,10 +165,11 @@ const groupsReducer = (state = initialState, action) => {
       //   return { ...state, ...allGroups };
       // return { ...state, ...allGroups };
       console.log("LOAD: new state", newState);
-      return { ...state, ...newState };
-    case LOAD_CURR:
-      newState = { ...action.groups };
       return newState;
+    // case LOAD_CURR:
+    //   // action.groups is an array
+    //   newState = { ...action.groups };
+    //   return newState;
     case CREATE:
       // case EDIT:
       newState = { ...state };
@@ -187,7 +185,7 @@ const groupsReducer = (state = initialState, action) => {
         ...newState[action.group.id],
         ...action.group,
       };
-      return { ...state };
+      return newState;
     // case CREATE_IMG:
     //   newState = { ...state };
     //   newState[action.group.id] = {

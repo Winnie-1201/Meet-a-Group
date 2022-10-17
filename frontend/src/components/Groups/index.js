@@ -8,6 +8,7 @@ import "./groups.css";
 // import MyGroups from "./MyGroups";
 
 const Groups = () => {
+  const currentUser = useSelector((state) => state.session.user);
   const groups = Object.values(useSelector((state) => state.group));
 
   //   console.log("groups in compn!!!!", groups);
@@ -24,11 +25,7 @@ const Groups = () => {
       <div>
         <h2>All groups</h2>
         {groups.map((group) => (
-          <Link
-            to={`/groups/current/${group.id}`}
-            key={group.id}
-            className="nav-link"
-          >
+          <Link to={`/groups/${group.id}`} key={group.id} className="nav-link">
             <p>{group.name}</p>
             <p>About: {group.about}</p>
             <p>Type: {group.type}</p>

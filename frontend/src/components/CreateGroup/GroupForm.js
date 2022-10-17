@@ -107,7 +107,7 @@ const GroupForm = ({ group, formType }) => {
           name="isPrivate"
           //   value="private"
           value="true"
-          checked={isPrivate === true ? "checked" : ""}
+          checked={isPrivate === "true" ? "checked" : ""}
           onChange={(e) => setPrivate(e.target.value)}
         />
         private
@@ -115,7 +115,7 @@ const GroupForm = ({ group, formType }) => {
           type="radio"
           name="isPrivate"
           value="false"
-          checked={isPrivate === false ? "checked" : ""}
+          checked={isPrivate === "false" ? "checked" : ""}
           onChange={(e) => setPrivate(e.target.value)}
         />
         public

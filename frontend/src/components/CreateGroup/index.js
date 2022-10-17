@@ -12,7 +12,7 @@ const CreateGroup = () => {
     private: "",
     city: "",
     state: "",
-    // previewImage: "",
+    previewImage: "",
   };
   return <GroupForm group={group} formType="Create Group" />;
 };

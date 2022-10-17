@@ -9,7 +9,7 @@ const MyGroups = () => {
   // console.log("organizerId", userId);
   // const currentUser = useSelector((state) => state.session.user);
   const groups = Object.values(useSelector((state) => state.group));
-  // console.log("groupsss!!!!", groups);
+  console.log("groupsss!!!!", groups);
   const dispatch = useDispatch();
 
   // useEffect(() => {
@@ -40,11 +40,7 @@ const MyGroups = () => {
       <div>
         <h2>My groups</h2>
         {groups.map((group) => (
-          <Link
-            to={`/groups/current/${group.id}`}
-            key={group.id}
-            className="nav-link"
-          >
+          <Link key={group.id} to={`/groups/${group.id}`} className="nav-link">
             <span>
               <p>{group.name}</p>
               <p>About: {group.about}</p>
