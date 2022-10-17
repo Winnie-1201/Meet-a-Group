@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { createGroup } from "../../store/group";
+import { createGroup, editGroupThunk } from "../../store/group";
 import { createImg } from "../../store/image";
 // import AddImage from "./AddImage";
 
@@ -15,7 +15,7 @@ const GroupForm = ({ group, formType }) => {
   const [isPrivate, setPrivate] = useState(group.private);
   const [city, setCity] = useState(group.city);
   const [state, setState] = useState(group.state);
-  //   const [previewImg, setPreviewImg] = useState(group.previewImage);
+  const [previewImg, setPreviewImg] = useState(group.previewImage);
 
   const dispatch = useDispatch();
 
@@ -31,10 +31,23 @@ const GroupForm = ({ group, formType }) => {
       private: isPrivate,
       city,
       state,
-      //   previewImage: previewImg,
+      previewImage: previewImg,
     };
-    const newGroup = await dispatch(createGroup(group));
-    history.push(`/groups/${newGroup.id}`);
+    let img = {};
+    if (previewImg.length > 0) {
+      img = {
+        // groupId: newGroup.id,
+        url: previewImg,
+        preview: true,
+      };
+    }
+
+    const newGroup =
+      formType === "Create Group"
+        ? await dispatch(createGroup(group, img))
+        : await dispatch(editGroupThunk(group));
+
+    if (newGroup) history.push(`/groups/current`);
 
     // console.log(group);
     // const newGroup = await dispatch(createGroup(group));
@@ -94,7 +107,7 @@ const GroupForm = ({ group, formType }) => {
           name="isPrivate"
           //   value="private"
           value="true"
-          checked={isPrivate === "true" ? "checked" : ""}
+          checked={isPrivate === true ? "checked" : ""}
           onChange={(e) => setPrivate(e.target.value)}
         />
         private
@@ -102,19 +115,19 @@ const GroupForm = ({ group, formType }) => {
           type="radio"
           name="isPrivate"
           value="false"
-          checked={isPrivate === "false" ? "checked" : ""}
+          checked={isPrivate === false ? "checked" : ""}
           onChange={(e) => setPrivate(e.target.value)}
         />
         public
       </label>
-      {/* <label>
+      <label>
         Preview image
         <input
           type="text"
           value={previewImg}
           onChange={(e) => setPreviewImg(e.target.value)}
         />
-      </label> */}
+      </label>
       {/* <AddImage /> */}
       <label>
         City

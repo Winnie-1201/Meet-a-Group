@@ -5,6 +5,7 @@ import GroupForm from "./GroupForm";
 const EditGroup = () => {
   const { groupId } = useParams();
   const group = useSelector((state) => state.group)[groupId];
+  //   console.log(group);
   // let report;
   // if (isNaN(Number(reportId)))
   //   report = reports.find((report) => report.id === reportId);

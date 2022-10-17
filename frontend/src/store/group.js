@@ -1,8 +1,10 @@
 import { csrfFetch } from "./csrf";
+import { createImg } from "./image";
 
 const LOAD = "groups/getGroups";
+const LOAD_CURR = "groups/getCurrentGroups";
 const CREATE = "groups/createGroup";
-const CREATE_IMG = "groups/createImage";
+// const CREATE_IMG = "groups/createImage";
 const REMOVE = "groups/removeGroup";
 const EDIT = "groups/editGroup";
 
@@ -10,6 +12,13 @@ const EDIT = "groups/editGroup";
 const load = (groups) => {
   return {
     type: LOAD,
+    groups,
+  };
+};
+
+const loadCurr = (groups) => {
+  return {
+    type: LOAD_CURR,
     groups,
   };
 };
@@ -35,8 +44,6 @@ const edit = (group) => {
   };
 };
 
-// the action creator for creating a new gorup;
-
 // thunk action creator for loading all groups;
 export const getGroups = () => async (dispatch) => {
   const response = await fetch("/api/groups");
@@ -48,8 +55,20 @@ export const getGroups = () => async (dispatch) => {
   }
 };
 
+// thunk action creator: get group by userid;
+export const getGroupByUserThunk = () => async (dispatch) => {
+  const response = await csrfFetch("/api/groups/current");
+
+  if (response.ok) {
+    const groups = await response.json();
+    // console.log("get current groups thunk", groups);
+    dispatch(loadCurr(groups.Groups));
+    return groups;
+  }
+};
+
 // thunk action creator for creating a group;
-export const createGroup = (group) => async (dispatch) => {
+export const createGroup = (group, image) => async (dispatch) => {
   const response = await csrfFetch("/api/groups", {
     method: "POST",
     headers: {
@@ -68,13 +87,14 @@ export const createGroup = (group) => async (dispatch) => {
 
   if (response.ok) {
     const groupData = await response.json();
-    // const groupId = groupData.id;
-    // const img = await csrfFetch("/api/groups")
+    const groupId = groupData.id;
+    dispatch(create(group));
+    dispatch(createImg(image, groupId));
+
     // const imgData = await newImg.json()
     console.log("create group thunk!!", groupData);
     // console.log("create image thunk", imgData);
     // groupData.
-    dispatch(create(groupData));
 
     return groupData;
   }
@@ -149,8 +169,11 @@ const groupsReducer = (state = initialState, action) => {
       // return { ...state, ...allGroups };
       console.log("LOAD: new state", newState);
       return { ...state, ...newState };
+    case LOAD_CURR:
+      newState = { ...action.groups };
+      return newState;
     case CREATE:
-    case EDIT:
+      // case EDIT:
       newState = { ...state };
       // const newGroup = action.group;
       // console.log(newGroup);
@@ -158,7 +181,13 @@ const groupsReducer = (state = initialState, action) => {
 
       console.log("CREATE new state", newState);
       return newState;
-
+    case EDIT:
+      newState = { ...state };
+      newState[action.group.id] = {
+        ...newState[action.group.id],
+        ...action.group,
+      };
+      return { ...state };
     // case CREATE_IMG:
     //   newState = { ...state };
     //   newState[action.group.id] = {

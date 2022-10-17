@@ -122,7 +122,7 @@ router.get("/", async (req, res, next) => {
 
     const image = await GroupImage.findOne({
       where: {
-        id,
+        groupId: id,
         preview: true,
       },
     });
@@ -235,13 +235,13 @@ router.post("/:groupId/images", requireAuth, async (req, res, next) => {
       preview,
     });
 
-    newImage = newImage.toJSON();
-    let result = {};
-    result.id = newImage.id;
-    result.url = newImage.url;
-    result.preview = newImage.preview;
+    // newImage = newImage.toJSON();
+    // let result = {};
+    // result.id = newImage.id;
+    // result.url = newImage.url;
+    // result.preview = newImage.preview;
 
-    res.json(result);
+    res.json(newImage);
   }
 });
 
