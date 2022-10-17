@@ -1,27 +1,10 @@
 import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
-import { Route } from "react-router-dom";
-// import * as sessionActions from "../../store/session";
 import ProfileButton from "./ProfileButton";
 import "./Navigation.css";
-import Home from "../Home";
 
 const Navigation = ({ isLoaded }) => {
-  // const dispatch = useDispatch();
   const currentUser = useSelector((state) => state.session.user);
-  //   let logout = false;
-  //   let signup = true;
-  //   let login = true;
-  //   if (currentUser) {
-  //     logout = true;
-  //     signup = false;
-  //     login = false;
-  //   }
-  // const handleLogout = (e) => {
-  //   e.preventDefault();
-  //   dispatch(sessionActions.logout());
-  //   return <NavLink to="/" />;
-  // };
 
   return (
     <>
@@ -42,12 +25,6 @@ const Navigation = ({ isLoaded }) => {
           </NavLink>
         </>
       )}
-
-      {/* feature one Read: to get all groups */}
-
-      {/* <div>
-        <img src="http://drive.google.com/uc?export=view&id=1s2m4KUrp0d0BzPucsrYs8XXJSEU7FJ5u"></img>
-      </div> */}
     </>
   );
 
