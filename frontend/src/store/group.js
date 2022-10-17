@@ -50,7 +50,7 @@ export const getGroups = () => async (dispatch) => {
 
 // thunk action creator for creating a group;
 export const createGroup = (group) => async (dispatch) => {
-  const newGroup = await csrfFetch("/api/groups", {
+  const response = await csrfFetch("/api/groups", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -66,8 +66,10 @@ export const createGroup = (group) => async (dispatch) => {
   //   body: JSON.stringify(image),
   // });
 
-  if (newGroup.ok) {
-    const groupData = await newGroup.json();
+  if (response.ok) {
+    const groupData = await response.json();
+    // const groupId = groupData.id;
+    // const img = await csrfFetch("/api/groups")
     // const imgData = await newImg.json()
     console.log("create group thunk!!", groupData);
     // console.log("create image thunk", imgData);
@@ -131,7 +133,7 @@ const groupsReducer = (state = initialState, action) => {
   switch (action.type) {
     case LOAD:
       //   const allGroups = {};
-      newState = { ...state };
+      newState = {};
       // console.log(action.groups);
 
       action.groups.forEach((group) => {
@@ -146,7 +148,7 @@ const groupsReducer = (state = initialState, action) => {
       //   return { ...state, ...allGroups };
       // return { ...state, ...allGroups };
       console.log("LOAD: new state", newState);
-      return newState;
+      return { ...state, ...newState };
     case CREATE:
     case EDIT:
       newState = { ...state };

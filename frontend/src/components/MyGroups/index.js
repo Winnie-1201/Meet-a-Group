@@ -1,7 +1,7 @@
-import { useEffect } from "react";
+// import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { getGroups } from "../../store/group";
+// import { getGroups } from "../../store/group";
 
 const MyGroups = () => {
   // const { userId } = useParams();
@@ -15,9 +15,9 @@ const MyGroups = () => {
   //   dispatch(getCurrGroups());
   // }, [dispatch]);
   // does not work
-  useEffect(() => {
-    dispatch(getGroups());
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(getGroups());
+  // }, [dispatch]);
 
   if (!groups) return null;
   const myGroups = groups.filter(
