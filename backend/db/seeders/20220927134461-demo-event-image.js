@@ -3,18 +3,18 @@
 const eventImages = [
   {
     eventId: 1,
-    url: "https://drive.google.com/file/d/1urmijsNQnIaCXBrtHz9EV5QRvmV9kfdt/view?usp=sharing",
+    url: "http://drive.google.com/uc?export=view&id=1BIlbjRI8loGaQD3uPczIZeKqk5AY0-Z4",
     preview: true,
   },
   {
     eventId: 2,
-    url: "https://drive.google.com/file/d/1QFULo-ZCutEfzNEmeaGEv8dQdLyLAbtc/view?usp=sharing",
+    url: "http://drive.google.com/uc?export=view&id=1KKIkoTmPVyWA8U7j8gBJn7WGNJR9l4HK",
     preview: true,
   },
   {
     eventId: 3,
-    url: "https://drive.google.com/file/d/1s2m4KUrp0d0BzPucsrYs8XXJSEU7FJ5u/view?usp=sharing",
-    preview: false,
+    url: "http://drive.google.com/uc?export=view&id=1urmijsNQnIaCXBrtHz9EV5QRvmV9kfdt",
+    preview: true,
   },
   // {
   //   eventId: 1,

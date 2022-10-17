@@ -14,3 +14,8 @@ html {
   font-size: 18px;
   color: rgb(52, 50, 50);
 }
+
+img {
+  width: 150px;
+  height: 120px;
+}

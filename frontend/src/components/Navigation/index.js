@@ -1,10 +1,12 @@
 import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
+import { Route } from "react-router-dom";
 // import * as sessionActions from "../../store/session";
 import ProfileButton from "./ProfileButton";
 import "./Navigation.css";
+import Home from "../Home";
 
-const Navigation = () => {
+const Navigation = ({ isLoaded }) => {
   // const dispatch = useDispatch();
   const currentUser = useSelector((state) => state.session.user);
   //   let logout = false;
@@ -21,28 +23,56 @@ const Navigation = () => {
   //   return <NavLink to="/" />;
   // };
 
-  if (currentUser) {
-    return (
-      <>
-        <NavLink to="/">Home</NavLink>
-        <ProfileButton user={currentUser} />
-      </>
-    );
-  } else {
-    return (
-      <>
-        <NavLink to="/" className="nav-link">
-          Home
-        </NavLink>
-        <NavLink to="/login" className="nav-link">
-          Log in
-        </NavLink>
-        <NavLink to="/signup" className="nav-link">
-          Sign up
-        </NavLink>
-      </>
-    );
-  }
+  return (
+    <>
+      <NavLink to="/" className="nav-link">
+        Home
+      </NavLink>
+      <NavLink to="/groups" className="nav-link">
+        Groups
+      </NavLink>
+      {isLoaded && currentUser && <ProfileButton user={currentUser} />}
+      {isLoaded && !currentUser && (
+        <>
+          <NavLink to="/login" className="nav-link">
+            Log in
+          </NavLink>
+          <NavLink to="/signup" className="nav-link">
+            Sign up
+          </NavLink>
+        </>
+      )}
+
+      {/* feature one Read: to get all groups */}
+
+      {/* <div>
+        <img src="http://drive.google.com/uc?export=view&id=1s2m4KUrp0d0BzPucsrYs8XXJSEU7FJ5u"></img>
+      </div> */}
+    </>
+  );
+
+  // if (currentUser) {
+  //   return (
+  //     <>
+  //       <NavLink to="/">Home</NavLink>
+  //       <ProfileButton user={currentUser} />
+  //     </>
+  //   );
+  // } else {
+  //   return (
+  //     <>
+  //       <NavLink to="/" className="nav-link">
+  //         Home
+  //       </NavLink>
+  //       <NavLink to="/login" className="nav-link">
+  //         Log in
+  //       </NavLink>
+  //       <NavLink to="/signup" className="nav-link">
+  //         Sign up
+  //       </NavLink>
+  //     </>
+  //   );
+  // }
 
   //   return (
   //     <nav className="nav-bar">

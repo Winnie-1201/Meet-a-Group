@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
+import { Link, NavLink, Redirect } from "react-router-dom";
 import * as sessionActions from "../../store/session";
+
 import "./ProfileButton.css";
 
 const ProfileButton = ({ user }) => {
@@ -29,7 +31,12 @@ const ProfileButton = ({ user }) => {
     dispatch(sessionActions.logout());
   };
 
-  //   console.log(user);
+  // const handleGroup = (e) => {
+  //   e.preventDefault();
+  //   <Redirect to="/api/groups/mygroup" />;
+  // };
+
+  // console.log("this is the userId", user.id);
   return (
     <>
       <button onClick={onClick}>
@@ -39,9 +46,19 @@ const ProfileButton = ({ user }) => {
         <ul>
           <li>{user.username}</li>
           <li>{user.email}</li>
-          <button onClick={handleLogout}>Log Out</button>
+          <li>
+            <NavLink exact to={`/groups/current`}>
+              My groups
+            </NavLink>
+          </li>
+          <li>
+            <button onClick={handleLogout}>Log Out</button>
+          </li>
         </ul>
       )}
+      {/* <Route path="/groups/:organizerId/mygoups"> */}
+      {/* <MyGroups user={user} /> */}
+      {/* </Route> */}
     </>
   );
 };
