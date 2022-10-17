@@ -39,7 +39,11 @@ const MyGroups = () => {
       <div>
         <h2>My groups</h2>
         {myGroups.map((group) => (
-          <Link to={`/groups/${group.id}`} key={group.id} className="nav-link">
+          <Link
+            to={`/groups/current/${group.id}`}
+            key={group.id}
+            className="nav-link"
+          >
             <span>
               <p>{group.name}</p>
               <p>About: {group.about}</p>

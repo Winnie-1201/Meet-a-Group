@@ -34,7 +34,7 @@ function App() {
           <Route exact path="/groups/current/new">
             <CreateGroup />
           </Route>
-          <Route exact path="/groups/:groupId">
+          <Route exact path="/groups/current/:groupId">
             <GroupDetails />
           </Route>
           <Route exact path="/groups/current/:groupId/edit">
