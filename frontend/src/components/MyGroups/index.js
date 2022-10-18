@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { getGroupByUserThunk } from "../../store/group";
-// import { getGroups } from "../../store/group";
 
 const MyGroups = () => {
   // const { userId } = useParams();
@@ -12,10 +11,6 @@ const MyGroups = () => {
   console.log("groupsss!!!!", groups);
   const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   dispatch(getCurrGroups());
-  // }, [dispatch]);
-  // does not work
   useEffect(() => {
     dispatch(getGroupByUserThunk());
   }, [dispatch]);
@@ -33,8 +28,6 @@ const MyGroups = () => {
       </>
     );
 
-  // console.log("groupsss!!!!", myGroups);
-
   return (
     <>
       <div>
@@ -47,7 +40,6 @@ const MyGroups = () => {
               <p>Type: {group.type}</p>
               <img src={`${group.previewImage}`} />
             </span>
-            {/* <button onClick={() => dispatch(removeGroup(group))}>Delete</button> */}
           </Link>
         ))}
       </div>

@@ -1,8 +1,12 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory, useParams } from "react-router-dom";
+<<<<<<< HEAD
 import { getGroupById, removeGroup } from "../../store/group";
 // import { removeImgThunk } from "../../store/image";
+=======
+import { removeGroup } from "../../store/group";
+>>>>>>> 421270065b87b61ba3a4540ded43f7ef040c45e9
 
 const GroupDetails = () => {
   const { groupId } = useParams();
@@ -24,6 +28,7 @@ const GroupDetails = () => {
 
   // const history = useHistory();
 
+<<<<<<< HEAD
   // then do the delete and edit here!!
   // const handleDelete = async (e) => {
   //   e.preventDefault();
@@ -41,6 +46,9 @@ const GroupDetails = () => {
 
   // if (!group) return history.push("/groups");
   // group = Object.values(group)[0];
+=======
+  if (!group) return history.push("/groups");
+>>>>>>> 421270065b87b61ba3a4540ded43f7ef040c45e9
 
   return (
     <>

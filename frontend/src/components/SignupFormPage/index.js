@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import * as sessionActions from "../../store/session";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
@@ -6,7 +6,6 @@ import "./SignupFormPage.css";
 
 const SignupFormPage = ({ user }) => {
   const dispatch = useDispatch();
-  //   const history = useHistory();
   const sessionUser = useSelector((state) => state.session.user);
 
   const [firstName, setFirstName] = useState("");
@@ -52,14 +51,6 @@ const SignupFormPage = ({ user }) => {
     //   history.push("/");
     // }
   };
-
-  //   useEffect(() => {
-  //     const error = [];
-  //     if (confirm !== password) {
-  //       error.push("Please enter the same password!");
-  //     }
-  //     setErrors(error);
-  //   }, [confirm]);
 
   return (
     // <section className="edit-form-holder centered middled">
