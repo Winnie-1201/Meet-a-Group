@@ -5,7 +5,7 @@ import "./Navigation.css";
 
 const Navigation = ({ isLoaded }) => {
   const currentUser = useSelector((state) => state.session.user);
-
+  console.log("getting in the navigation component======================");
   return (
     <>
       <NavLink to="/" className="nav-link">
@@ -13,6 +13,9 @@ const Navigation = ({ isLoaded }) => {
       </NavLink>
       <NavLink to="/groups" className="nav-link">
         Groups
+      </NavLink>
+      <NavLink to="/events" className="nav-link">
+        Events
       </NavLink>
       {isLoaded && currentUser && <ProfileButton user={currentUser} />}
       {isLoaded && !currentUser && (

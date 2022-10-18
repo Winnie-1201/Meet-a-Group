@@ -1,48 +1,37 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useHistory, useParams } from "react-router-dom";
-
-import { getGroupById, removeGroup } from "../../store/group";
-// import { removeImgThunk } from "../../store/image";
-
-import { removeGroup } from "../../store/group";
+import { Link, useParams } from "react-router-dom";
+import { getEventByGroup } from "../../store/event";
+import { clear, getGroupById, removeGroup } from "../../store/group";
 
 const GroupDetails = () => {
   const { groupId } = useParams();
   const dispatch = useDispatch();
 
   useEffect(() => {
+    dispatch(getEventByGroup(groupId));
     dispatch(getGroupById(groupId));
-    // helper(groupId);
+    return () => dispatch(clear());
   }, [dispatch]);
 
   // const group = useSelector((state) => state.group)[groupId];
   const currentUser = useSelector((state) => state.session.user);
   const group = useSelector((state) => state.group)[groupId];
-  console.log("the group in groupdetails", group);
+  console.log(
+    "the group in groupdetails in GroupDetails component====================",
+    group
+  );
 
-  if (!group) return null;
+  const events = Object.values(useSelector((state) => state.event));
+  console.log(
+    "here are all the events in GroupDetaisl comp===========",
+    events
+  );
+  // if (!group) return null;
   if (!group.Organizer) return null;
-  //   console.log("the group", group);
-
-  // const history = useHistory();
-  // then do the delete and edit here!!
-  // const handleDelete = async (e) => {
-  //   e.preventDefault();
-
-  //   const deleted = await dispatch(removeGroup(group.id));
-  //   console.log("the deleted item is:", deleted);
-  //   // history.push("/groups/current");
-  //   // dispatch(removeImgThunk())
-  //   if (deleted.length > 0) return history.push("/groups/current");
-  // };
-
-  //   const handleUpdate = async (e) => {
-  //     e.preventDefault();
-  //   };
-
-  if (!group) return history.push("/groups");
-
+  let isEvent = false;
+  // if (!events) return null;
+  if (!events) isEvent = true;
   return (
     <>
       <div>
@@ -58,6 +47,29 @@ const GroupDetails = () => {
             <button onClick={() => dispatch(removeGroup(groupId))}>
               Delete
             </button>
+          </>
+        )}
+      </div>
+      <div>
+        <h3>Incoming events:</h3>
+        {events?.map((event) => (
+          <div key={event.id}>
+            <Link to={`/events/${event.id}`} className="nav-link">
+              <h2>{event.name}</h2>
+              <p>{event.Venue?.city}</p>
+              <img src={event?.previewImage} />
+            </Link>
+          </div>
+        ))}
+        {isEvent && (
+          <>
+            <p>There is no event in your group yet</p>
+            <Link to="/events/new">Create your first event!</Link>
+          </>
+        )}
+        {currentUser && currentUser.id === group.organizerId && (
+          <>
+            <Link to={`/events/group/${group.id}/new`}>Create new event</Link>
           </>
         )}
       </div>

@@ -5,6 +5,7 @@ import GroupForm from "./GroupForm";
 const EditGroup = () => {
   const { groupId } = useParams();
   const group = useSelector((state) => state.group)[groupId];
+  console.log("group details in edit group comp: ", group);
   return <GroupForm group={group} formType="Update Group" />;
 };
 

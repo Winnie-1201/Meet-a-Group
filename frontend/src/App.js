@@ -10,6 +10,11 @@ import MyGroups from "./components/MyGroups";
 import CreateGroup from "./components/CreateGroup";
 import GroupDetails from "./components/CreateGroup/GroupDetails";
 import EditGroup from "./components/CreateGroup/EditGroupForm";
+import Events from "./components/Events";
+import CreateEvent from "./components/CreateEvent";
+import MyEvents from "./components/MyEvents";
+import EventDetails from "./components/CreateEvent/EventDetails";
+import EditEvent from "./components/CreateEvent/EditEvent";
 
 function App() {
   const dispatch = useDispatch();
@@ -29,6 +34,24 @@ function App() {
           <Route path="/signup">
             <SignupFormPage />
           </Route>
+          <Route exact path="/groups">
+            <Groups />
+          </Route>
+          <Route exact path="/events">
+            <Events />
+          </Route>
+          <Route exact path="/events/group/:groupId/new">
+            <CreateEvent />
+          </Route>
+          {/* <Route exact path="/events/groups/:groupId">
+            <MyEvents />
+          </Route> */}
+          <Route exact path="/events/:eventId/edit">
+            <EditEvent />
+          </Route>
+          <Route exact path="/events/:eventId">
+            <EventDetails />
+          </Route>
           <Route exact path="/groups/current">
             <MyGroups />
           </Route>
@@ -40,9 +63,6 @@ function App() {
           </Route>
           <Route exact path="/groups/current/:groupId/edit">
             <EditGroup />
-          </Route>
-          <Route path="/groups">
-            <Groups />
           </Route>
         </Switch>
       )}

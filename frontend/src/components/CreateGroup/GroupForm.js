@@ -13,29 +13,35 @@ const GroupForm = ({ group, formType }) => {
   const [isPrivate, setPrivate] = useState(group.private);
   const [city, setCity] = useState(group.city);
   const [state, setState] = useState(group.state);
-  const [previewImg, setPreviewImg] = useState(group.previewImage);
+  const [previewImage, setPreviewImg] = useState(group.previewImage);
 
+  // let image =
+  //   formType === "Create Group" ? previewImg : group.GroupImages[0].url;
+
+  let update = formType === "Create Group" ? true : false;
+  // previewImg = formType === "Create Group" ? "" : group.GroupImages[0].url;
   const dispatch = useDispatch();
 
+  console.log("enter the GroupForm component======================");
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // let priv = isPrivate === "Private" ? true : false;
+
     group = {
       ...group,
-      //   organizerId,
       name,
       about,
       type,
       private: isPrivate,
       city,
       state,
-      previewImage: previewImg,
+      previewImage,
     };
     let img = {};
-    if (previewImg.length > 0) {
+    if (previewImage.length > 0) {
       img = {
-        // groupId: newGroup.id,
-        url: previewImg,
+        url: previewImage,
         preview: true,
       };
     }
@@ -45,33 +51,20 @@ const GroupForm = ({ group, formType }) => {
         ? await dispatch(createGroup(group, img))
         : await dispatch(editGroupThunk(group));
 
-    if (newGroup) history.push(`/groups/current`);
-
-    // console.log(group);
-    // const newGroup = await dispatch(createGroup(group));
-    // console.log("this is the new group", newGroup);
-    // if (previewImg.length > 0 && newGroup) {
-    //   const img = {
-    //     groupId: newGroup.id,
-    //     url: previewImg,
-    //     preview: true,
-    //   };
-    //   const newImg = await dispatch(createImg(img));
-    //   console.log("this is the new img", newImg);
-    //   if (newImg && newGroup) history.push(`/groups/current/${newGroup.id}`);
-    // }
-    // console.log("the new group in comp", newGroup);
-
-    // can change it to the new group page later
-    // if (newGroup) history.push(`/groups/current/${newGroup.id}`);
+    console.log(
+      "here is the new group created in CreateForm component=================",
+      newGroup
+    );
+    if (newGroup) return history.push(`/groups/current`);
   };
+
   return (
     <form onSubmit={handleSubmit} className="login-form">
       <h2>{formType}</h2>
       <label>
         Group name
         <input
-          typr="text"
+          type="text"
           value={name}
           onChange={(e) => setName(e.target.value)}
         />
@@ -79,7 +72,7 @@ const GroupForm = ({ group, formType }) => {
       <label>
         About
         <input
-          typr="text"
+          type="text"
           value={about}
           onChange={(e) => setAbout(e.target.value)}
         />
@@ -100,37 +93,52 @@ const GroupForm = ({ group, formType }) => {
       </label>
       <label>
         Private or public?
-        <input
+        <select
+          name="isPrivate"
+          value={isPrivate}
+          onChange={(e) => setPrivate(e.target.value)}
+        >
+          <option value="" disabled>
+            Please select...
+          </option>
+          <option>Private</option>
+          <option>Public</option>
+        </select>
+        {/* <input
           type="radio"
           name="isPrivate"
           //   value="private"
-          value="true"
-          checked={isPrivate === "true" ? "checked" : ""}
+          value="Private"
+          checked={isPrivate === "Private" ? "checked" : ""}
           onChange={(e) => setPrivate(e.target.value)}
         />
         private
         <input
           type="radio"
           name="isPrivate"
-          value="false"
-          checked={isPrivate === "false" ? "checked" : ""}
+          value="Public"
+          checked={isPrivate === "Public" ? "checked" : ""}
           onChange={(e) => setPrivate(e.target.value)}
         />
-        public
+        public */}
+        {/* NOTE!!!! */}
+        {/* For some reason, I can't get the preview imgae link when I update */}
       </label>
-      <label>
-        Preview image
-        <input
-          type="text"
-          value={previewImg}
-          onChange={(e) => setPreviewImg(e.target.value)}
-        />
-      </label>
+      {update && (
+        <label>
+          Preview image
+          <input
+            type="text"
+            value={previewImage}
+            onChange={(e) => setPreviewImg(e.target.value)}
+          />
+        </label>
+      )}
       {/* <AddImage /> */}
       <label>
         City
         <input
-          typr="text"
+          type="text"
           value={city}
           onChange={(e) => setCity(e.target.value)}
         />
@@ -138,7 +146,7 @@ const GroupForm = ({ group, formType }) => {
       <label>
         State
         <input
-          typr="text"
+          type="text"
           value={state}
           onChange={(e) => setState(e.target.value)}
         />

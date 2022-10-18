@@ -8,18 +8,16 @@ const MyGroups = () => {
   // console.log("organizerId", userId);
   // const currentUser = useSelector((state) => state.session.user);
   const groups = Object.values(useSelector((state) => state.group));
-  console.log("groupsss!!!!", groups);
+  console.log(
+    "here is all my groups in MyGroups component!!!!=======================",
+    groups
+  );
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getGroupByUserThunk());
   }, [dispatch]);
 
-  // if (!groups) return null;
-  // const myGroups = groups.filter(
-  //   (group) => group.organizerId === currentUser.id
-  // );
-  // console.log("groupsss!!!!", myGroups);
   if (!groups.length > 0)
     return (
       <>
