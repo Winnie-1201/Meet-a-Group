@@ -1,11 +1,9 @@
 // import { useEffect } from "react";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
-
 import { useDispatch, useSelector } from "react-redux";
 import { getGroups } from "../../store/group";
 import "./groups.css";
-// import MyGroups from "./MyGroups";
 
 const Groups = () => {
   // const currentUser = useSelector((state) => state.session.user);
@@ -33,9 +31,6 @@ const Groups = () => {
           </Link>
         ))}
       </div>
-      {/* <Route exact path="/groups/:organizerId/mygoups"> */}
-      {/* <MyGroups /> */}
-      {/* </Route> */}
     </>
   );
 };

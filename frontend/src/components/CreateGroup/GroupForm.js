@@ -2,8 +2,6 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { createGroup, editGroupThunk } from "../../store/group";
-import { createImg } from "../../store/image";
-// import AddImage from "./AddImage";
 
 const GroupForm = ({ group, formType }) => {
   const history = useHistory();
