@@ -4,7 +4,6 @@ import { createImg } from "./image";
 const LOAD = "groups/getGroups";
 const LOAD_ONE = "groups/getOneGroup";
 const CREATE = "groups/createGroup";
-// const CREATE_IMG = "groups/createImage";
 const REMOVE = "groups/removeGroup";
 const EDIT = "groups/editGroup";
 
@@ -16,6 +15,7 @@ const load = (groups) => {
   };
 };
 
+// load group by id
 const loadOne = (group) => {
   return {
     type: LOAD_ONE,
@@ -23,6 +23,7 @@ const loadOne = (group) => {
   };
 };
 
+// create a group
 const create = (group) => {
   return {
     type: CREATE,
@@ -30,6 +31,7 @@ const create = (group) => {
   };
 };
 
+// remove a group by id
 const remove = (groupId) => {
   return {
     type: REMOVE,
@@ -37,6 +39,7 @@ const remove = (groupId) => {
   };
 };
 
+// edit a group
 const edit = (group) => {
   return {
     type: EDIT,
@@ -49,7 +52,7 @@ export const getGroups = () => async (dispatch) => {
   const response = await fetch("/api/groups");
   if (response.ok) {
     const groups = await response.json();
-    console.log("groups in thunk", groups.Groups);
+    console.log("getting all groups in thunk", groups.Groups);
     dispatch(load(groups.Groups));
     return groups;
   }
@@ -61,7 +64,7 @@ export const getGroupById = (groupId) => async (dispatch) => {
 
   if (response.ok) {
     const group = await response.json();
-    console.log("group details in thunk", group);
+    console.log("getting group details by id in thunk", group);
     await dispatch(loadOne(group));
     return group;
   }
@@ -73,7 +76,7 @@ export const getGroupByUserThunk = () => async (dispatch) => {
 
   if (response.ok) {
     const groups = await response.json();
-    // console.log("get current groups thunk", groups);
+    console.log("getting current user's groups in thunk", groups);
     await dispatch(load(groups.Groups));
     return groups;
   }
@@ -89,25 +92,13 @@ export const createGroup = (group, image) => async (dispatch) => {
     body: JSON.stringify(group),
   });
 
-  // const newImg = await csrfFetch(`/groups/${group.id}/images`, {
-  //   method: "POST",
-  //   headers: {
-  //     "Content-Type": "application/json",
-  //   },
-  //   body: JSON.stringify(image),
-  // });
-
   if (response.ok) {
     const groupData = await response.json();
     const groupId = groupData.id;
+    console.log("creating a new group thunk!!", groupData);
     await dispatch(create(group));
+    console.log("adding the img to the new created group in thunk", image);
     await dispatch(createImg(image, groupId));
-
-    // const imgData = await newImg.json()
-    console.log("create group thunk!!", groupData);
-    // console.log("create image thunk", imgData);
-    // groupData.
-
     return groupData;
   }
 };
@@ -124,6 +115,7 @@ export const editGroupThunk = (group) => async (dispatch) => {
 
   if (response.ok) {
     const data = await response.json();
+    console.log("editing group in thunk", data);
     dispatch(edit(data));
     return data;
   }
@@ -135,26 +127,12 @@ export const removeGroup = (groupId) => async (dispatch) => {
     method: "DELETE",
   });
   if (response.ok) {
-    // const { id: deletedItemId } = await response.json();
     const data = await response.json();
-    // console.log("this is deleting in thunk:", response.ok);
-    // console.log("this is the return value from delete thunk", data);
+    console.log("deleting group by id in thunk", data);
     dispatch(remove(groupId));
-
     return data;
   }
 };
-
-// thunk action creator for loading current user's group
-// export const getCurrGroups = () => async (dispatch) => {
-//   const response = await csrfFetch("/api/groups/current");
-//   if (response.ok) {
-//     const groups = await response.json();
-//     console.log("groups of current user in thunk", groups);
-//     dispatch(load(groups.Groups));
-//     return groups;
-//   }
-// };
 
 // defined the initial state
 const initialState = {};
@@ -166,34 +144,19 @@ const groupsReducer = (state = initialState, action) => {
     case LOAD:
       newState = {};
       action.groups.forEach((group) => {
-        // console.log(group);
         newState[group.id] = group;
       });
-      // const allGroups = action.groups;
-      //   action.groups.forEach((group) => {
-      //     allGroups[group.organizerId] = group;
-      //   });
-      // console.log("grouppppp", { ...state, ...allGroups });
-      //   return { ...state, ...allGroups };
-      // return { ...state, ...allGroups };
-      console.log("LOAD: new state", newState);
+      console.log("LOAD: new state in reducer", newState);
       return newState;
     case LOAD_ONE:
       newState = {};
       newState[action.group.id] = action.group;
+      console.log("loading one group: new state in reducer", newState);
       return newState;
-    // case LOAD_CURR:
-    //   // action.groups is an array
-    //   newState = { ...action.groups };
-    //   return newState;
     case CREATE:
-      // case EDIT:
       newState = {};
-      // const newGroup = action.group;
-      // console.log(newGroup);
       newState[action.group.id] = action.group;
-
-      console.log("CREATE new state", newState);
+      console.log("CREATE new state in reducer", newState);
       return newState;
     case EDIT:
       newState = { ...state };
@@ -201,17 +164,12 @@ const groupsReducer = (state = initialState, action) => {
         ...newState[action.group.id],
         ...action.group,
       };
+      console.log("editing new state in reducer", newState);
       return newState;
-    // case CREATE_IMG:
-    //   newState = { ...state };
-    //   newState[action.group.id] = {
-    //     ...newState[action.group.id],
-    //     ...action.imgage,
-    //   };
-    //   return newState;
     case REMOVE:
       newState = { ...state };
       delete newState[action.groupId];
+      console.log("removing new state in reducer", newState);
       return newState;
     default:
       return state;

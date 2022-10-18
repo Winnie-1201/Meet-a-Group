@@ -5,7 +5,7 @@ import "./Navigation.css";
 
 const Navigation = ({ isLoaded }) => {
   const currentUser = useSelector((state) => state.session.user);
-
+  console.log("getting in the navigation component======================");
   return (
     <>
       <NavLink to="/" className="nav-link">

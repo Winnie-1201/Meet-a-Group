@@ -3,7 +3,7 @@ import { csrfFetch } from "./csrf";
 const CREATE_IMG = "groups/createImage";
 const REMOVE_IMG = "groups/removeImage";
 
-const createImgage = (image, groupId) => {
+const create = (image, groupId) => {
   return {
     type: CREATE_IMG,
     image,
@@ -11,7 +11,7 @@ const createImgage = (image, groupId) => {
   };
 };
 
-const removeImg = (imgId) => {
+const remove = (imgId) => {
   return {
     type: REMOVE_IMG,
     imgId,
@@ -30,7 +30,7 @@ export const createImg = (image, groupId) => async (dispatch) => {
   if (response.ok) {
     const img = await response.json();
     console.log("create image thunk", img);
-    dispatch(createImgage(img, groupId));
+    dispatch(create(img, groupId));
     return img;
   }
 };
@@ -40,7 +40,7 @@ export const removeImgThunk = (imgId) => async (dispatch) => {
     method: "DELETE",
   });
   if (response.ok) {
-    dispatch(removeImg(imgId));
+    dispatch(remove(imgId));
     return imgId;
   }
 };
@@ -53,7 +53,7 @@ const imagesReducer = (state = initialState, action) => {
   switch (action.type) {
     case CREATE_IMG:
       newState = { ...state };
-      newState[action.groupId] = action.image;
+      newState[action.id] = action.image;
       return newState;
     case REMOVE_IMG:
       newState = { ...state };

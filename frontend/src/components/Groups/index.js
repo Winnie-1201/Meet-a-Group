@@ -9,7 +9,10 @@ const Groups = () => {
   // const currentUser = useSelector((state) => state.session.user);
   const groups = Object.values(useSelector((state) => state.group));
 
-  //   console.log("groups in compn!!!!", groups);
+  console.log(
+    "all of the groups in Groups component!!!!==============",
+    groups
+  );
   const dispatch = useDispatch();
 
   useEffect(() => {

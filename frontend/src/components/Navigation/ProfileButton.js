@@ -8,6 +8,7 @@ import "./ProfileButton.css";
 const ProfileButton = ({ user }) => {
   const [openMenu, setOpenMenu] = useState(false);
   const dispatch = useDispatch();
+  console.log("now in profilebutton component======================");
 
   const onClick = (e) => {
     e.preventDefault();

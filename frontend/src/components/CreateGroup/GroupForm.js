@@ -13,16 +13,18 @@ const GroupForm = ({ group, formType }) => {
   const [isPrivate, setPrivate] = useState(group.private);
   const [city, setCity] = useState(group.city);
   const [state, setState] = useState(group.state);
-  const [previewImg, setPreviewImg] = useState(group.previewImage);
+  let [previewImg, setPreviewImg] = useState(group.previewImage);
 
+  previewImg =
+    formType === "Create Group" ? group.previewImage : group.GroupImages[0].url;
   const dispatch = useDispatch();
 
+  console.log("enter the GroupForm component======================");
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     group = {
       ...group,
-      //   organizerId,
       name,
       about,
       type,
@@ -34,7 +36,6 @@ const GroupForm = ({ group, formType }) => {
     let img = {};
     if (previewImg.length > 0) {
       img = {
-        // groupId: newGroup.id,
         url: previewImg,
         preview: true,
       };
@@ -45,26 +46,13 @@ const GroupForm = ({ group, formType }) => {
         ? await dispatch(createGroup(group, img))
         : await dispatch(editGroupThunk(group));
 
-    if (newGroup) history.push(`/groups/current`);
-
-    // console.log(group);
-    // const newGroup = await dispatch(createGroup(group));
-    // console.log("this is the new group", newGroup);
-    // if (previewImg.length > 0 && newGroup) {
-    //   const img = {
-    //     groupId: newGroup.id,
-    //     url: previewImg,
-    //     preview: true,
-    //   };
-    //   const newImg = await dispatch(createImg(img));
-    //   console.log("this is the new img", newImg);
-    //   if (newImg && newGroup) history.push(`/groups/current/${newGroup.id}`);
-    // }
-    // console.log("the new group in comp", newGroup);
-
-    // can change it to the new group page later
-    // if (newGroup) history.push(`/groups/current/${newGroup.id}`);
+    console.log(
+      "here is the new group created in CreateForm component=================",
+      newGroup
+    );
+    if (newGroup) return history.push(`/groups/current`);
   };
+
   return (
     <form onSubmit={handleSubmit} className="login-form">
       <h2>{formType}</h2>

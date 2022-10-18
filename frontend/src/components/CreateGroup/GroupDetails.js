@@ -1,11 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useHistory, useParams } from "react-router-dom";
-
+import { Link, useParams } from "react-router-dom";
 import { getGroupById, removeGroup } from "../../store/group";
-// import { removeImgThunk } from "../../store/image";
-
-import { removeGroup } from "../../store/group";
 
 const GroupDetails = () => {
   const { groupId } = useParams();
@@ -13,35 +9,18 @@ const GroupDetails = () => {
 
   useEffect(() => {
     dispatch(getGroupById(groupId));
-    // helper(groupId);
   }, [dispatch]);
 
   // const group = useSelector((state) => state.group)[groupId];
   const currentUser = useSelector((state) => state.session.user);
   const group = useSelector((state) => state.group)[groupId];
-  console.log("the group in groupdetails", group);
+  console.log(
+    "the group in groupdetails in GroupDetails component====================",
+    group
+  );
 
   if (!group) return null;
   if (!group.Organizer) return null;
-  //   console.log("the group", group);
-
-  // const history = useHistory();
-  // then do the delete and edit here!!
-  // const handleDelete = async (e) => {
-  //   e.preventDefault();
-
-  //   const deleted = await dispatch(removeGroup(group.id));
-  //   console.log("the deleted item is:", deleted);
-  //   // history.push("/groups/current");
-  //   // dispatch(removeImgThunk())
-  //   if (deleted.length > 0) return history.push("/groups/current");
-  // };
-
-  //   const handleUpdate = async (e) => {
-  //     e.preventDefault();
-  //   };
-
-  if (!group) return history.push("/groups");
 
   return (
     <>

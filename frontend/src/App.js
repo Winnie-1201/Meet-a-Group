@@ -29,6 +29,9 @@ function App() {
           <Route path="/signup">
             <SignupFormPage />
           </Route>
+          <Route exact path="/groups">
+            <Groups />
+          </Route>
           <Route exact path="/groups/current">
             <MyGroups />
           </Route>
@@ -40,9 +43,6 @@ function App() {
           </Route>
           <Route exact path="/groups/current/:groupId/edit">
             <EditGroup />
-          </Route>
-          <Route path="/groups">
-            <Groups />
           </Route>
         </Switch>
       )}
