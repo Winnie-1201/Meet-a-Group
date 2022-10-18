@@ -1,17 +1,28 @@
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory, useParams } from "react-router-dom";
-import { removeGroup } from "../../store/group";
+import { getGroupById, removeGroup } from "../../store/group";
 // import { removeImgThunk } from "../../store/image";
 
 const GroupDetails = () => {
   const { groupId } = useParams();
-  //   console.log("groupId", groupId);
-  const group = useSelector((state) => state.group)[groupId];
-  // console.log("the group in groupdetails", group)
-  const currentUser = useSelector((state) => state.session.user);
-  //   console.log("the group", group);
   const dispatch = useDispatch();
-  const history = useHistory();
+
+  useEffect(() => {
+    dispatch(getGroupById(groupId));
+    // helper(groupId);
+  }, [dispatch]);
+
+  // const group = useSelector((state) => state.group)[groupId];
+  const currentUser = useSelector((state) => state.session.user);
+  const group = useSelector((state) => state.group)[groupId];
+  console.log("the group in groupdetails", group);
+
+  if (!group) return null;
+  if (!group.Organizer) return null;
+  //   console.log("the group", group);
+
+  // const history = useHistory();
 
   // then do the delete and edit here!!
   // const handleDelete = async (e) => {
@@ -28,14 +39,18 @@ const GroupDetails = () => {
   //     e.preventDefault();
   //   };
 
-  if (!group) return history.push("/groups");
+  // if (!group) return history.push("/groups");
+  // group = Object.values(group)[0];
 
   return (
     <>
       <div>
         <h2>{group.name}</h2>
+        <p>
+          Organizer: {group.Organizer.lastName}, {group.Organizer.firstName}
+        </p>
         <p>About: {group.about}</p>
-        <img src={`${group.previewImage}`} />
+        <img src={`${group.GroupImages[0].url}`} />
         {currentUser && currentUser.id === group.organizerId && (
           <>
             <Link to={`/groups/current/${groupId}/edit`}>Edit</Link>

@@ -2,7 +2,7 @@ import { csrfFetch } from "./csrf";
 import { createImg } from "./image";
 
 const LOAD = "groups/getGroups";
-// const LOAD_CURR = "groups/getCurrentGroups";
+const LOAD_ONE = "groups/getOneGroup";
 const CREATE = "groups/createGroup";
 // const CREATE_IMG = "groups/createImage";
 const REMOVE = "groups/removeGroup";
@@ -16,12 +16,12 @@ const load = (groups) => {
   };
 };
 
-// const loadCurr = (groups) => {
-//   return {
-//     type: LOAD_CURR,
-//     groups,
-//   };
-// };
+const loadOne = (group) => {
+  return {
+    type: LOAD_ONE,
+    group,
+  };
+};
 
 const create = (group) => {
   return {
@@ -55,6 +55,18 @@ export const getGroups = () => async (dispatch) => {
   }
 };
 
+// thunk: get details of a group from an id:
+export const getGroupById = (groupId) => async (dispatch) => {
+  const response = await fetch(`/api/groups/${groupId}`);
+
+  if (response.ok) {
+    const group = await response.json();
+    console.log("group details in thunk", group);
+    await dispatch(loadOne(group));
+    return group;
+  }
+};
+
 // thunk action creator: get group by userid;
 export const getGroupByUserThunk = () => async (dispatch) => {
   const response = await csrfFetch("/api/groups/current");
@@ -62,7 +74,7 @@ export const getGroupByUserThunk = () => async (dispatch) => {
   if (response.ok) {
     const groups = await response.json();
     // console.log("get current groups thunk", groups);
-    dispatch(load(groups.Groups));
+    await dispatch(load(groups.Groups));
     return groups;
   }
 };
@@ -166,13 +178,17 @@ const groupsReducer = (state = initialState, action) => {
       // return { ...state, ...allGroups };
       console.log("LOAD: new state", newState);
       return newState;
+    case LOAD_ONE:
+      newState = {};
+      newState[action.group.id] = action.group;
+      return newState;
     // case LOAD_CURR:
     //   // action.groups is an array
     //   newState = { ...action.groups };
     //   return newState;
     case CREATE:
       // case EDIT:
-      newState = { ...state };
+      newState = {};
       // const newGroup = action.group;
       // console.log(newGroup);
       newState[action.group.id] = action.group;
