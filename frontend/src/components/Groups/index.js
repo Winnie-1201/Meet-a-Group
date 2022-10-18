@@ -19,7 +19,7 @@ const Groups = () => {
     dispatch(getGroups());
   }, [dispatch]);
 
-  if (!groups) return null;
+  if (!groups.length) return null;
 
   return (
     <>

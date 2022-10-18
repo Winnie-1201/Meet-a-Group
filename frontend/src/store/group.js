@@ -1,4 +1,5 @@
 import { csrfFetch } from "./csrf";
+import { LOAD_EVENTS } from "./event";
 import { createImg } from "./image";
 
 const LOAD = "groups/getGroups";
@@ -6,12 +7,19 @@ const LOAD_ONE = "groups/getOneGroup";
 const CREATE = "groups/createGroup";
 const REMOVE = "groups/removeGroup";
 const EDIT = "groups/editGroup";
+const CLEAR = "groups/clearGroup";
 
 // the action creator for loading groups
 const load = (groups) => {
   return {
     type: LOAD,
     groups,
+  };
+};
+
+export const clear = () => {
+  return {
+    type: CLEAR,
   };
 };
 
@@ -171,6 +179,16 @@ const groupsReducer = (state = initialState, action) => {
       delete newState[action.groupId];
       console.log("removing new state in reducer", newState);
       return newState;
+    case CLEAR:
+      return {};
+    // case LOAD_EVENTS:
+    //   return {
+    //     ...state,
+    //     [action.groupId]: {
+    //       ...state[action.groupId],
+    //       events
+    //     }
+    //   }
     default:
       return state;
   }

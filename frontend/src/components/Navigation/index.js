@@ -14,6 +14,9 @@ const Navigation = ({ isLoaded }) => {
       <NavLink to="/groups" className="nav-link">
         Groups
       </NavLink>
+      <NavLink to="/events" className="nav-link">
+        Events
+      </NavLink>
       {isLoaded && currentUser && <ProfileButton user={currentUser} />}
       {isLoaded && !currentUser && (
         <>
