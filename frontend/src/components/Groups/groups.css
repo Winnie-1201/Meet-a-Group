@@ -1,5 +1,78 @@
-.group-session {
+/* .group-session {
   border: 1px solid black;
   margin-top: 40px;
   padding-left: 10px;
+} */
+p,
+h2,
+h3 {
+  margin: 0;
+}
+
+.all-groups {
+  display: flex;
+  flex-direction: column;
+  width: 640px;
+  /* margin: 0 10px 10px 10px; */
+}
+
+.one-group {
+  /* margin-top: 12px ; */
+  padding: 12px 0;
+  border-top: 1px solid rgb(202, 197, 197);
+}
+
+.one-group-link {
+  display: flex;
+  flex-direction: row;
+  height: 180px;
+  width: 500px;
+  /* grid-template-columns: 1fr 2fr;
+  grid-template-areas: "pic details"; */
+  text-decoration: none;
+  color: rgb(94, 92, 92);
+}
+
+.group-imgage {
+  grid-area: pic;
+}
+
+.one-group-detail {
+  display: flex;
+  flex-direction: column;
+  grid-area: details;
+}
+
+.group-img {
+  width: 150px;
+  height: 100px;
+  border-radius: 8px;
+}
+
+.group-name {
+  font-size: 20px;
+  font-weight: 550;
+  color: black;
+  margin: 5px;
+}
+
+.group-location {
+  margin: 0 5px 15px 5px;
+  font-size: 15px;
+  font-weight: 550;
+  color: rgb(171, 120, 27);
+}
+
+.group-type {
+  font-size: 15px;
+  margin: 0px 5px 15px 5px;
+  margin-top: auto;
+}
+
+.group-about {
+  font-size: 15px;
+  margin: 0 5px 15px 5px;
+  line-height: 1.5em;
+  height: 3em;
+  overflow: hidden;
 }

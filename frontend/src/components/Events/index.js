@@ -2,6 +2,8 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { getEvents } from "../../store/event";
+import groupsReducer from "../../store/group";
+import "./events.css";
 
 const Events = () => {
   const dispatch = useDispatch();
@@ -16,14 +18,28 @@ const Events = () => {
 
   return (
     <>
-      <div>
-        <h2>All events</h2>
+      <div className="all-events">
+        {/* <h2>All events</h2> */}
         {events.map((event) => (
-          <Link to={`/events/${event.id}`} key={event.id} className="nav-link">
-            <p>{event.name}</p>
-            <p>Type: {event.type}</p>
-            <img src={event.previewImage} />
-          </Link>
+          <div className="one-event" key={event.id}>
+            <Link to={`/events/${event.id}`} className="one-event-link">
+              <div className="event-image">
+                <img src={event.previewImage} className="event-img" />
+              </div>
+              <div className="one-event-detail">
+                <p className="event-date">{event.startDate}</p>
+                <p className="event-name">{event.name}</p>
+                <p className="event-group">{event.Group.name}</p>
+                <p className="event-location">
+                  {event.Group.city}, {event.Group.state}
+                </p>
+                <p className="event-attendees">
+                  {event.numAttending} attendees
+                </p>
+                <p className="event-type">{event.type} Event</p>
+              </div>
+            </Link>
+          </div>
         ))}
       </div>
     </>

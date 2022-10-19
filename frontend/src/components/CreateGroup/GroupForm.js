@@ -26,20 +26,20 @@ const GroupForm = ({ group, formType }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // let priv = isPrivate === "Private" ? true : false;
+    let priv = isPrivate === "Private" ? true : false;
 
     group = {
       ...group,
       name,
       about,
       type,
-      private: isPrivate,
+      private: priv,
       city,
       state,
       previewImage,
     };
     let img = {};
-    if (previewImage.length > 0) {
+    if (previewImage) {
       img = {
         url: previewImage,
         preview: true,
@@ -51,11 +51,11 @@ const GroupForm = ({ group, formType }) => {
         ? await dispatch(createGroup(group, img))
         : await dispatch(editGroupThunk(group));
 
-    console.log(
-      "here is the new group created in CreateForm component=================",
-      newGroup
-    );
-    if (newGroup) return history.push(`/groups/current`);
+    // console.log(
+    //   "here is the new group created in CreateForm component=================",
+    //   newGroup
+    // );
+    history.push(`/groups/current`);
   };
 
   return (
@@ -101,8 +101,8 @@ const GroupForm = ({ group, formType }) => {
           <option value="" disabled>
             Please select...
           </option>
-          <option>Private</option>
-          <option>Public</option>
+          <option key="Private">Private</option>
+          <option key="Public">Public</option>
         </select>
         {/* <input
           type="radio"

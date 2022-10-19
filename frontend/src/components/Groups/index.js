@@ -23,16 +23,29 @@ const Groups = () => {
 
   return (
     <>
-      <div>
-        <h2>All groups</h2>
-        {groups.map((group) => (
-          <Link to={`/groups/${group.id}`} key={group.id} className="nav-link">
-            <p>{group.name}</p>
-            <p>About: {group.about}</p>
-            <p>Type: {group.type}</p>
-            <img src={`${group.previewImage}`} />
-          </Link>
-        ))}
+      <div className="event-groups-content">
+        <div className="all-groups">
+          {/* <h2 className="group-header">All groups</h2> */}
+          {groups.map((group) => (
+            <div className="one-group" key={group.id}>
+              <Link to={`/groups/${group.id}`} className="one-group-link">
+                <div className="group-image">
+                  <img className="group-img" src={`${group?.previewImage}`} />
+                </div>
+                <div className="one-group-detail">
+                  <p className="group-name">{group.name}</p>
+                  <p className="group-location">
+                    {group.city}, {group.state}
+                  </p>
+                  <p className="group-about">{group.about}</p>
+                  <p className="group-type">
+                    {group.numMembers} members · {group.type}
+                  </p>
+                </div>
+              </Link>
+            </div>
+          ))}
+        </div>
       </div>
     </>
   );

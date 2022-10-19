@@ -2,7 +2,8 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { getEventByGroup } from "../../store/event";
-import { clear, getGroupById, removeGroup } from "../../store/group";
+import { getGroupById, removeGroup } from "../../store/group";
+import "./GroupDetails.css";
 
 const GroupDetails = () => {
   const { groupId } = useParams();
@@ -11,7 +12,7 @@ const GroupDetails = () => {
   useEffect(() => {
     dispatch(getEventByGroup(groupId));
     dispatch(getGroupById(groupId));
-    return () => dispatch(clear());
+    // return () => dispatch(clear());
   }, [dispatch]);
 
   // const group = useSelector((state) => state.group)[groupId];
@@ -28,19 +29,55 @@ const GroupDetails = () => {
     events
   );
   // if (!group) return null;
-  if (!group.Organizer) return null;
+  if (!group?.Organizer) return null;
   let isEvent = false;
   // if (!events) return null;
   if (!events) isEvent = true;
   return (
     <>
-      <div>
-        <h2>{group.name}</h2>
-        <p>
-          Organizer: {group.Organizer.lastName}, {group.Organizer.firstName}
-        </p>
-        <p>About: {group.about}</p>
-        <img src={`${group.GroupImages[0].url}`} />
+      <div className="group-detail-page">
+        <div className="group-detail-image">
+          <img
+            src={`${group.GroupImages[0].url}`}
+            className="group-detail-img"
+          />
+        </div>
+        <div className="group-detail">
+          <h2 className="group-detial-name">{group.name}</h2>
+          <p className="group-detail-location">
+            {group.city}, {group.state}
+          </p>
+          <p className="group-detail-type">
+            {group.numMembers} members{" "}
+            {group.private === true ? "Private" : "Public"} group
+          </p>
+          <p className="group-detail-host">
+            Organized by{" "}
+            <span className="group-detail-firstname">
+              {group.Organizer.firstName} {group.Organizer.lastName[0]}.
+            </span>
+          </p>
+        </div>
+        {/* <p>
+          Organizer: {group.Organizer?.lastName}, {group.Organizer?.firstName}
+        </p> */}
+      </div>
+      <div className="group-detail-middle-bar">
+        <div className="group-detail-middle-bar-left">
+          <button className="button-about">About</button>
+          <button className="button-events">Events</button>
+          <button className="button-members">Members</button>
+          <button className="button-photos">Photots</button>
+          <button className="button-discussion">Discussion</button>
+          <button className="button-more">More</button>
+        </div>
+        <div className="group-detail-middle-bar-right">
+          <button className="button-request">Request to Join</button>
+          <button className="button-dots">...</button>
+        </div>
+      </div>
+      <div className="group-detail-middle-bar">
+        <p>About: {group?.about}</p>
         {currentUser && currentUser.id === group.organizerId && (
           <>
             <Link to={`/groups/current/${groupId}/edit`}>Edit</Link>

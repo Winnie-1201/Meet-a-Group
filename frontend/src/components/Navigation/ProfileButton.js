@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { NavLink } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
 import * as sessionActions from "../../store/session";
 
 import "./ProfileButton.css";
@@ -8,6 +8,7 @@ import "./ProfileButton.css";
 const ProfileButton = ({ user }) => {
   const [openMenu, setOpenMenu] = useState(false);
   const dispatch = useDispatch();
+  const history = useHistory();
   console.log("now in profilebutton component======================");
 
   const onClick = (e) => {
@@ -30,6 +31,7 @@ const ProfileButton = ({ user }) => {
   const handleLogout = (e) => {
     e.preventDefault();
     dispatch(sessionActions.logout());
+    history.push("/");
   };
 
   return (

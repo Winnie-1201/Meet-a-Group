@@ -18,6 +18,7 @@ const MyGroups = () => {
     dispatch(getGroupByUserThunk());
   }, [dispatch]);
 
+  // if (!group.id) return null;
   if (!groups.length > 0)
     return (
       <>
@@ -31,12 +32,16 @@ const MyGroups = () => {
       <div>
         <h2>My groups</h2>
         {groups.map((group) => (
-          <Link key={group.id} to={`/groups/${group.id}`} className="nav-link">
+          <Link
+            key={group.name}
+            to={`/groups/${group.id}`}
+            className="nav-link"
+          >
             <span>
               <p>{group.name}</p>
               <p>About: {group.about}</p>
               <p>Type: {group.type}</p>
-              <img src={`${group.previewImage}`} />
+              <img src={`${group?.previewImage}`} />
             </span>
           </Link>
         ))}
