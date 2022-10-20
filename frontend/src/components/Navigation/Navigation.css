@@ -23,7 +23,7 @@ html {
 .header-left {
   display: flex;
   flex-direction: row;
-  height: 42px;
+  /* height: 42px; */
   align-items: center;
 }
 

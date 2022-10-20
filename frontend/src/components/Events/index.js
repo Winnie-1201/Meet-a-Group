@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { getEvents } from "../../store/event";
 import groupsReducer from "../../store/group";
 import "./events.css";
@@ -18,8 +18,19 @@ const Events = () => {
 
   return (
     <>
+      <div className="event-groups-content">
+        <div className="events-groups">
+          <NavLink to="/events" className="event-link">
+            Events
+          </NavLink>
+          <NavLink to="/groups" className="group-link">
+            Groups
+          </NavLink>
+        </div>
+      </div>
       <div className="all-events">
         {/* <h2>All events</h2> */}
+
         {events.map((event) => (
           <div className="one-event" key={event.id}>
             <Link to={`/events/${event.id}`} className="one-event-link">
