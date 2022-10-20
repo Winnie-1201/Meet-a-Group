@@ -50,7 +50,7 @@ const EventForm = ({ event, groupId, formType }) => {
 
     console.log("here is the new event created ================", newEvent);
 
-    if (newEvent) return history.push(`/groups/${groupId}`);
+    if (newEvent) return history.push(`/events/${newEvent.id}`);
   };
   return (
     <form onSubmit={handleSubmit} className="login-form">

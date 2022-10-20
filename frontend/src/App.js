@@ -16,6 +16,7 @@ import MyEvents from "./components/MyEvents";
 import EventDetails from "./components/CreateEvent/EventDetails";
 import EditEvent from "./components/CreateEvent/EditEvent";
 import Home from "./components/Home";
+import HomeBar from "./components/HeaderBar";
 
 function App() {
   const dispatch = useDispatch();
@@ -27,10 +28,11 @@ function App() {
   return (
     <>
       {/* <Home isLoaded={isLoaded} /> */}
-      <Navigation isLoaded={isLoaded} />
+      {/* <HomeBar isLoaded={isLoaded} /> */}
       {isLoaded && (
         <Switch>
           <Route exact path="/">
+            <HomeBar />
             <Home />
           </Route>
           <Route path="/login">
@@ -40,9 +42,11 @@ function App() {
             <SignupFormPage />
           </Route>
           <Route exact path="/groups">
+            <Navigation />
             <Groups />
           </Route>
           <Route exact path="/events">
+            <Navigation />
             <Events />
           </Route>
           <Route exact path="/events/group/:groupId/new">
@@ -55,15 +59,18 @@ function App() {
             <EditEvent />
           </Route>
           <Route exact path="/events/:eventId">
+            <Navigation />
             <EventDetails />
           </Route>
           <Route exact path="/groups/current">
+            <Navigation />
             <MyGroups />
           </Route>
           <Route exact path="/groups/current/new">
             <CreateGroup />
           </Route>
           <Route exact path="/groups/:groupId">
+            <Navigation />
             <GroupDetails />
           </Route>
           <Route exact path="/groups/current/:groupId/edit">

@@ -18,7 +18,7 @@ const Events = () => {
 
   return (
     <>
-      <div className="event-groups-content">
+      {/* <div className="event-groups-content">
         <div className="events-groups">
           <NavLink to="/events" className="event-link">
             Events
@@ -27,7 +27,7 @@ const Events = () => {
             Groups
           </NavLink>
         </div>
-      </div>
+      </div> */}
       <div className="all-events">
         {/* <h2>All events</h2> */}
 

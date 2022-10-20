@@ -17,8 +17,8 @@ const Navigation = ({ isLoaded }) => {
             <input type="text" placeholder="Search for keywords" />
           </div>
         </div>
-        {isLoaded && currentUser && <ProfileButton user={currentUser} />}
-        {isLoaded && !currentUser && (
+        {currentUser && <ProfileButton user={currentUser} />}
+        {!currentUser && (
           <div className="user">
             <Link to="/login" className="login-link">
               Log in
@@ -29,7 +29,7 @@ const Navigation = ({ isLoaded }) => {
           </div>
         )}
       </div>
-      {/* <div className="event-groups-content">
+      <div className="event-groups-content">
         <div className="events-groups">
           <NavLink to="/events" className="event-link">
             Events
@@ -38,7 +38,7 @@ const Navigation = ({ isLoaded }) => {
             Groups
           </NavLink>
         </div>
-      </div> */}
+      </div>
     </>
   );
 
