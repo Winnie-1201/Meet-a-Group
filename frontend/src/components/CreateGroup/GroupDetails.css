@@ -1,0 +1,71 @@
+.group-detail-page {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas: "pic details";
+  box-sizing: border-box;
+  margin: 10px 10px 10px 5px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgb(202, 197, 197);
+}
+
+.group-detail-image {
+  grid-area: pic;
+  display: flex;
+  justify-content: end;
+  margin-right: 15px;
+}
+
+.group-detail-img {
+  width: 550px;
+  height: 350px;
+  border-radius: 10px;
+}
+
+.group-detail {
+  grid-area: details;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  margin-left: 10px;
+}
+
+.group-detial-name {
+  font-size: 38px;
+  font-weight: 550;
+  padding: 30px 5px 5px 5px;
+}
+
+.group-detail-location,
+.group-detail-type,
+.group-detail-host {
+  font-size: 18px;
+  padding: 10px 5px 5px 5px;
+}
+
+.group-detail-firstname {
+  font-weight: 550;
+}
+
+.group-detail-middle-bar {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas: "left right";
+  box-sizing: border-box;
+  margin: 10px 10px 10px 5px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgb(202, 197, 197);
+}
+
+.group-detail-middle-bar-left {
+  width: 550px;
+  grid-area: left;
+  display: flex;
+  justify-content: space-between;
+}
+
+.group-detail-middle-bar-right {
+  grid-area: right;
+  display: flex;
+  justify-content: space-around;
+  margin-left: 10px;
+}

@@ -15,6 +15,7 @@ import CreateEvent from "./components/CreateEvent";
 import MyEvents from "./components/MyEvents";
 import EventDetails from "./components/CreateEvent/EventDetails";
 import EditEvent from "./components/CreateEvent/EditEvent";
+import Home from "./components/Home";
 
 function App() {
   const dispatch = useDispatch();
@@ -25,9 +26,13 @@ function App() {
 
   return (
     <>
+      {/* <Home isLoaded={isLoaded} /> */}
       <Navigation isLoaded={isLoaded} />
       {isLoaded && (
         <Switch>
+          <Route exact path="/">
+            <Home />
+          </Route>
           <Route path="/login">
             <LoginFormPage />
           </Route>
