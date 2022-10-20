@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useParams } from "react-router-dom";
+import { Link, useHistory, useParams } from "react-router-dom";
 import { getEventByGroup } from "../../store/event";
 import { getGroupById, removeGroup } from "../../store/group";
 import "./GroupDetails.css";
@@ -8,6 +8,7 @@ import "./GroupDetails.css";
 const GroupDetails = () => {
   const { groupId } = useParams();
   const dispatch = useDispatch();
+  const history = useHistory();
 
   useEffect(() => {
     dispatch(getEventByGroup(groupId));
@@ -28,6 +29,12 @@ const GroupDetails = () => {
     "here are all the events in GroupDetaisl comp===========",
     events
   );
+
+  const handleDelete = async (e) => {
+    e.preventDefault();
+    const deleted = await dispatch(removeGroup(groupId));
+    if (deleted) return history.push("/groups/current");
+  };
   // if (!group) return null;
   if (!group?.Organizer) return null;
   let isEvent = false;
@@ -81,9 +88,7 @@ const GroupDetails = () => {
         {currentUser && currentUser.id === group.organizerId && (
           <>
             <Link to={`/groups/current/${groupId}/edit`}>Edit</Link>
-            <button onClick={() => dispatch(removeGroup(groupId))}>
-              Delete
-            </button>
+            <button onClick={handleDelete}>Delete</button>
           </>
         )}
       </div>

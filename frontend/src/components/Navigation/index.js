@@ -29,7 +29,7 @@ const Navigation = ({ isLoaded }) => {
           </div>
         )}
       </div>
-      <div className="event-groups-content">
+      {/* <div className="event-groups-content">
         <div className="events-groups">
           <NavLink to="/events" className="event-link">
             Events
@@ -38,7 +38,7 @@ const Navigation = ({ isLoaded }) => {
             Groups
           </NavLink>
         </div>
-      </div>
+      </div> */}
     </>
   );
 
