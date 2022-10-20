@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { createGroup, editGroupThunk } from "../../store/group";
 
 const GroupForm = ({ group, formType }) => {
   const history = useHistory();
-
+  const { groupId } = useParams();
+  console.log("group in gorupform as arg", group);
   //   const [organizerId, setOrganizer] = useState(group.organizerId);
   const [name, setName] = useState(group.name);
   const [about, setAbout] = useState(group.about);
@@ -29,14 +30,16 @@ const GroupForm = ({ group, formType }) => {
     let priv = isPrivate === "Private" ? true : false;
 
     group = {
-      ...group,
+      // ...group,
+      // id: groupId,
       name,
       about,
       type,
-      private: priv,
+      // there is some problem with it
+      private: true,
       city,
       state,
-      previewImage,
+      // previewImage,
     };
     let img = {};
     if (previewImage) {
@@ -49,13 +52,13 @@ const GroupForm = ({ group, formType }) => {
     const newGroup =
       formType === "Create Group"
         ? await dispatch(createGroup(group, img))
-        : await dispatch(editGroupThunk(group));
+        : await dispatch(editGroupThunk(group, groupId));
 
-    // console.log(
-    //   "here is the new group created in CreateForm component=================",
-    //   newGroup
-    // );
-    history.push(`/groups/current`);
+    console.log(
+      "here is the new group created in CreateForm component=================",
+      newGroup
+    );
+    if (newGroup) return history.push(`/groups/${newGroup.id}`);
   };
 
   return (

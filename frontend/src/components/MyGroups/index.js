@@ -7,15 +7,20 @@ const MyGroups = () => {
   // const { userId } = useParams();
   // console.log("organizerId", userId);
   // const currentUser = useSelector((state) => state.session.user);
-  const groups = Object.values(useSelector((state) => state.group));
+  const groups = Object.values(useSelector((state) => state.group.allGroups));
   console.log(
     "here is all my groups in MyGroups component!!!!=======================",
     groups
   );
   const dispatch = useDispatch();
 
+  const helpDelay = async () => {
+    await dispatch(getGroupByUserThunk());
+  };
+
   useEffect(() => {
-    dispatch(getGroupByUserThunk());
+    helpDelay();
+    // dispatch(getGroupByUserThunk());
   }, [dispatch]);
 
   // if (!group.id) return null;

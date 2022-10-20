@@ -10,6 +10,15 @@ const GroupDetails = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
+  console.log(groupId);
+  const group = Object.values(
+    useSelector((state) => state.group.singleGroup)
+  )[0];
+  console.log(
+    "the group in groupdetails in GroupDetails component====================",
+    group
+  );
+
   useEffect(() => {
     dispatch(getEventByGroup(groupId));
     dispatch(getGroupById(groupId));
@@ -18,11 +27,6 @@ const GroupDetails = () => {
 
   // const group = useSelector((state) => state.group)[groupId];
   const currentUser = useSelector((state) => state.session.user);
-  const group = useSelector((state) => state.group)[groupId];
-  console.log(
-    "the group in groupdetails in GroupDetails component====================",
-    group
-  );
 
   const events = Object.values(useSelector((state) => state.event));
   console.log(

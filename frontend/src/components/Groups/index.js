@@ -7,7 +7,7 @@ import "./groups.css";
 
 const Groups = () => {
   // const currentUser = useSelector((state) => state.session.user);
-  const groups = Object.values(useSelector((state) => state.group));
+  const groups = Object.values(useSelector((state) => state.group.allGroups));
 
   console.log(
     "all of the groups in Groups component!!!!==============",
@@ -15,7 +15,11 @@ const Groups = () => {
   );
   const dispatch = useDispatch();
 
+  // const helpDelay = async () => {
+  //   await dispatch(getGroups());
+  // };
   useEffect(() => {
+    // helpDelay();
     dispatch(getGroups());
   }, [dispatch]);
 
@@ -23,7 +27,7 @@ const Groups = () => {
 
   return (
     <>
-      <div className="event-groups-content">
+      {/* <div className="event-groups-content">
         <div className="events-groups">
           <NavLink to="/events" className="event-link">
             Events
@@ -32,7 +36,7 @@ const Groups = () => {
             Groups
           </NavLink>
         </div>
-      </div>
+      </div> */}
       <div className="event-groups-content">
         <div className="all-groups">
           {/* <h2 className="group-header">All groups</h2> */}

@@ -84,7 +84,7 @@ export const getGroupByUserThunk = () => async (dispatch) => {
 
   if (response.ok) {
     const groups = await response.json();
-    console.log("getting current user's groups in thunk", groups);
+    console.log("getting current user's groups in thunk", groups.Groups);
     await dispatch(load(groups.Groups));
     return groups;
   }
@@ -104,16 +104,17 @@ export const createGroup = (group, image) => async (dispatch) => {
     const groupData = await response.json();
     const groupId = groupData.id;
     console.log("creating a new group thunk!!", groupData);
-    await dispatch(create(group));
+    dispatch(create(group));
     console.log("adding the img to the new created group in thunk", image);
-    await dispatch(createImg(image, groupId));
+    dispatch(createImg(image, groupId));
     return groupData;
   }
 };
 
 //Edit a group action thunk;
-export const editGroupThunk = (group) => async (dispatch) => {
-  const response = await csrfFetch(`/api/groups/${group.id}`, {
+export const editGroupThunk = (group, groupId) => async (dispatch) => {
+  console.log("in edit gorup thunk", group, groupId);
+  const response = await csrfFetch(`/api/groups/${groupId}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -121,6 +122,7 @@ export const editGroupThunk = (group) => async (dispatch) => {
     body: JSON.stringify(group),
   });
 
+  console.log("the response in edit gorup thunk", response);
   if (response.ok) {
     const data = await response.json();
     console.log("editing group in thunk", data);
@@ -143,31 +145,35 @@ export const removeGroup = (groupId) => async (dispatch) => {
 };
 
 // defined the initial state
-const initialState = {};
+const initialState = { allGroups: {}, singleGroup: {} };
 
 // groups reducer
 const groupsReducer = (state = initialState, action) => {
   let newState;
   switch (action.type) {
     case LOAD:
-      newState = {};
+      newState = { allGroups: {}, singleGroup: {} };
+      console.log("new state in reducer", newState.allGroups);
+      console.log("new state", action.groups[0]);
+      console.log("-----", newState);
       action.groups.forEach((group) => {
-        newState[group.id] = group;
+        newState.allGroups[group.id] = { ...group };
       });
       console.log("LOAD: new state in reducer", newState);
-      return newState;
+      return { ...newState };
     case LOAD_ONE:
-      newState = {};
-      newState[action.group.id] = action.group;
+      newState = { allGroups: {}, singleGroup: {} };
+      newState.singleGroup[action.group.id] = action.group;
       console.log("loading one group: new state in reducer", newState);
       return newState;
     case CREATE:
-      newState = {};
-      newState[action.group.id] = action.group;
+      newState = initialState;
+      newState.singleGroup[action.group.id] = action.group;
       console.log("CREATE new state in reducer", newState);
       return newState;
     case EDIT:
       newState = { ...state };
+      console.log("new state in edit reducer", newState);
       newState[action.group.id] = {
         ...newState[action.group.id],
         ...action.group,
