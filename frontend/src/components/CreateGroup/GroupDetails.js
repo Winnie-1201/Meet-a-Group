@@ -28,7 +28,7 @@ const GroupDetails = () => {
   // const group = useSelector((state) => state.group)[groupId];
   const currentUser = useSelector((state) => state.session.user);
 
-  const events = Object.values(useSelector((state) => state.event));
+  const events = Object.values(useSelector((state) => state.event.allEvents));
   console.log(
     "here are all the events in GroupDetaisl comp===========",
     events

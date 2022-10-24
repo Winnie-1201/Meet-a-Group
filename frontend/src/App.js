@@ -36,9 +36,11 @@ function App() {
             <Home />
           </Route>
           <Route path="/login">
+            <HomeBar />
             <LoginFormPage />
           </Route>
           <Route path="/signup">
+            <HomeBar />
             <SignupFormPage />
           </Route>
           <Route exact path="/groups">
