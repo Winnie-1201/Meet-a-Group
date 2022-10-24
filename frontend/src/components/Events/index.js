@@ -7,7 +7,7 @@ import "./events.css";
 
 const Events = () => {
   const dispatch = useDispatch();
-  const events = Object.values(useSelector((state) => state.event));
+  const events = Object.values(useSelector((state) => state.event.allEvents));
   console.log("all the events in Events component===========", events);
 
   useEffect(() => {

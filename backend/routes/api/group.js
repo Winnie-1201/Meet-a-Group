@@ -29,10 +29,10 @@ const validateGroup = [
     .exists({ checkFalsy: true })
     .isIn(["Online", "In person"])
     .withMessage("Type must be 'Online' or 'In person'"),
-  check("private")
-    .exists({ checkFalsy: true })
-    .isIn([true, false])
-    .withMessage("Private must be a boolean"),
+  // check("private")
+  //   .exists({ checkFalsy: true })
+  //   .isIn([true, false])
+  //   .withMessage("Private must be a boolean"),
   check("city").exists({ checkFalsy: true }).withMessage("City is required"),
   check("state").exists({ checkFalsy: true }).withMessage("State is required"),
   handleValidationErrors,
@@ -204,7 +204,18 @@ router.get("/:groupId/events", async (req, res, next) => {
 
 // create a group;
 router.post("/", requireAuth, validateGroup, async (req, res, next) => {
-  const { name, about, type, private, city, state } = req.body;
+  let { name, about, type, private, city, state } = req.body;
+  // if (private === "true") private = true;
+  // if (private === "false") private = false;
+  console.log(
+    "create a group in backend",
+    name,
+    about,
+    type,
+    private,
+    city,
+    state
+  );
   const newGroup = await Group.create({
     organizerId: req.user.id,
     name,

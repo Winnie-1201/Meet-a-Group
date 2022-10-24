@@ -152,32 +152,43 @@ const groupsReducer = (state = initialState, action) => {
   let newState;
   switch (action.type) {
     case LOAD:
+      // newState = { allGroups: {}, singleGroup: {} };
       newState = { allGroups: {}, singleGroup: {} };
       console.log("new state in reducer", newState.allGroups);
       console.log("new state", action.groups[0]);
       console.log("-----", newState);
+      const allGroups = {};
       action.groups.forEach((group) => {
-        newState.allGroups[group.id] = { ...group };
+        allGroups[group.id] = { ...group };
       });
+      newState.allGroups = { ...allGroups };
       console.log("LOAD: new state in reducer", newState);
-      return { ...newState };
+      // return { ...newState };
+      return newState;
     case LOAD_ONE:
+      // newState = { allGroups: {}, singleGroup: {} };
+      // newState = { allGroups: {}, singleGroup: {} };
       newState = { allGroups: {}, singleGroup: {} };
-      newState.singleGroup[action.group.id] = action.group;
+      const singleGroup = {};
+      singleGroup[action.group.id] = action.group;
+      newState.singleGroup = singleGroup;
+      // newState = { ...initialState };
+      // newState.singleGroup[action.group.id] = action.group;
       console.log("loading one group: new state in reducer", newState);
       return newState;
     case CREATE:
-      newState = initialState;
+      newState = { ...state };
       newState.singleGroup[action.group.id] = action.group;
       console.log("CREATE new state in reducer", newState);
       return newState;
     case EDIT:
       newState = { ...state };
       console.log("new state in edit reducer", newState);
-      newState[action.group.id] = {
-        ...newState[action.group.id],
-        ...action.group,
-      };
+      // newState[action.group.id] = {
+      //   ...newState[action.group.id],
+      //   ...action.group,
+      // };
+      newState.singleGroup = action.group;
       console.log("editing new state in reducer", newState);
       return newState;
     case REMOVE:
