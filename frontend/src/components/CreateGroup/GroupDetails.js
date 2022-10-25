@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory, useParams } from "react-router-dom";
 import { getEventByGroup } from "../../store/event";
@@ -9,6 +9,9 @@ const GroupDetails = () => {
   const { groupId } = useParams();
   const dispatch = useDispatch();
   const history = useHistory();
+
+  const [showAbout, setAbout] = useState(true);
+  const [showEvents, setEvents] = useState(false);
 
   console.log(groupId);
   const group = Object.values(
@@ -46,78 +49,188 @@ const GroupDetails = () => {
   if (!events) isEvent = true;
   return (
     <>
-      <div className="group-detail-page">
-        <div className="group-detail-image">
-          <img
-            src={`${group.GroupImages[0].url}`}
-            className="group-detail-img"
-          />
-        </div>
-        <div className="group-detail">
-          <h2 className="group-detial-name">{group.name}</h2>
-          <p className="group-detail-location">
-            {group.city}, {group.state}
-          </p>
-          <p className="group-detail-type">
-            {group.numMembers} members{" "}
-            {group.private === true ? "Private" : "Public"} group
-          </p>
-          <p className="group-detail-host">
-            Organized by{" "}
-            <span className="group-detail-firstname">
-              {group.Organizer.firstName} {group.Organizer.lastName[0]}.
-            </span>
-          </p>
-        </div>
-        {/* <p>
+      <div className="group-details-body">
+        <div className="group-detail-page">
+          <div className="top-detail">
+            <div className="group-detail-image flex-grow-three">
+              <img
+                src={`${group.GroupImages[0].url}`}
+                className="group-detail-img"
+              />
+            </div>
+            <div className="group-detail flex-grow-two">
+              <h1 className="group-detial-name">{group.name}</h1>
+              <p className="group-detail-location">
+                {group.city}, {group.state}
+              </p>
+              <p className="group-detail-type">
+                {group.numMembers} members{" "}
+                {group.private === true ? "Private" : "Public"} group
+              </p>
+              <p className="group-detail-host">
+                Organized by{" "}
+                <span className="group-detail-firstname">
+                  {group.Organizer.firstName} {group.Organizer.lastName[0]}.
+                </span>
+              </p>
+            </div>
+          </div>
+          {/* <p>
           Organizer: {group.Organizer?.lastName}, {group.Organizer?.firstName}
         </p> */}
-      </div>
-      <div className="group-detail-middle-bar">
-        <div className="group-detail-middle-bar-left">
-          <button className="button-about">About</button>
-          <button className="button-events">Events</button>
-          <button className="button-members">Members</button>
-          <button className="button-photos">Photots</button>
-          <button className="button-discussion">Discussion</button>
-          <button className="button-more">More</button>
         </div>
-        <div className="group-detail-middle-bar-right">
-          <button className="button-request">Request to Join</button>
-          <button className="button-dots">...</button>
-        </div>
-      </div>
-      <div className="group-detail-middle-bar">
-        <p>About: {group?.about}</p>
-        {currentUser && currentUser.id === group.organizerId && (
-          <>
-            <Link to={`/groups/current/${groupId}/edit`}>Edit</Link>
-            <button onClick={handleDelete}>Delete</button>
-          </>
-        )}
-      </div>
-      <div>
-        <h3>Incoming events:</h3>
-        {events?.map((event) => (
-          <div key={event.id}>
-            <Link to={`/events/${event.id}`} className="nav-link">
-              <h2>{event.name}</h2>
-              <p>{event.Venue?.city}</p>
-              <img src={event?.previewImage} />
-            </Link>
+        {/* <div className="group-detail-middle-bar-container"> */}
+        <div className="group-detail-middle-bar">
+          <div className="group-detail-middle-bar-left">
+            <ul className="middle-bar">
+              <li>
+                <button
+                  className="button-about"
+                  onClick={() => {
+                    setEvents(!showEvents);
+                    setAbout(!showAbout);
+                  }}
+                >
+                  About
+                </button>
+              </li>
+              <li>
+                <button
+                  className="button-events button-details"
+                  onClick={() => {
+                    setEvents(!showEvents);
+                    setAbout(!showAbout);
+                  }}
+                >
+                  Events
+                </button>
+              </li>
+              {currentUser && currentUser.id === group.organizerId && (
+                <li>
+                  {/* <> */}
+                  <Link
+                    className="edit-group"
+                    to={`/groups/current/${groupId}/edit`}
+                  >
+                    Edit
+                  </Link>
+                  {/* <button onClick={handleDelete}>Delete</button>
+              </> */}
+                  {/* <span className="button-members button-details">Members</span> */}
+                </li>
+              )}
+              {currentUser && currentUser.id === group.organizerId && (
+                <li>
+                  {/* // <> */}
+                  {/* <Link to={`/groups/current/${groupId}/edit`}>Edit</Link> */}
+                  <button
+                    onClick={handleDelete}
+                    className="group-detail-delete-button"
+                  >
+                    Delete
+                  </button>
+                  {/* </> */}
+                </li>
+              )}
+              {/* <span className="button-photos  button-details">Photots</span> */}
+              {/* <li>
+                <span className="button-discussion button-details">
+                  Discussion
+                </span>
+              </li>
+              <li>
+                <span className="button-more button-details">More</span>
+              </li> */}
+            </ul>
           </div>
-        ))}
-        {isEvent && (
-          <>
-            <p>There is no event in your group yet</p>
-            <Link to="/events/new">Create your first event!</Link>
-          </>
-        )}
-        {currentUser && currentUser.id === group.organizerId && (
-          <>
-            <Link to={`/events/group/${group.id}/new`}>Create new event</Link>
-          </>
-        )}
+          {/* <div className="group-detail-middle-bar-right">
+            <span className="button-request">Request to Join</span>
+            <span className="button-dots">...</span>
+          </div> */}
+        </div>
+
+        <div className="group-detail-hidden">
+          {showAbout && (
+            <div className="group-detail-hidden-about">
+              <div className="group-detail-left flex-grow-one">
+                <p className="group-detail-about">
+                  <h2>
+                    <span>What we're about</span>
+                  </h2>
+                  <div>
+                    <p>{group?.about}</p>
+                  </div>
+                </p>
+              </div>
+              {/* {currentUser && currentUser.id === group.organizerId && (
+              <>
+                <Link to={`/groups/current/${groupId}/edit`}>Edit</Link>
+                <button onClick={handleDelete}>Delete</button>
+              </>
+            )} */}
+              <div className="group-detail-right flex-grow-two">
+                <h3 className="group-detail-organizer">Organizer</h3>
+                <p className="organizer-first-name">
+                  {group?.Organizer.firstName}
+                </p>
+              </div>
+            </div>
+          )}
+
+          {showEvents && (
+            <div className="group-detail-hidden-events">
+              {/* <div className="hidden-events-left"> */}
+              <div className="hidden-events-top">
+                <h3>Incoming events:</h3>
+                <div className="hidden-events-link">
+                  {currentUser && currentUser.id === group.organizerId && (
+                    <Link
+                      className="hidden-events-link-text"
+                      to={`/events/group/${group.id}/new`}
+                    >
+                      Create new event
+                    </Link>
+                  )}
+                </div>
+              </div>
+              {events?.map((event) => (
+                <div key={event.id}>
+                  {/* <Link to={`/events/${event.id}`}> */}
+                  <div className="events-show">
+                    <div className="events-show-pics">
+                      <img src={event?.previewImage} />
+                    </div>
+                    <div className="events-show-details">
+                      <h2>{event.name}</h2>
+                      <p className="event-city">{event.Venue?.city}</p>
+                      <div className="events-details-link">
+                        click
+                        <Link
+                          className="events-details-link-text"
+                          to={`/events/${event.id}`}
+                        >
+                          {" "}
+                          here{" "}
+                        </Link>
+                        to see more details
+                      </div>
+                    </div>
+                  </div>
+                  {/* </Link> */}
+                </div>
+              ))}
+
+              {isEvent && (
+                <>
+                  <p>There is no event in your group yet</p>
+                  <Link to="/events/new">Create your first event!</Link>
+                </>
+              )}
+              {/* </div> */}
+            </div>
+          )}
+        </div>
+        {/* </div> */}
       </div>
     </>
   );

@@ -2,7 +2,8 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory, useParams } from "react-router-dom";
 import { getEventById, deleteEvent } from "../../store/event";
-import { getGroupById, getGroupByUserThunk } from "../../store/group";
+import { getGroupByUserThunk } from "../../store/group";
+import "./EventDetails.css";
 
 const EventDetails = () => {
   const { eventId } = useParams();
@@ -53,22 +54,146 @@ const EventDetails = () => {
   return (
     <>
       {/* <p>here is the event detail</p> */}
-      <div>
-        <h2>{event.name}</h2>
-        <p>Capacity: {event.capacity}</p>
-        <p>Description: {event.description}</p>
-        <img src={`${event.EventImages[0].url}`} />
-        {/* <img src={`${event.EventImages[0].url}`} /> */}
-      </div>
-      {currentUser &&
-        group &&
-        event.groupId === group.id &&
-        currentUser.id === group.organizerId && (
-          <div>
-            <Link to={`/events/${eventId}/edit/`}>Edit</Link>
-            <button onClick={handleDelete}>Delete</button>
+      <div className="event-details-flex">
+        <div className="event-details-flex-grow"></div>
+        <div className="event-details-top">
+          <div className="event-details-top-title">
+            <h1>{event.name}</h1>
+            {currentUser &&
+              group &&
+              event.groupId === group.id &&
+              currentUser.id === group.organizerId && (
+                <div className="top-title-edit-delete">
+                  <Link className="edit-link" to={`/events/${eventId}/edit/`}>
+                    Edit
+                  </Link>
+
+                  <button
+                    className="top-title-delete-button"
+                    onClick={handleDelete}
+                  >
+                    Delete
+                  </button>
+                </div>
+              )}
+            {/* <p>Capacity: {event.capacity}</p>
+            <p>Description: {event.description}</p> */}
           </div>
-        )}
+
+          {/* <img src={`${event.EventImages[0].url}`} /> */}
+        </div>
+        <div className="event-details-middle-flex">
+          <div className="event-details-middle-details">
+            <div className="event-detail-flex">
+              <div className="event-detail-left-flex">
+                <div className="event-detail-img">
+                  <img src={`${event.EventImages[0].url}`} />
+                </div>
+                <div className="event-detail-text">
+                  <div className="event-detail-text-top-flex">
+                    <h2>Detail</h2>
+                  </div>
+                  <div className="event-detail-text-bottom">
+                    <p>{event.description}</p>
+                  </div>
+                </div>
+                <div className="event-detail-attendees">
+                  <div className="event-detail-attendees-title-flex">
+                    <h2>Attendees ({event.numAttending})</h2>
+                  </div>
+                  {/* <div className="event-detail-attendees-card">
+                    <div className="card-detail-grid">
+                      attendees-detail-later
+                    </div>
+                  </div> */}
+                </div>
+                <div className="event-detail-photos">
+                  <div className="event-detail-photos-title-flex">
+                    <h2>Photos ({event.EventImages.length})</h2>
+                  </div>
+                  <div className="event-detail-photos-grid">
+                    {event.EventImages.map((img) => (
+                      <img key={img.id} src={img.url} />
+                    ))}
+                    {event.EventImages.length === 2 && (
+                      <div className="sample-photo-flex">
+                        <i className="fa-solid fa-camera" />
+                      </div>
+                    )}
+                    {event.EventImages.length === 1 && (
+                      <>
+                        <div className="sample-photo-flex">
+                          <i className="fa-solid fa-camera" />
+                        </div>
+                        <div className="sample-photo-flex">
+                          <i className="fa-solid fa-camera" />
+                        </div>
+                      </>
+                    )}
+                  </div>
+                </div>
+              </div>
+
+              <div className="event-detail-right">
+                <div className="event-detail-right-sticky">
+                  <div className="right-group-info">
+                    <Link to={`groups/{group?.id}`} className="group-info-link">
+                      <div className="group-info-link-flex">
+                        <div className="group-info-img">
+                          <img src={group?.previewImage} />
+                        </div>
+                        <div className="group-info-text">
+                          <div className="group-info-title">{group?.name}</div>
+                          <div className="group-info-privacy-flex">
+                            <span>
+                              {group?.private === true ? "Private" : "Public"}{" "}
+                              group
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </Link>
+                  </div>
+
+                  <div className="right-event-info">
+                    <div className="right-event-info-bottom">
+                      <div className="event-info-bottom-one-flex">
+                        <i className="fa-regular fa-clock" />
+                        <div className="event-info-time">
+                          {/* split it out later */}
+                          <time>{event.startDate}</time>
+                        </div>
+                      </div>
+
+                      <div className="event-info-bottom-two-flex">
+                        <i className="fa-solid fa-video" />
+                        <div className="event-info-type">
+                          <p>{event.type} event</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="event-details-bottom-sticky">
+          <div className="event-details-bottom-text">
+            <div className="buttom-text-flex">
+              <div className="text-event-time">
+                <time>{event.startDate}</time>
+              </div>
+              <div className="text-event-title">
+                <p>
+                  {event.Venue.city}, {event.name}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </>
   );
 };

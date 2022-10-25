@@ -25,7 +25,7 @@ h3 {
 .header-detail {
   display: flex;
   /* padding: 0 16px; */
-  display: flex;
+  /* display: flex; */
   justify-content: space-between;
   /* padding: 0 16px; */
   align-items: center;
@@ -45,11 +45,11 @@ h3 {
 
 .home-title {
   /* margin-left: 10px; */
-  /* padding-left: 24px; */
+  padding-left: 18px;
   text-decoration: none;
   font-family: "Brush Script MT";
   font-weight: bold;
-  font-size: 40px;
+  font-size: 35px;
   color: #f65858;
 }
 

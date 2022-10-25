@@ -17,26 +17,42 @@ const Navigation = ({ isLoaded }) => {
             <input type="text" placeholder="Search for keywords" />
           </div>
         </div>
-        {currentUser && <ProfileButton user={currentUser} />}
-        {!currentUser && (
-          <div className="user">
-            <Link to="/login" className="login-link">
-              Log in
+
+        <div className="header-right">
+          {currentUser && (
+            <Link className="start-new-group" to="/groups/current/new">
+              Start a new group
             </Link>
-            <Link to="/signup" className="signup-link">
-              Sign up
+          )}
+          {/* come back here to change it for more details */}
+          {!currentUser && (
+            <Link className="start-new-group" to="/login">
+              Start a new group
             </Link>
-          </div>
-        )}
+          )}
+          {currentUser && <ProfileButton user={currentUser} />}
+          {!currentUser && (
+            <div className="user">
+              <Link to="/login" className="login-link">
+                Log in
+              </Link>
+              <Link to="/signup" className="signup-link">
+                Sign up
+              </Link>
+            </div>
+          )}
+        </div>
       </div>
-      <div className="event-groups-content">
-        <div className="events-groups">
-          <NavLink to="/events" className="event-link">
-            Events
-          </NavLink>
-          <NavLink to="/groups" className="group-link">
-            Groups
-          </NavLink>
+      <div className="event-groups-body">
+        <div className="event-groups-content">
+          <div className="events-groups">
+            <NavLink to="/events" className="event-link">
+              Events
+            </NavLink>
+            <NavLink to="/groups" className="group-link">
+              Groups
+            </NavLink>
+          </div>
         </div>
       </div>
     </>

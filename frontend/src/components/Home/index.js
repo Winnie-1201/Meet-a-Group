@@ -9,15 +9,15 @@ const Home = ({ isLoaded }) => {
   return (
     <>
       <div className="homepage">
-        <div className="home-header">
-          <div className="header-detail">
-            {/* <div className="header-left">
+        {/* <div className="home-header"> */}
+        {/* <div className="header-detail"> */}
+        {/* <div className="header-left">
               <Link to="/" className="home-title">
                 MeetaGroup
               </Link>
             </div> */}
-            {/* {isLoaded && currentUser && <ProfileButton user={currentUser} />} */}
-            {/* {isLoaded && !currentUser && (
+        {/* {isLoaded && currentUser && <ProfileButton user={currentUser} />} */}
+        {/* {isLoaded && !currentUser && (
               <div className="user">
                 <Link to="/login" className="login-link">
                   Log in
@@ -27,8 +27,8 @@ const Home = ({ isLoaded }) => {
                 </Link>
               </div>
             )} */}
-          </div>
-        </div>
+        {/* </div> */}
+        {/* </div> */}
 
         <main className="homepage-main">
           <div className="main-div">
@@ -120,9 +120,15 @@ const Home = ({ isLoaded }) => {
                       />
                     </div>
                   </div>
-
-                  {/* <div className="three-search-button"> */}
-                  <button className="three-search-button">Search</button>
+                  {/* --
+                  --- */}
+                  {/* change it back to button later> */}
+                  {/* <button className="three-search-button">Search</button> */}
+                  <div className="three-search-button">
+                    <p>Search</p>
+                  </div>
+                  {/* --
+                  --- */}
                   {/* </div> */}
                 </form>
               </div>

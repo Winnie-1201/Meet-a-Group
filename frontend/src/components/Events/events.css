@@ -9,10 +9,16 @@ h3 {
   margin: 0;
 }
 
+.all-events-body {
+  max-width: 1080px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .all-events {
   display: flex;
   flex-direction: column;
-  margin: 0 10px 10px 10px;
+  margin: 0 10px 10px 16px;
 }
 
 .one-event {

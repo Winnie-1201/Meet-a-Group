@@ -37,7 +37,8 @@ const Groups = () => {
           </NavLink>
         </div>
       </div> */}
-      <div className="event-groups-content">
+      {/* <div className="event-groups-content"> */}
+      <div className="all-groups-body">
         <div className="all-groups">
           {/* <h2 className="group-header">All groups</h2> */}
           {groups.map((group) => (
@@ -60,6 +61,8 @@ const Groups = () => {
             </div>
           ))}
         </div>
+        <div></div>
+        {/* </div> */}
       </div>
     </>
   );

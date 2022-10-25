@@ -28,30 +28,32 @@ const Events = () => {
           </NavLink>
         </div>
       </div> */}
-      <div className="all-events">
-        {/* <h2>All events</h2> */}
+      <div className="all-events-body">
+        <div className="all-events">
+          {/* <h2>All events</h2> */}
 
-        {events.map((event) => (
-          <div className="one-event" key={event.id}>
-            <Link to={`/events/${event.id}`} className="one-event-link">
-              <div className="event-image">
-                <img src={event.previewImage} className="event-img" />
-              </div>
-              <div className="one-event-detail">
-                <p className="event-date">{event.startDate}</p>
-                <p className="event-name">{event.name}</p>
-                <p className="event-group">{event.Group.name}</p>
-                <p className="event-location">
-                  {event.Group.city}, {event.Group.state}
-                </p>
-                <p className="event-attendees">
-                  {event.numAttending} attendees
-                </p>
-                <p className="event-type">{event.type} Event</p>
-              </div>
-            </Link>
-          </div>
-        ))}
+          {events.map((event) => (
+            <div className="one-event" key={event.id}>
+              <Link to={`/events/${event.id}`} className="one-event-link">
+                <div className="event-image">
+                  <img src={event.previewImage} className="event-img" />
+                </div>
+                <div className="one-event-detail">
+                  <p className="event-date">{event.startDate}</p>
+                  <p className="event-name">{event.name}</p>
+                  <p className="event-group">{event.Group.name}</p>
+                  <p className="event-location">
+                    {event.Group.city}, {event.Group.state}
+                  </p>
+                  <p className="event-attendees">
+                    {event.numAttending} attendees
+                  </p>
+                  <p className="event-type">{event.type} Event</p>
+                </div>
+              </Link>
+            </div>
+          ))}
+        </div>
       </div>
     </>
   );

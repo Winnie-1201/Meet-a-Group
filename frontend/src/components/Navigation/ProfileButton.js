@@ -35,25 +35,31 @@ const ProfileButton = ({ user }) => {
   };
 
   return (
-    <>
+    <div>
       <button className="header-bar-icon-button" onClick={onClick}>
         <i className="fa-regular fa-circle-user" />
       </button>
       {openMenu && (
-        <ul>
-          <li>{user.username}</li>
-          <li>{user.email}</li>
-          <li>
-            <NavLink exact to={`/groups/current`}>
+        <ul className="icon-detail">
+          <li className="icon-username">{user.username}</li>
+          <li className="icon-email">{user.email}</li>
+          <li className="icon-groups-link">
+            <NavLink
+              className="icon-groups-navlink"
+              exact
+              to={`/groups/current`}
+            >
               My groups
             </NavLink>
           </li>
-          <li>
-            <button onClick={handleLogout}>Log Out</button>
+          <li className="icon-logout">
+            <button className="icon-logout-button" onClick={handleLogout}>
+              Log Out
+            </button>
           </li>
         </ul>
       )}
-    </>
+    </div>
   );
 };
 
