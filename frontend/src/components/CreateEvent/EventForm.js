@@ -29,9 +29,10 @@ const EventForm = ({ event, groupId, formType }) => {
       newErrors.name = "Event name needs to be at 5 least characters";
     if (type !== "Online" && type !== "In person")
       newErrors.type = "Please choose the type of the event";
-    if (!capacity)
-      newErrors.capacity = "Please enter the capacity of the event";
-    if (!price) newErrors.price = "Please enter the price of the event";
+    if (capacity.length === 0 || capacity < 0)
+      newErrors.capacity = "Please enter the valid capacity of the event";
+    if (price.length === 0 || price < 0)
+      newErrors.price = "Please enter the valid price of the event";
     if (description?.length === 0)
       newErrors.description = "Please enter the description of the event";
     if (!startDate)

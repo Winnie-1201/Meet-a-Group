@@ -148,20 +148,20 @@ const groupsReducer = (state = initialState, action) => {
       newState = { allGroups: {}, singleGroup: {} };
       const allGroups = {};
       action.groups.forEach((group) => {
-        allGroups[group.id] = { ...group };
+        allGroups[group.id] = group;
       });
-      newState.allGroups = { ...allGroups };
+      newState.allGroups = allGroups;
       // console.log("LOAD: new state in reducer", newState);
       return newState;
     case LOAD_ONE:
-      newState = { ...state, ...state.allGroups, ...state.singleGroup };
+      newState = { allGroups: {}, singleGroup: {} };
       const singleGroup = {};
       singleGroup[action.group.id] = action.group;
       newState.singleGroup = singleGroup;
       // console.log("loading one group: new state in reducer", newState);
       return newState;
     case CREATE:
-      newState = { ...state };
+      newState = { allGroups: {}, singleGroup: {} };
       newState.singleGroup[action.group.id] = action.group;
       // console.log("CREATE new state in reducer", newState);
       return newState;

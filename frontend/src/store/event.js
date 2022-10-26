@@ -151,7 +151,7 @@ const eventsReducer = (state = initialState, action) => {
       return newEvents;
     case LOAD_ONE:
       // newEvents = { allEvents: {}, singleEvent: {} };
-      newEvents = { ...state, ...state.allEvents, ...state.singleEvent };
+      newEvents = { allEvents: {}, singleEvent: {} };
       const singleEvent = {};
       singleEvent[action.event.id] = action.event;
       newEvents.singleEvent = singleEvent;
@@ -160,7 +160,7 @@ const eventsReducer = (state = initialState, action) => {
 
     case CREATE_EVENT:
       // try change it back to {...state}
-      const newEvent = { ...initialState };
+      const newEvent = { allEvents: {}, singleEvent: {} };
       newEvent.singleEvent[action.event.id] = action.event;
       return newEvent;
     case EDIT:

@@ -184,32 +184,34 @@ const GroupDetails = () => {
                   )}
                 </div>
               </div>
-              {events?.map((event) => (
-                <div key={event.id}>
-                  {/* <Link to={`/events/${event.id}`}> */}
-                  <div className="events-show">
-                    <div className="events-show-pics">
-                      <img src={event?.previewImage} />
-                    </div>
-                    <div className="events-show-details">
-                      <h2>{event.name}</h2>
-                      <p className="event-city">{event.Venue?.city}</p>
-                      <div className="events-details-link">
-                        click
-                        <Link
-                          className="events-details-link-text"
-                          to={`/events/${event.id}`}
-                        >
-                          {" "}
-                          here{" "}
-                        </Link>
-                        to see more details
+              <div className="all-events-group-detail">
+                {events?.map((event) => (
+                  <div key={event.id} className="event-detail-group-detail">
+                    {/* <Link to={`/events/${event.id}`}> */}
+                    <div className="events-show">
+                      <div className="events-show-pics">
+                        <img src={event?.previewImage} />
+                      </div>
+                      <div className="events-show-details">
+                        <h2>{event.name}</h2>
+                        <p className="event-city">{event.Venue?.city}</p>
+                        <div className="events-details-link">
+                          click
+                          <Link
+                            className="events-details-link-text"
+                            to={`/events/${event.id}`}
+                          >
+                            {" "}
+                            here{" "}
+                          </Link>
+                          to see more details
+                        </div>
                       </div>
                     </div>
+                    {/* </Link> */}
                   </div>
-                  {/* </Link> */}
-                </div>
-              ))}
+                ))}
+              </div>
 
               {showEvents && events.length === 0 && (
                 <>

@@ -15,19 +15,22 @@ const EventDetails = () => {
     useSelector((state) => state.event.singleEvent)
   )[0];
 
-  // console.log("event details in EventDetails component=========", event);
+  const events = useSelector((state) => state.event);
+
+  console.log("event details in EventDetails component=========", events);
 
   const group = Object.values(
     useSelector((state) => state.group.singleGroup)
   )[0];
 
-  // console.log("groups details in EventDetails component=========", groups);
+  // console.log("groups details in EventDetails component=========", group);
 
-  const helpDelay = async (eventId) => {
-    await dispatch(getEventById(eventId));
-  };
+  // const helpDelay = async (eventId) => {
+  //   await dispatch(getEventById(eventId));
+  // };
   useEffect(() => {
-    helpDelay(eventId);
+    // helpDelay(eventId);
+    dispatch(getEventById(eventId));
     // dispatch(getGroupByUserThunk());
   }, [dispatch]);
 
@@ -44,7 +47,7 @@ const EventDetails = () => {
   };
 
   if (!event) return null;
-  // if (!event.EventImages) return null;
+  if (!event.EventImages) return null;
   if (!group) return null;
 
   // console.log("event group id in eventdetails", event.groupId);
