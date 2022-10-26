@@ -81,6 +81,7 @@ const EventDetails = () => {
               )}
           </div>
         </div>
+
         <div className="event-details-middle-flex">
           <div className="event-details-middle-details">
             <div className="event-detail-flex">
@@ -136,16 +137,16 @@ const EventDetails = () => {
               <div className="event-detail-right">
                 <div className="event-detail-right-sticky">
                   <div className="right-group-info">
-                    <Link to={`groups/{group?.id}`} className="group-info-link">
+                    <Link to={`groups/{group.id}`} className="group-info-link">
                       <div className="group-info-link-flex">
                         <div className="group-info-img">
-                          <img src={group?.previewImage} />
+                          <img src={group.previewImage} />
                         </div>
                         <div className="group-info-text">
-                          <div className="group-info-title">{group?.name}</div>
+                          <div className="group-info-title">{group.name}</div>
                           <div className="group-info-privacy-flex">
                             <span>
-                              {group?.private === true ? "Private" : "Public"}{" "}
+                              {group.private === true ? "Private" : "Public"}{" "}
                               group
                             </span>
                           </div>
