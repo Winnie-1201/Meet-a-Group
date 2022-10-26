@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory, useParams } from "react-router-dom";
 import { getEventById, deleteEvent } from "../../store/event";
-import { getGroupByUserThunk } from "../../store/group";
+import { getGroupById, getGroupByUserThunk } from "../../store/group";
 import "./EventDetails.css";
 
 const EventDetails = () => {
@@ -17,7 +17,9 @@ const EventDetails = () => {
 
   // console.log("event details in EventDetails component=========", event);
 
-  const groups = useSelector((state) => state.group.allGroups);
+  const group = Object.values(
+    useSelector((state) => state.group.singleGroup)
+  )[0];
 
   // console.log("groups details in EventDetails component=========", groups);
 
@@ -26,7 +28,8 @@ const EventDetails = () => {
   };
   useEffect(() => {
     helpDelay(eventId);
-    dispatch(getGroupByUserThunk());
+    // dispatch(getGroupByUserThunk());
+    dispatch(getGroupById(event?.groupId));
   }, [dispatch]);
 
   const handleDelete = async (e) => {
@@ -37,10 +40,13 @@ const EventDetails = () => {
 
   if (!event) return null;
   if (!event.EventImages) return null;
+  if (!group) return null;
 
   // console.log("event group id in eventdetails", event.groupId);
 
-  const group = Object.values(groups)[0];
+  // const group = Object.values(groups)[0];
+
+  // console.log("allgroups---", group);
 
   const newStartDate = new Date(event.startDate);
   const newEndDate = new Date(event.endDate);
@@ -137,10 +143,13 @@ const EventDetails = () => {
               <div className="event-detail-right">
                 <div className="event-detail-right-sticky">
                   <div className="right-group-info">
-                    <Link to={`groups/{group.id}`} className="group-info-link">
+                    <Link
+                      to={`/groups/${group?.id}`}
+                      className="group-info-link"
+                    >
                       <div className="group-info-link-flex">
                         <div className="group-info-img">
-                          <img src={group.previewImage} />
+                          <img src={group.GroupImages[0].url} />
                         </div>
                         <div className="group-info-text">
                           <div className="group-info-title">{group.name}</div>
