@@ -12,7 +12,7 @@ import GroupDetails from "./components/CreateGroup/GroupDetails";
 import EditGroup from "./components/CreateGroup/EditGroupForm";
 import Events from "./components/Events";
 import CreateEvent from "./components/CreateEvent";
-import MyEvents from "./components/MyEvents";
+
 import EventDetails from "./components/CreateEvent/EventDetails";
 import EditEvent from "./components/CreateEvent/EditEvent";
 import Home from "./components/Home";

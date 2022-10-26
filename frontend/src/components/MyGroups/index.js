@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { getGroupByUserThunk } from "../../store/group";
-
+import "./MyGroups.css";
 const MyGroups = () => {
   // const { userId } = useParams();
   // console.log("organizerId", userId);
@@ -33,26 +33,35 @@ const MyGroups = () => {
     );
 
   return (
-    <>
-      <div>
-        <h2>My groups</h2>
-        {groups.map((group) => (
-          <Link
-            key={group.name}
-            to={`/groups/${group.id}`}
-            className="nav-link"
-          >
-            <span>
-              <p>{group.name}</p>
-              <p>About: {group.about}</p>
-              <p>Type: {group.type}</p>
-              <img src={`${group?.previewImage}`} />
-            </span>
-          </Link>
-        ))}
+    <div>
+      <div className="mygroups-body">
+        <div className="mygroups-header">
+          <h2>My groups</h2>
+          <div className="group-nav-link">
+            <Link className="nav-link-text" to="/groups/current/new">
+              Create a new groups
+            </Link>
+          </div>
+        </div>
+        <div className="mygroups-detail">
+          {groups.map((group) => (
+            // <div className="mygroups-detail" }>
+            <div className="mygroup-info" key={group.name}>
+              <div className="mygroup-image">
+                <img className="mygroup-img" src={`${group?.previewImage}`} />
+              </div>
+              <div className="text-detail">
+                <p className="mygroup-name">{group.name}</p>
+                <Link className="mygroup-nav-link" to={`/groups/${group.id}`}>
+                  more
+                </Link>
+              </div>
+              {/* </div> */}
+            </div>
+          ))}
+        </div>
       </div>
-      <Link to="/groups/current/new">Create a new groups</Link>
-    </>
+    </div>
   );
 };
 

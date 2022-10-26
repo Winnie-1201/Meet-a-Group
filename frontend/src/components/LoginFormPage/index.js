@@ -83,6 +83,15 @@ const LoginFormPage = () => {
         ))}
       </ul>
       <button type="submit">Log in</button>
+      <button
+        type="submit"
+        onClick={() => {
+          setCredential("demo@user.io");
+          setPassword("password");
+        }}
+      >
+        Demo user
+      </button>
     </form>
     // </section>
   );

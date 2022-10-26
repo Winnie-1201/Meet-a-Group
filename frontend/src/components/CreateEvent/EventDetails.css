@@ -247,7 +247,7 @@ attendees cards detail here
 }
 
 .event-detail-right {
-  margin: 40px 0 0 100px;
+  margin: 40px 0 0 92px;
 }
 
 .event-detail-right-sticky {
@@ -265,10 +265,10 @@ attendees cards detail here
   flex-direction: row;
   align-items: center;
   border-radius: 1rem;
-  padding: 24px;
+  padding: 20px;
   background-color: rgb(255 255 255);
   /* max-width: 340px; */
-  width: 350px;
+  /* width: 350px; */
   height: 112px;
   box-sizing: border-box;
   line-height: 1.25rem;
@@ -307,12 +307,22 @@ attendees cards detail here
   color: #757575;
 }
 
+.right-group-info {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  /* margin-top: 1.25rem; */
+  background-color: rgb(255 255 255);
+  border-radius: 1rem;
+  box-sizing: border-box;
+}
+
 .right-event-info {
   font-size: 0.875rem;
   line-height: 1.25rem;
   margin-top: 1.25rem;
   background-color: rgb(255 255 255);
   border-radius: 1rem;
+  box-sizing: border-box;
 }
 
 .right-event-info-bottom {
