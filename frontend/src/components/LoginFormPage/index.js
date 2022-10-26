@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
 import "./LoginForm.css";
 
-const LoginFormPage = ({ user }) => {
+const LoginFormPage = () => {
   const dispatch = useDispatch();
   //   const history = useHistory();
   const sessionUser = useSelector((state) => state.session.user);
@@ -45,19 +45,17 @@ const LoginFormPage = ({ user }) => {
   return (
     // <section className="edit-form-holder centered middled">
     <form className="login-form" onSubmit={handleSubmit}>
-      {errors.length > 0 && (
-        <ul>
-          {errors.map((error, idx) => (
-            <li key={idx}>{error}</li>
-          ))}
-        </ul>
-      )}
       <i className="fa-solid fa-cannabis fa-xl" />
+      <ul>
+        {errors.map((error, idx) => (
+          <li key={idx}>{error}</li>
+        ))}
+      </ul>
       <h2>Log in</h2>
       <label>
         Username or email
         <input
-          type="text"
+          type="email"
           // placeholder="Username or Email"
           value={credential}
           onChange={getCredential}
@@ -66,12 +64,19 @@ const LoginFormPage = ({ user }) => {
       <label>
         Password
         <input
-          type="text"
+          type="password"
           // placeholder="Password"
           value={password}
           onChange={getPassword}
           required
         />
+        {errors.length > 0 && (
+          <ul className="error-messages">
+            {errors.map((error, idx) => (
+              <li key={idx}>{error}</li>
+            ))}
+          </ul>
+        )}
       </label>
       <button type="submit">Log in</button>
     </form>

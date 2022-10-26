@@ -2,9 +2,16 @@ import { useSelector } from "react-redux";
 import { NavLink, Link } from "react-router-dom";
 import ProfileButton from "./ProfileButton";
 import "./Navigation.css";
+// import LoginFormModal from "../LoginFormModal";
 
 const Navigation = ({ isLoaded }) => {
   const currentUser = useSelector((state) => state.session.user);
+  // let sessionLinks;
+  // if (currentUser) {
+  //   sessionLinks = (
+
+  //   )
+  // }
   console.log("getting in the navigation component======================");
   return (
     <>
@@ -36,6 +43,7 @@ const Navigation = ({ isLoaded }) => {
               <Link to="/login" className="login-link">
                 Log in
               </Link>
+              {/* <LoginFormModal /> */}
               <Link to="/signup" className="signup-link">
                 Sign up
               </Link>
