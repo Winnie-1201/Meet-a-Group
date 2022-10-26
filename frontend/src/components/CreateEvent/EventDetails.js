@@ -31,8 +31,10 @@ const EventDetails = () => {
     // dispatch(getGroupByUserThunk());
   }, [dispatch]);
 
+  // console.log("event----", event);
   useEffect(() => {
-    // adding event, re-render when event state change
+    dispatch(getGroupById(event?.groupId));
+    // add event to re-render
   }, [dispatch, event]);
 
   const handleDelete = async (e) => {
@@ -42,7 +44,7 @@ const EventDetails = () => {
   };
 
   if (!event) return null;
-  if (!event.EventImages) return null;
+  // if (!event.EventImages) return null;
   if (!group) return null;
 
   // console.log("event group id in eventdetails", event.groupId);
