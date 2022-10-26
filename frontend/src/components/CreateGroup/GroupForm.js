@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { useHistory, useParams } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { createGroup, editGroupThunk } from "../../store/group";
 import "./GroupForm.css";
 
@@ -14,6 +14,7 @@ const GroupForm = ({ group, formType }) => {
   if (group.private === true) privacy = "Private";
   else if (group.private === false) privacy = "Public";
   else privacy = "";
+
   const [name, setName] = useState(group.name);
   const [about, setAbout] = useState(group.about);
   const [type, setType] = useState(group.type);
@@ -24,15 +25,8 @@ const GroupForm = ({ group, formType }) => {
   // const [errors, setErrors] = useState([]);
   const [errors, setErrors] = useState({});
 
-  // let privacy = group.private === true ? "Private" : "Public";
-  // if (formType === "Update Group") setPrivate(privacy);
-  console.log("isPrivate", isPrivate);
+  let create = formType === "Create Group" ? true : false;
 
-  // let image =
-  //   formType === "Create Group" ? previewImg : group.GroupImages[0].url;
-  let update = formType === "Create Group" ? true : false;
-  // const groupId = formType === "Edit Group" ? group.id : null;
-  // previewImg = formType === "Create Group" ? "" : group.GroupImages[0].url;
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -48,7 +42,7 @@ const GroupForm = ({ group, formType }) => {
     //   newErrors.push("Type must be 'Online' or 'In person'");
     // if (isPrivate !== true || false)
     //   newErrors.push("You need to set the privacy of your group");
-    // if (update && previewImage?.length === 0)
+    // if (create && previewImage?.length === 0)
     //   newErrors.push("You need to upload your first image for your group");
     // if (city?.length === 0)
     //   newErrors.push("You need to set the city of your group");
@@ -72,7 +66,7 @@ const GroupForm = ({ group, formType }) => {
       isPrivate !== "Private"
     )
       newErrors.isPrivate = "You need to set the privacy of your group";
-    if (update && !previewImage)
+    if (create && !previewImage)
       newErrors.previewImg =
         "You need to upload your first image for your group";
     if (city?.length === 0)
@@ -83,22 +77,21 @@ const GroupForm = ({ group, formType }) => {
     setErrors(newErrors);
   }, [name, about, type, isPrivate, previewImage, city, state]);
 
-  console.log("========error-------------", errors.isPrivate, isPrivate);
+  // console.log("========error-------------", errors.isPrivate, isPrivate);
 
-  console.log("enter the GroupForm component======================");
+  // console.log("enter the GroupForm component======================");
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // let priv = isPrivate == "Public" ? false : true;
     let priv;
     if (isPrivate === "Public") priv = false;
     else if (isPrivate === "Private") priv = true;
-    // else if (isPrivate === true || isPrivate === false) priv = isPrivate;
-    console.log(
-      "---------------the privacy in groupForm component---------------",
-      isPrivate,
-      priv
-    );
+
+    // console.log(
+    //   "---------------the privacy in groupForm component---------------",
+    //   isPrivate,
+    //   priv
+    // );
 
     group = {
       ...group,
@@ -106,12 +99,11 @@ const GroupForm = ({ group, formType }) => {
       name,
       about,
       type,
-      // there is some problem with it
       private: priv,
       city,
       state,
-      // previewImage,
     };
+
     let img = {};
     if (previewImage?.length > 0) {
       img = {
@@ -121,17 +113,17 @@ const GroupForm = ({ group, formType }) => {
     }
 
     setErrors([]);
-    console.log("the group id in edit groupform", group.id);
+    // console.log("the group id in edit groupform", group.id);
 
     const newGroup =
       formType === "Create Group"
         ? await dispatch(createGroup(group, img))
         : await dispatch(editGroupThunk(group, group.id));
 
-    console.log(
-      "here is the new group created in CreateForm component=================",
-      newGroup
-    );
+    // console.log(
+    //   "here is the new group created in CreateForm component=================",
+    //   newGroup
+    // );
     if (newGroup) return history.push(`/groups/${newGroup.id}`);
   };
 
@@ -210,27 +202,8 @@ const GroupForm = ({ group, formType }) => {
             <li className="error-detail-group-form">{errors.isPrivate}</li>
           </ul>
         )}
-        {/* <input
-          type="radio"
-          name="isPrivate"
-          //   value="private"
-          value="Private"
-          checked={isPrivate === "Private" ? "checked" : ""}
-          onChange={(e) => setPrivate(e.target.value)}
-        />
-        private
-        <input
-          type="radio"
-          name="isPrivate"
-          value="Public"
-          checked={isPrivate === "Public" ? "checked" : ""}
-          onChange={(e) => setPrivate(e.target.value)}
-        />
-        public */}
-        {/* NOTE!!!! */}
-        {/* For some reason, I can't get the preview imgae link when I update */}
       </label>
-      {update && (
+      {create && (
         <label>
           Preview image
           <input

@@ -1,37 +1,25 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { getEvents } from "../../store/event";
-import groupsReducer from "../../store/group";
+// import groupsReducer from "../../store/group";
 import "./events.css";
 
 const Events = () => {
   const dispatch = useDispatch();
   const events = Object.values(useSelector((state) => state.event.allEvents));
-  console.log("all the events in Events component===========", events);
+  // console.log("all the events in Events component===========", events);
 
   useEffect(() => {
     dispatch(getEvents());
   }, [dispatch]);
 
   if (!events) return null;
-  // const newStartDate = event.startDate;
+
   return (
     <>
-      {/* <div className="event-groups-content">
-        <div className="events-groups">
-          <NavLink to="/events" className="event-link">
-            Events
-          </NavLink>
-          <NavLink to="/groups" className="group-link">
-            Groups
-          </NavLink>
-        </div>
-      </div> */}
       <div className="all-events-body">
         <div className="all-events">
-          {/* <h2>All events</h2> */}
-
           {events.map((event) => (
             <div className="one-event" key={event.id}>
               <Link to={`/events/${event.id}`} className="one-event-link">

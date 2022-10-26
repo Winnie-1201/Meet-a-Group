@@ -6,20 +6,14 @@ ul {
 
 html {
   font-family: BlinkMacSystemFont, Arial, sans-serif;
-  /* BlinkMacSystemFont; */
-  /* , BlinkMacSystemFont, Roboto,
-    Helvetica, Arial, sans-serif;  */
-  /* margin: 0px 20px; */
 }
 
 .header {
-  /* margin: 20px 10px; */
   padding-bottom: 15px;
   border-bottom: 1px solid rgb(202, 197, 197);
   display: flex;
   justify-content: space-between;
   padding: 0 16px;
-  /* height: 65px; */
   align-items: center;
   margin-bottom: 40px;
   min-height: 64px;
@@ -33,17 +27,13 @@ html {
 .header-left {
   display: flex;
   flex-direction: row;
-  /* height: 42px; */
   align-items: center;
 }
 
 .header-search-bar {
-  /* padding: 8px 8px 8px 16px; */
   display: flex;
   margin-left: 40px;
-  /* border-radius: 10px; */
   flex-grow: 1;
-  /* height: 42px; */
   outline: 2px solid transparent;
   width: 100%;
   position: relative;
@@ -63,7 +53,6 @@ html {
 }
 
 .home {
-  /* margin-left: 10px; */
   padding-left: 24px;
   text-decoration: none;
   font-family: "Brush Script MT";
@@ -75,7 +64,6 @@ html {
 .header-right {
   display: flex;
   align-items: center;
-  /* justify-content: center; */
   flex-direction: row;
   padding-left: 16px;
 }
@@ -87,7 +75,6 @@ html {
   font-size: 14px;
   font-weight: 500;
   margin-right: 40px;
-  /* height: 42px; */
 }
 
 .user {
@@ -113,13 +100,6 @@ html {
   color: #008294;
   background-color: white;
 }
-/* .nav-link {
-  margin: 10px;
-  text-decoration: none;
-  font-size: 18px;
-  color: rgb(52, 50, 50);
-  margin: 10px 10px;
-} */
 
 .event-groups-body {
   max-width: 1080px;
@@ -130,13 +110,9 @@ html {
 .event-groups-content {
   padding: 0px 16px;
   margin: 0 0 64px;
-  /* border-bottom: 1px solid rgb(202, 197, 197); */
 }
 .events-groups {
   display: flex;
-  /* margin-top: 40px; */
-  /* margin-bottom: 20px; */
-  /* padding-bottom: 0 16px; */
   padding: 12px 0px 6px;
 }
 
@@ -155,8 +131,3 @@ html {
   color: #008294;
   border-bottom: 4px solid #008294;
 }
-
-/* img {
-  width: 150px;
-  height: 120px;
-} */

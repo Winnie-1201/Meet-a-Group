@@ -3,10 +3,10 @@
   color: red;
 }
 
-h1 {
+/* h1 {
   padding: 0;
   margin: 0;
-}
+} */
 
 .signup-form {
   display: flex;
@@ -43,20 +43,12 @@ h1 {
   margin: 32px 0 16px 9;
 }
 
-/* .body-name {
-  display: flex;
-  flex-direction: column;
-} */
-
 .signup-form label {
   color: black;
   display: block;
   font-size: 16px;
   margin-top: 15px;
   width: 100%;
-
-  /* margin-top: 20px;
-    margin-bottom: 5px; */
 }
 .signup-form input {
   width: 100%;
@@ -70,9 +62,6 @@ h1 {
   border-radius: 8px;
   padding: 5px;
   box-sizing: border-box;
-  /* the indent of the input text;
-    similar to padding left but not taking
-    space for the box model */
   text-indent: 2px;
 }
 .signup-form button {
@@ -85,25 +74,11 @@ h1 {
   border-radius: 8px;
   margin-top: 40px;
   padding: 8px 12px;
-  /* so the button is clickable */
   cursor: pointer;
-  /* outline: none; */
 }
 
-/* form .fa-cannabis {
-    color: rgb(231, 177, 186);
-    font-size: 40px;
-  } */
-
-/* .error-messages {
-    padding: 0;
-    color: red;
-    font-size: 14px;
-  } */
-
+/* change it back to class later */
 input:focus {
-  /* background-color: rgb(196, 226, 237);
-    border: 0.5px solid rgb(209, 68, 136); */
   outline: 1px solid #55b7e1;
 }
 

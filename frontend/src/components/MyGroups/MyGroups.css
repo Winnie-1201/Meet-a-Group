@@ -2,10 +2,29 @@
   text-decoration: none;
 }
 
+.mygroup-nogroup {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+}
+
+.mygroup-nogroup p {
+  padding: 20px;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.create-group-nav-link {
+  padding-top: 20px;
+  font-size: 18px;
+  text-decoration: none;
+  color: #008294;
+}
+
 .mygroups-body {
   display: flex;
   flex-direction: column;
-  /* align-items: center; */
 }
 
 .mygroups-header {
@@ -54,15 +73,12 @@
   padding: 20px 0;
   margin: 20px 0;
   box-sizing: border-box;
-  /* justify-content: space-between; */
 }
 
 .mygroup-image {
   display: flex;
   flex-direction: row;
   margin-right: 30px;
-  /* padding: 20px; */
-  /* margin: 15px; */
 }
 
 .mygroup-img {

@@ -205,17 +205,7 @@ router.get("/:groupId/events", async (req, res, next) => {
 // create a group;
 router.post("/", requireAuth, validateGroup, async (req, res, next) => {
   let { name, about, type, private, city, state } = req.body;
-  // if (private === "true") private = true;
-  // if (private === "false") private = false;
-  console.log(
-    "create a group in backend",
-    name,
-    about,
-    type,
-    private,
-    city,
-    state
-  );
+
   const newGroup = await Group.create({
     organizerId: req.user.id,
     name,
@@ -602,7 +592,7 @@ router.put(
       },
     });
     const preStatus = member.toJSON().status;
-    console.log(status, preStatus);
+    // console.log(status, preStatus);
 
     if (
       status === "member" &&

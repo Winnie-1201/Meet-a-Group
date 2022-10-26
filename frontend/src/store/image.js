@@ -29,7 +29,7 @@ export const createImg = (image, groupId) => async (dispatch) => {
 
   if (response.ok) {
     const img = await response.json();
-    console.log("create group image thunk", img);
+    // console.log("create group image thunk", img);
     dispatch(create(img, groupId));
     return img;
   }
@@ -45,7 +45,7 @@ export const createEventImage = (image, eventId) => async (dispatch) => {
   });
   if (response.ok) {
     const img = await response.json();
-    console.log("create event image thunk", img);
+    // console.log("create event image thunk", img);
     dispatch(create(img, eventId));
     return img;
   }

@@ -3,15 +3,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { getGroupByUserThunk } from "../../store/group";
 import "./MyGroups.css";
+
 const MyGroups = () => {
-  // const { userId } = useParams();
-  // console.log("organizerId", userId);
-  // const currentUser = useSelector((state) => state.session.user);
   const groups = Object.values(useSelector((state) => state.group.allGroups));
-  console.log(
-    "here is all my groups in MyGroups component!!!!=======================",
-    groups
-  );
+  // console.log(
+  //   "here is all my groups in MyGroups component!!!!=======================",
+  //   groups
+  // );
   const dispatch = useDispatch();
 
   const helpDelay = async () => {
@@ -20,16 +18,16 @@ const MyGroups = () => {
 
   useEffect(() => {
     helpDelay();
-    // dispatch(getGroupByUserThunk());
   }, [dispatch]);
 
-  // if (!group.id) return null;
   if (!groups.length > 0)
     return (
-      <>
+      <div className="mygroup-nogroup">
         <p>You don't have any group yet.</p>
-        <Link to="/groups/current/new">Go to create your first group!</Link>
-      </>
+        <Link className="create-group-nav-link" to="/groups/current/new">
+          Go to create your first group!
+        </Link>
+      </div>
     );
 
   return (

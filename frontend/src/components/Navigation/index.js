@@ -4,15 +4,10 @@ import ProfileButton from "./ProfileButton";
 import "./Navigation.css";
 // import LoginFormModal from "../LoginFormModal";
 
-const Navigation = ({ isLoaded }) => {
+const Navigation = () => {
   const currentUser = useSelector((state) => state.session.user);
-  // let sessionLinks;
-  // if (currentUser) {
-  //   sessionLinks = (
 
-  //   )
-  // }
-  console.log("getting in the navigation component======================");
+  // console.log("getting in the navigation component======================");
   return (
     <>
       <div className="header">
@@ -65,38 +60,6 @@ const Navigation = ({ isLoaded }) => {
       </div>
     </>
   );
-
-  // if (currentUser) {
-  //   return (
-  //     <>
-  //       <NavLink to="/">Home</NavLink>
-  //       <ProfileButton user={currentUser} />
-  //     </>
-  //   );
-  // } else {
-  //   return (
-  //     <>
-  //       <NavLink to="/" className="nav-link">
-  //         Home
-  //       </NavLink>
-  //       <NavLink to="/login" className="nav-link">
-  //         Log in
-  //       </NavLink>
-  //       <NavLink to="/signup" className="nav-link">
-  //         Sign up
-  //       </NavLink>
-  //     </>
-  //   );
-  // }
-
-  //   return (
-  //     <nav className="nav-bar">
-  //       <NavLink to="/">Home</NavLink>
-  //       {signup && <NavLink to="/signup">Sign Up</NavLink>}
-  //       {login && <NavLink to="/login">Login</NavLink>}
-  //       {logout && <button onClick={handleLogout}>Logout</button>}
-  //     </nav>
-  //   );
 };
 
 export default Navigation;

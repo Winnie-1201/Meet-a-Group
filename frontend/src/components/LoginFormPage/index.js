@@ -30,16 +30,6 @@ const LoginFormPage = () => {
       const data = await res.json();
       if (data && data.errors) setErrors(data.errors);
     });
-    // const payload = {
-    //   credential,
-    //   password,
-    // };
-
-    // const returnUser = await dispatch(sessionActions.loginSession(payload));
-
-    // if (returnUser) {
-    //   history.push("/");
-    // }
   };
 
   return (

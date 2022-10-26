@@ -2,8 +2,6 @@ import { csrfFetch } from "./csrf";
 
 const LOAD = "user/loadSession";
 const REMOVE = "user/removeSession";
-// const RESTORE = "user/restoreSession"
-// const ADD = "user/addSession";
 
 // regular action creator returning the current user information
 const load = (user) => {
@@ -18,19 +16,6 @@ const remove = () => {
     type: REMOVE,
   };
 };
-
-// const add = (user) => {
-//     return  {
-//         type: ADD,
-//     }
-// }
-
-// const restore = (user) => {
-//     return {
-//         type: RESTORE,
-//         user
-//     }
-// }
 
 // thunk action for login;
 export const loginSession = (user) => async (dispatch) => {
@@ -113,7 +98,6 @@ const sessionReducer = (state = initialState, action) => {
       newState.user = action.user;
       return newState;
     case REMOVE:
-      //   newState = { user: null };
       newState = Object.assign({}, state);
       newState.user = null;
       return newState;

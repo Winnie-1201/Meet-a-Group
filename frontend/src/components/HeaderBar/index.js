@@ -1,11 +1,11 @@
 import { useSelector } from "react-redux";
-import { NavLink, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import ProfileButton from "../Navigation/ProfileButton";
 import "./HomeBar.css";
 
-const HomeBar = ({ isLoaded }) => {
+const HomeBar = () => {
   const currentUser = useSelector((state) => state.session.user);
-  console.log("getting in the navigation component======================");
+  // console.log("getting in the navigation component======================");
   return (
     <>
       <div className="home-header">

@@ -1,50 +1,32 @@
-p,
+/* p,
 h2,
 h3 {
   margin: 0;
-}
-
-/* need to go back here to  */
-/* img {
-  width: 100px;
-  height: 100px;
 } */
 
 .homepage {
   display: flex;
   flex-direction: column;
-  /* justify-content: center; */
   padding: 0 16px;
 }
 
 .home-header {
   margin-bottom: 40px;
-  /* padding: 0 16px; */
 }
 
 .header-detail {
   display: flex;
-  /* padding: 0 16px; */
-  /* display: flex; */
   justify-content: space-between;
-  /* padding: 0 16px; */
   align-items: center;
 }
 
 .header-left {
   display: flex;
   flex-direction: row;
-  /* height: 42px; */
   align-items: center;
 }
 
-/* .header-search-bar {
-    padding: 8px 8px 8px 16px;
-    border-radius: 10px;
-  } */
-
 .home-title {
-  /* margin-left: 10px; */
   padding-left: 18px;
   text-decoration: none;
   font-family: "Brush Script MT";
@@ -71,7 +53,4 @@ h3 {
 .homepage-main {
   display: flex;
   flex-direction: column;
-  /* align-items: center; */
-  /* position: relative; */
-  /* flex-grow: 1; */
 }

@@ -11,33 +11,23 @@ const EventDetails = () => {
   const history = useHistory();
 
   const currentUser = useSelector((state) => state.session.user);
-  // const event = useSelector((state) => state.event)[eventId];
-  // const event = Object.values(useSelector((state) => state.event.singleEvent));
   const event = Object.values(
     useSelector((state) => state.event.singleEvent)
   )[0];
 
-  console.log("event details in EventDetails component=========", event);
+  // console.log("event details in EventDetails component=========", event);
 
-  //   console.log("the groupId", groupId);
-  //   console.log("group detail in EventDetails======", group);
-
-  //   const credential = currentUser.id === group.organizerId;
-  // const groupId = event.groupId;
   const groups = useSelector((state) => state.group.allGroups);
-  console.log("groups details in EventDetails component=========", groups);
+
+  // console.log("groups details in EventDetails component=========", groups);
+
   const helpDelay = async (eventId) => {
     await dispatch(getEventById(eventId));
   };
   useEffect(() => {
     helpDelay(eventId);
-    // dispatch(getEventById(eventId));
     dispatch(getGroupByUserThunk());
   }, [dispatch]);
-
-  // if (event) {
-  //   const groupId = event.groupId;
-  // }
 
   const handleDelete = async (e) => {
     e.preventDefault();
@@ -47,10 +37,11 @@ const EventDetails = () => {
 
   if (!event) return null;
   if (!event.EventImages) return null;
-  // console.log("iddd-------", currentUser.id, group.organizerId);
-  console.log("event group id in eventdetails", event.groupId);
+
+  // console.log("event group id in eventdetails", event.groupId);
+
   const group = Object.values(groups)[0];
-  console.log("group in eventdetails", group);
+
   const newStartDate = new Date(event.startDate);
   const newEndDate = new Date(event.endDate);
   const days = [
@@ -62,7 +53,7 @@ const EventDetails = () => {
     "Friday",
     "Saturday",
   ];
-  console.log("event startdate-----------", newStartDate.getFullYear());
+
   return (
     <>
       {/* <p>here is the event detail</p> */}
@@ -88,11 +79,7 @@ const EventDetails = () => {
                   </button>
                 </div>
               )}
-            {/* <p>Capacity: {event.capacity}</p>
-            <p>Description: {event.description}</p> */}
           </div>
-
-          {/* <img src={`${event.EventImages[0].url}`} /> */}
         </div>
         <div className="event-details-middle-flex">
           <div className="event-details-middle-details">
@@ -172,8 +159,6 @@ const EventDetails = () => {
                       <div className="event-info-bottom-one-flex">
                         <i className="fa-regular fa-clock" />
                         <div className="event-info-time">
-                          {/* split it out later */}
-                          {/* <time>{event.startDate}</time> */}
                           <div>
                             {days[newStartDate.getDay()]},{" "}
                             {new Intl.DateTimeFormat("en-US", {
