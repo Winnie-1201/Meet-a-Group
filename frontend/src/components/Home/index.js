@@ -3,33 +3,12 @@ import { NavLink, Link, Redirect } from "react-router-dom";
 import ProfileButton from "../Navigation/ProfileButton";
 import "./Home.css";
 
-const Home = ({ isLoaded }) => {
-  const currentUser = useSelector((state) => state.session.user);
-  console.log("getting in the navigation component======================");
+const Home = () => {
+  // const currentUser = useSelector((state) => state.session.user);
+  // console.log("getting in the navigation component======================");
   return (
     <>
       <div className="homepage">
-        {/* <div className="home-header"> */}
-        {/* <div className="header-detail"> */}
-        {/* <div className="header-left">
-              <Link to="/" className="home-title">
-                MeetaGroup
-              </Link>
-            </div> */}
-        {/* {isLoaded && currentUser && <ProfileButton user={currentUser} />} */}
-        {/* {isLoaded && !currentUser && (
-              <div className="user">
-                <Link to="/login" className="login-link">
-                  Log in
-                </Link>
-                <Link to="/signup" className="signup-link">
-                  Sign up
-                </Link>
-              </div>
-            )} */}
-        {/* </div> */}
-        {/* </div> */}
-
         <main className="homepage-main">
           <div className="main-div">
             <div className="main-div-one">

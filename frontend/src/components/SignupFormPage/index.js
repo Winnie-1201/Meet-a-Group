@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import * as sessionActions from "../../store/session";
 import { useDispatch, useSelector } from "react-redux";
-import { Redirect, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import "./SignupFormPage.css";
 
-const SignupFormPage = ({ user }) => {
+const SignupFormPage = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const sessionUser = useSelector((state) => state.session.user);
@@ -59,21 +59,9 @@ const SignupFormPage = ({ user }) => {
       const data = await res.json();
       if (data && data.errors) setErrors(data.errors);
     });
-    // const payload = {
-    //   credential,
-    //   password,
-    // };
-
-    // const returnUser = await dispatch(sessionActions.loginSession(payload));
-
-    // if (returnUser) {
-    //   history.push("/");
-    // }
   };
 
   return (
-    // <section className="edit-form-holder centered middled">
-    // change it to signuo form later
     <form className="signup-form" onSubmit={handleSubmit}>
       {/* {errors.length > 0 && (
         <ul>
@@ -175,8 +163,6 @@ const SignupFormPage = ({ user }) => {
         <button type="submit">Sign Up</button>
       </div>
     </form>
-
-    // </section>
   );
 };
 

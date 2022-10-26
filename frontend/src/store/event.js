@@ -22,17 +22,8 @@ const loadOne = (event) => {
   return {
     type: LOAD_ONE,
     event,
-    // groupId,
   };
 };
-
-// const loadOneGroup = (events, groupId) => {
-//   return {
-//     type: LOAD_ONE_GROUP,
-//     events,
-//     groupId,
-//   };
-// };
 
 // create a group
 const create = (event) => {
@@ -64,7 +55,7 @@ export const getEvents = () => async (dispatch) => {
 
   if (response.ok) {
     const events = await response.json();
-    console.log("all events in thunk=========", events);
+    // console.log("all events in thunk=========", events);
     dispatch(load(events.Events));
     return events;
   }
@@ -76,8 +67,7 @@ export const getEventById = (eventId) => async (dispatch) => {
 
   if (response.ok) {
     const event = await response.json();
-    // not sure !!
-    console.log("An event by eventId in thunk========", event);
+    // console.log("An event by eventId in thunk========", event);
     dispatch(loadOne(event));
     return event;
   }
@@ -95,7 +85,7 @@ export const editEvent = (event) => async (dispatch) => {
 
   if (response.ok) {
     const event = await response.json();
-    console.log("edit event in thunk========", event);
+    // console.log("edit event in thunk========", event);
     dispatch(edit(event));
     return event;
   }
@@ -119,7 +109,7 @@ export const getEventByGroup = (groupId) => async (dispatch) => {
 
   if (response.ok) {
     const events = await response.json();
-    console.log("all event by groupId in thunk========", events);
+    // console.log("all event by groupId in thunk========", events);
     dispatch(load(events.Events));
     return events;
   }
@@ -138,7 +128,7 @@ export const createEvent = (event, groupId, image) => async (dispatch) => {
   if (response.ok) {
     const event = await response.json();
     const eventId = event.id;
-    console.log("edit event in thunk========", event);
+    // console.log("edit event in thunk========", event);
     await dispatch(create(event));
     await dispatch(createEventImage(image, eventId));
     return event;
@@ -152,46 +142,34 @@ const eventsReducer = (state = initialState, action) => {
   switch (action.type) {
     case LOAD_EVENTS:
       newEvents = { allEvents: {}, singleEvent: {} };
-      // action.events.forEach((event) => {
-      //   newEvents.allEvents[event.id] = event;
-      // });
-      // return { ...state, ...newEvents };
-      // newEvents = { allEvents: {}, singleEvent: {} };
       const allEvents = {};
-      console.log("event in load events", action.events[0]);
+      // console.log("event in load events", action.events[0]);
       action.events.forEach((event) => {
         allEvents[event.id] = { ...event };
       });
       newEvents.allEvents = { ...allEvents };
       return newEvents;
-
-    // case LOAD_ONE_GROUP:
-    //   newEvents =  { allEvents: {}, singleEvent: {} };
-
     case LOAD_ONE:
       // newEvents = { allEvents: {}, singleEvent: {} };
       newEvents = { ...state };
       const singleEvent = {};
       singleEvent[action.event.id] = action.event;
       newEvents.singleEvent = singleEvent;
-      // action.events.forEach((event) => {
-      //   singleEvent[event.id] = { ...event };
-      // });
-      // newEvents.singleEvent = { ...singleEvent };
-      // action.events.forEach((event) => {
-      //   newEvents[event.id] = event;
-      // });
+
       return newEvents;
 
     case CREATE_EVENT:
+      // try change it back to {...state}
       const newEvent = { ...initialState };
       newEvent.singleEvent[action.event.id] = action.event;
       return newEvent;
     case EDIT:
-      return { ...state, [action.event.id]: action.event };
+      newEvents = { ...state };
+      newEvents.singleEvent = action.event;
+      return newEvents;
     case REMOVE_EVENT:
       newEvents = { ...state };
-      delete newEvents[action.eventId];
+      delete newEvents.singleEvent[action.eventId];
       return newEvents;
     default:
       return state;

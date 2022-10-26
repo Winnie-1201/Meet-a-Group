@@ -19,9 +19,9 @@ const EventForm = ({ event, groupId, formType }) => {
 
   const dispatch = useDispatch();
 
-  console.log("enter the EventForm component================");
+  // console.log("enter the EventForm component================");
 
-  let update = formType === "Create Event" ? true : false;
+  let create = formType === "Create Event" ? true : false;
 
   useEffect(() => {
     const newErrors = {};
@@ -42,7 +42,7 @@ const EventForm = ({ event, groupId, formType }) => {
         "Please enter the valid start date for the event";
     if (new Date(endDate) <= new Date(startDate))
       newErrors.validEndDate = "Please enter the valid end date for the event";
-    if (update && previewImage?.length === 0)
+    if (create && previewImage?.length === 0)
       newErrors.previewImage =
         "Please enter the url of the first image for the event";
 
@@ -85,10 +85,11 @@ const EventForm = ({ event, groupId, formType }) => {
         ? await dispatch(createEvent(event, groupId, img))
         : await dispatch(editEvent(event));
 
-    console.log("here is the new event created ================", newEvent);
+    // console.log("here is the new event created ================", newEvent);
 
     if (newEvent) return history.push(`/events/${newEvent.id}`);
   };
+
   return (
     <form onSubmit={handleSubmit} className="event-form">
       <h1>{formType}</h1>
@@ -138,7 +139,7 @@ const EventForm = ({ event, groupId, formType }) => {
       {errors.price && (
         <p className="error-message-event-form">{errors.price}</p>
       )}
-      {update && (
+      {create && (
         <label>
           Preview image
           <input
@@ -148,7 +149,7 @@ const EventForm = ({ event, groupId, formType }) => {
           />
         </label>
       )}
-      {update && errors.previewImage && (
+      {create && errors.previewImage && (
         <p className="error-message-event-form">{errors.previewImage}</p>
       )}
       <label>

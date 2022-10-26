@@ -12,7 +12,6 @@ import GroupDetails from "./components/CreateGroup/GroupDetails";
 import EditGroup from "./components/CreateGroup/EditGroupForm";
 import Events from "./components/Events";
 import CreateEvent from "./components/CreateEvent";
-
 import EventDetails from "./components/CreateEvent/EventDetails";
 import EditEvent from "./components/CreateEvent/EditEvent";
 import Home from "./components/Home";
@@ -55,9 +54,6 @@ function App() {
             <Navigation />
             <CreateEvent />
           </Route>
-          {/* <Route exact path="/events/groups/:groupId">
-            <MyEvents />
-          </Route> */}
           <Route exact path="/events/:eventId/edit">
             <Navigation />
             <EditEvent />

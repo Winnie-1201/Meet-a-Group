@@ -9,7 +9,7 @@ const ProfileButton = ({ user }) => {
   const [openMenu, setOpenMenu] = useState(false);
   const dispatch = useDispatch();
   const history = useHistory();
-  console.log("now in profilebutton component======================");
+  // console.log("now in profilebutton component======================");
 
   const onClick = (e) => {
     e.preventDefault();

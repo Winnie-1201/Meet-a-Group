@@ -6,18 +6,18 @@ import GroupForm from "./GroupForm";
 
 const EditGroup = () => {
   const { groupId } = useParams();
-  console.log("------------groupId", groupId);
+
+  // console.log("------------groupId", groupId);
   const dispatch = useDispatch();
 
   const group = Object.values(
     useSelector((state) => state.group.singleGroup)
   )[0];
-  // const group = useSelector((state) => state.group);
 
   useEffect(() => {
     dispatch(getGroupById(groupId));
   }, [dispatch]);
-  console.log("group details in edit group comp: ", group);
+
   if (!group) return null;
   return <GroupForm group={group} formType="Update Group" />;
 };

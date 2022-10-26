@@ -1,6 +1,6 @@
 // import { useEffect } from "react";
 import { useEffect } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getGroups } from "../../store/group";
 import "./groups.css";
@@ -9,17 +9,13 @@ const Groups = () => {
   // const currentUser = useSelector((state) => state.session.user);
   const groups = Object.values(useSelector((state) => state.group.allGroups));
 
-  console.log(
-    "all of the groups in Groups component!!!!==============",
-    groups
-  );
+  // console.log(
+  //   "all of the groups in Groups component!!!!==============",
+  //   groups
+  // );
   const dispatch = useDispatch();
 
-  // const helpDelay = async () => {
-  //   await dispatch(getGroups());
-  // };
   useEffect(() => {
-    // helpDelay();
     dispatch(getGroups());
   }, [dispatch]);
 
@@ -27,16 +23,6 @@ const Groups = () => {
 
   return (
     <>
-      {/* <div className="event-groups-content">
-        <div className="events-groups">
-          <NavLink to="/events" className="event-link">
-            Events
-          </NavLink>
-          <NavLink to="/groups" className="group-link">
-            Groups
-          </NavLink>
-        </div>
-      </div> */}
       {/* <div className="event-groups-content"> */}
       <div className="all-groups-body">
         <div className="all-groups">

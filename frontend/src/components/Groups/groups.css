@@ -1,16 +1,7 @@
-/* .group-session {
-  border: 1px solid black;
-  margin-top: 40px;
-  padding-left: 10px;
-} */
-p,
+/* p,
 h2,
 h3 {
   margin: 0;
-}
-
-/* .event-groups-content {
-  display: flex;
 } */
 
 .all-groups-body {
@@ -57,13 +48,6 @@ h3 {
   border-radius: 8px;
 }
 
-/* .group-date {
-  margin: 5px 5px 0px 5px;
-  font-size: 14px;
-  font-weight: 500;
-  color: rgb(143, 110, 49);
-} */
-
 .group-name {
   font-size: 18px;
   font-weight: bold;
@@ -71,11 +55,6 @@ h3 {
   color: black;
   margin: 5px;
 }
-
-/* .event-group {
-  margin: 5px;
-  font-size: 14px;
-} */
 
 .group-location {
   margin: 0 5px 15px 5px;

@@ -13,29 +13,26 @@ const GroupDetails = () => {
   const [showAbout, setAbout] = useState(true);
   const [showEvents, setEvents] = useState(false);
 
-  console.log(groupId);
   const group = Object.values(
     useSelector((state) => state.group.singleGroup)
   )[0];
-  console.log(
-    "the group in groupdetails in GroupDetails component====================",
-    group
-  );
+  // console.log(
+  //   "the group in groupdetails in GroupDetails component====================",
+  //   group
+  // );
 
   useEffect(() => {
     dispatch(getEventByGroup(groupId));
     dispatch(getGroupById(groupId));
-    // return () => dispatch(clear());
   }, [dispatch]);
 
-  // const group = useSelector((state) => state.group)[groupId];
   const currentUser = useSelector((state) => state.session.user);
 
   const events = Object.values(useSelector((state) => state.event.allEvents));
-  console.log(
-    "here are all the events in GroupDetaisl comp===========",
-    events
-  );
+  // console.log(
+  //   "here are all the events in GroupDetaisl comp===========",
+  //   events
+  // );
 
   const handleDelete = async (e) => {
     e.preventDefault();
@@ -45,12 +42,8 @@ const GroupDetails = () => {
   // if (!group) return null;
   if (!group?.Organizer) return null;
   let isEvent = false;
-  // if (!events) return null;
   if (!events) isEvent = true;
 
-  // console.log("group about ----------------", group.about);
-  // const aboutArr = group.about.val().split("/\n/");
-  // console.log("group about arr ----------", aboutArr);
   return (
     <>
       <div className="group-details-body">
@@ -166,12 +159,6 @@ const GroupDetails = () => {
                   </div>
                 </div>
               </div>
-              {/* {currentUser && currentUser.id === group.organizerId && (
-              <>
-                <Link to={`/groups/current/${groupId}/edit`}>Edit</Link>
-                <button onClick={handleDelete}>Delete</button>
-              </>
-            )} */}
               <div className="group-detail-right flex-grow-two">
                 <h3 className="group-detail-organizer">Organizer</h3>
                 <p className="organizer-first-name">
@@ -227,14 +214,11 @@ const GroupDetails = () => {
               {showEvents && events.length === 0 && (
                 <>
                   <p>There is no event in this group yet</p>
-                  {/* <Link to="/events/new">Create your first event!</Link> */}
                 </>
               )}
-              {/* </div> */}
             </div>
           )}
         </div>
-        {/* </div> */}
       </div>
     </>
   );

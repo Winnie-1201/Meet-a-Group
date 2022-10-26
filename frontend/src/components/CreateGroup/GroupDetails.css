@@ -6,9 +6,6 @@
 
 .group-detail-page {
   box-sizing: border-box;
-  /* margin: 0 20px 20px; */
-  /* padding: 20px 0 0; */
-  /* margin: 0 20px 20px 20px; */
   padding-top: 20px;
   padding-bottom: 20px;
 }
@@ -19,7 +16,6 @@
 
 .group-detail-image {
   display: flex;
-  /* box-sizing: border-box; */
   justify-content: start;
   margin-right: 15px;
   max-width: 600px;
@@ -29,9 +25,6 @@
 .group-detail-img {
   width: 580px;
   height: 320px;
-
-  /* width: fit-content;
-  height: fit-content; */
   border-radius: 10px;
 }
 
@@ -96,11 +89,6 @@
   flex-wrap: nowrap;
   height: auto;
 }
-
-/* .button-details {
-  font-size: 16px;
-  color: #2e3e48;
-} */
 
 .button-about,
 .button-events,
@@ -168,8 +156,6 @@
 }
 
 .group-detail-about p {
-  /* display: -webkit-box;
-  overflow: hidden; */
   max-height: 192px;
   margin-bottom: 15px;
   line-height: 30px;
