@@ -51,6 +51,18 @@ const EventDetails = () => {
   console.log("event group id in eventdetails", event.groupId);
   const group = Object.values(groups)[0];
   console.log("group in eventdetails", group);
+  const newStartDate = new Date(event.startDate);
+  const newEndDate = new Date(event.endDate);
+  const days = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ];
+  console.log("event startdate-----------", newStartDate.getFullYear());
   return (
     <>
       {/* <p>here is the event detail</p> */}
@@ -161,7 +173,29 @@ const EventDetails = () => {
                         <i className="fa-regular fa-clock" />
                         <div className="event-info-time">
                           {/* split it out later */}
-                          <time>{event.startDate}</time>
+                          {/* <time>{event.startDate}</time> */}
+                          <div>
+                            {days[newStartDate.getDay()]},{" "}
+                            {new Intl.DateTimeFormat("en-US", {
+                              month: "long",
+                            }).format(newStartDate)}{" "}
+                            {newStartDate.getDate()},
+                            {newStartDate.getFullYear()} at{" "}
+                            {newStartDate.getHours()} :{" "}
+                            {newStartDate.getMinutes()}
+                            {newStartDate.getMinutes() == 0 ? 0 : ""}{" "}
+                            {newStartDate.getHours() >= 12 ? "PM" : "AM"} to
+                          </div>
+                          <div>
+                            {days[newEndDate.getDay()]},{" "}
+                            {new Intl.DateTimeFormat("en-US", {
+                              month: "long",
+                            }).format(newEndDate)}{" "}
+                            {newEndDate.getDate()},{newEndDate.getFullYear()} at{" "}
+                            {newEndDate.getHours()} : {newEndDate.getMinutes()}
+                            {newStartDate.getMinutes() == 0 ? 0 : ""}{" "}
+                            {newEndDate.getHours() >= 12 ? "PM" : "AM"}
+                          </div>
                         </div>
                       </div>
 
@@ -183,7 +217,23 @@ const EventDetails = () => {
           <div className="event-details-bottom-text">
             <div className="buttom-text-flex">
               <div className="text-event-time">
-                <time>{event.startDate}</time>
+                {/* <time>{event.startDate}</time> */}
+                <div>
+                  {new Intl.DateTimeFormat("en-US", {
+                    weekday: "short",
+                  })
+                    .format(newStartDate)
+                    .toUpperCase()}
+                  ,{" "}
+                  {new Intl.DateTimeFormat("en-US", {
+                    month: "short",
+                  })
+                    .format(newStartDate)
+                    .toUpperCase()}{" "}
+                  · {newStartDate.getHours()} : {newStartDate.getMinutes()}
+                  {newStartDate.getMinutes() == 0 ? 0 : ""}{" "}
+                  {newStartDate.getHours() >= 12 ? "PM" : "AM"}
+                </div>
               </div>
               <div className="text-event-title">
                 <p>

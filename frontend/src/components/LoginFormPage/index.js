@@ -45,13 +45,12 @@ const LoginFormPage = () => {
   return (
     // <section className="edit-form-holder centered middled">
     <form className="login-form" onSubmit={handleSubmit}>
-      <i className="fa-solid fa-cannabis fa-xl" />
-      <ul>
-        {errors.map((error, idx) => (
-          <li key={idx}>{error}</li>
-        ))}
-      </ul>
-      <h2>Log in</h2>
+      <div className="login-form-header">
+        <div className="login-form-icon">
+          <i className="fa-solid fa-cannabis fa-xl" />
+        </div>
+        <h1 className="login-header-h1">Log in</h1>
+      </div>
       <label>
         Username or email
         <input
@@ -78,6 +77,11 @@ const LoginFormPage = () => {
           </ul>
         )}
       </label>
+      <ul>
+        {errors.map((error, idx) => (
+          <li key={idx}>{error}</li>
+        ))}
+      </ul>
       <button type="submit">Log in</button>
     </form>
     // </section>

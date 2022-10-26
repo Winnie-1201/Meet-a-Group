@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { createEvent, editEvent } from "../../store/event";
+import "./EventForm.css";
 
 const EventForm = ({ event, groupId, formType }) => {
   const history = useHistory();
@@ -14,12 +15,48 @@ const EventForm = ({ event, groupId, formType }) => {
   const [startDate, setStartDate] = useState(event.startDate);
   const [endDate, setEndDate] = useState(event.endDate);
   const [previewImage, setPreviewImg] = useState(event.previewImage);
+  const [errors, setErrors] = useState({});
 
   const dispatch = useDispatch();
 
   console.log("enter the EventForm component================");
 
   let update = formType === "Create Event" ? true : false;
+
+  useEffect(() => {
+    const newErrors = {};
+    if (name?.length < 5)
+      newErrors.name = "Event name needs to be at 5 least characters";
+    if (type !== "Online" && type !== "In person")
+      newErrors.type = "Please choose the type of the event";
+    if (!capacity)
+      newErrors.capacity = "Please enter the capacity of the event";
+    if (!price) newErrors.price = "Please enter the price of the event";
+    if (description?.length === 0)
+      newErrors.description = "Please enter the description of the event";
+    if (!startDate)
+      newErrors.startDate = "Please enter the start date of the event";
+    if (!endDate) newErrors.endDate = "Please enter the end date of the event";
+    if (new Date(startDate) < new Date())
+      newErrors.validStartDate =
+        "Please enter the valid start date for the event";
+    if (new Date(endDate) <= new Date(startDate))
+      newErrors.validEndDate = "Please enter the valid end date for the event";
+    if (update && previewImage?.length === 0)
+      newErrors.previewImage =
+        "Please enter the url of the first image for the event";
+
+    setErrors(newErrors);
+  }, [
+    name,
+    type,
+    capacity,
+    previewImage,
+    price,
+    description,
+    startDate,
+    endDate,
+  ]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -53,7 +90,7 @@ const EventForm = ({ event, groupId, formType }) => {
     if (newEvent) return history.push(`/events/${newEvent.id}`);
   };
   return (
-    <form onSubmit={handleSubmit} className="login-form">
+    <form onSubmit={handleSubmit} className="event-form">
       <h2>{formType}</h2>
       <label>
         Event name
@@ -63,6 +100,7 @@ const EventForm = ({ event, groupId, formType }) => {
           onChange={(e) => setName(e.target.value)}
         />
       </label>
+      {errors.name && <p className="error-message-event-form">{errors.name}</p>}
       <label>
         Type
         <select
@@ -77,22 +115,29 @@ const EventForm = ({ event, groupId, formType }) => {
           <option>In person</option>
         </select>
       </label>
+      {errors.type && <p className="error-message-event-form">{errors.type}</p>}
       <label>
         Capacity
         <input
-          type="text"
+          type="number"
           value={capacity}
           onChange={(e) => setCapacity(e.target.value)}
         />
       </label>
+      {errors.capacity && (
+        <p className="error-message-event-form">{errors.capacity}</p>
+      )}
       <label>
         Price
         <input
-          type="text"
+          type="number"
           value={price}
           onChange={(e) => setPrice(e.target.value)}
         />
       </label>
+      {errors.price && (
+        <p className="error-message-event-form">{errors.price}</p>
+      )}
       {update && (
         <label>
           Preview image
@@ -103,30 +148,48 @@ const EventForm = ({ event, groupId, formType }) => {
           />
         </label>
       )}
+      {update && errors.previewImage && (
+        <p className="error-message-event-form">{errors.previewImage}</p>
+      )}
       <label>
         Description
-        <input
+        <textarea
           type="text"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
         />
       </label>
+      {errors.description && (
+        <p className="error-message-event-form">{errors.description}</p>
+      )}
       <label>
-        Start Date
+        Start Date (i.e. 2023-11-19 20:00:00)
         <input
           type="text"
           value={startDate}
           onChange={(e) => setStartDate(e.target.value)}
         />
       </label>
+      {errors.startDate && (
+        <p className="error-message-event-form">{errors.startDate}</p>
+      )}
+      {errors.validStartDate && (
+        <p className="error-message-event-form">{errors.validStartDate}</p>
+      )}
       <label>
-        End Date
+        End Date (i.e. 2023-11-19 21:00:00)
         <input
           type="text"
           value={endDate}
           onChange={(e) => setEndDate(e.target.value)}
         />
       </label>
+      {errors.endDate && (
+        <p className="error-message-event-form">{errors.endDate}</p>
+      )}
+      {errors.validEndDate && (
+        <p className="error-message-event-form">{errors.validEndDate}</p>
+      )}
       <button>Submit</button>
     </form>
   );

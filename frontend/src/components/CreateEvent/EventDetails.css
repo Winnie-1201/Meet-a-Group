@@ -151,6 +151,10 @@
   margin-bottom: 16px;
 }
 
+.event-detail-text-bottom p {
+  line-height: 30px;
+}
+
 .event-detail-attendees {
   margin-top: 20px;
   padding-top: 40px;
@@ -243,7 +247,7 @@ attendees cards detail here
 }
 
 .event-detail-right {
-  margin: 40px 0 0 112px;
+  margin: 40px 0 0 100px;
 }
 
 .event-detail-right-sticky {

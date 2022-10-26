@@ -15,7 +15,7 @@ const Events = () => {
   }, [dispatch]);
 
   if (!events) return null;
-
+  // const newStartDate = event.startDate;
   return (
     <>
       {/* <div className="event-groups-content">
@@ -39,7 +39,24 @@ const Events = () => {
                   <img src={event.previewImage} className="event-img" />
                 </div>
                 <div className="one-event-detail">
-                  <p className="event-date">{event.startDate}</p>
+                  <p className="event-date">
+                    {new Intl.DateTimeFormat("en-US", {
+                      weekday: "short",
+                    })
+                      .format(new Date(event.startDate))
+                      .toUpperCase()}
+                    ,{" "}
+                    {new Intl.DateTimeFormat("en-US", {
+                      month: "short",
+                    })
+                      .format(new Date(event.startDate))
+                      .toUpperCase()}{" "}
+                    · {new Date(event.startDate).getHours()} :{" "}
+                    {new Date(event.startDate).getMinutes()}
+                    {new Date(event.startDate).getMinutes() == 0 ? 0 : ""}{" "}
+                    {new Date(event.startDate).getHours() >= 12 ? "PM" : "AM"}
+                    {/* {event.startDate} */}
+                  </p>
                   <p className="event-name">{event.name}</p>
                   <p className="event-group">{event.Group.name}</p>
                   <p className="event-location">

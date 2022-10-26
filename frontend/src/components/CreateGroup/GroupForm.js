@@ -65,7 +65,12 @@ const GroupForm = ({ group, formType }) => {
       newErrors.about = "You must enter the about for your group";
     if (type !== "Online" && type !== "In person")
       newErrors.type = "Type must be 'Online' or 'In person'";
-    if (isPrivate !== true || false)
+    if (
+      isPrivate !== true &&
+      isPrivate !== false &&
+      isPrivate !== "Public" &&
+      isPrivate !== "Private"
+    )
       newErrors.isPrivate = "You need to set the privacy of your group";
     if (update && !previewImage)
       newErrors.previewImg =
@@ -78,7 +83,7 @@ const GroupForm = ({ group, formType }) => {
     setErrors(newErrors);
   }, [name, about, type, isPrivate, previewImage, city, state]);
 
-  console.log("========error-------------", errors.previewImg);
+  console.log("========error-------------", errors.isPrivate, isPrivate);
 
   console.log("enter the GroupForm component======================");
   const handleSubmit = async (e) => {
@@ -131,10 +136,10 @@ const GroupForm = ({ group, formType }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="signup-form">
-      <div className="signup-form-body">
-        <h2>{formType}</h2>
-        {/* <ul className="error-messages-group-form">
+    <form onSubmit={handleSubmit} className="group-form">
+      {/* <div className="group-form-body"> */}
+      <h1>{formType}</h1>
+      {/* <ul className="error-messages-group-form">
         {errors.length > 0 &&
           errors.map((error) => (
             <li className="error-detail-group-form" key={error}>
@@ -142,70 +147,70 @@ const GroupForm = ({ group, formType }) => {
             </li>
           ))}
       </ul> */}
-        <label>
-          Group name
-          <input
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-        </label>
-        {errors.name && (
+      <label>
+        Group name
+        <input
+          type="text"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
+      </label>
+      {errors.name && (
+        <ul className="error-messages-group-form">
+          <li className="error-detail-group-form">{errors.name}</li>
+        </ul>
+      )}
+      <label>
+        About
+        <textarea
+          type="text"
+          value={about}
+          onChange={(e) => setAbout(e.target.value)}
+        />
+      </label>
+      {errors.about && (
+        <ul className="error-messages-group-form">
+          <li className="error-detail-group-form">{errors.about}</li>
+        </ul>
+      )}
+      <label className="group-label-type">
+        Type
+        <select
+          name="attendType"
+          value={type}
+          onChange={(e) => setType(e.target.value)}
+        >
+          <option value="" disabled>
+            Please select a type...
+          </option>
+          <option key={"Online"}>Online</option>
+          <option key={"In person"}>In person</option>
+        </select>
+      </label>
+      {errors.type && (
+        <ul className="error-messages-group-form">
+          <li className="error-detail-group-form">{errors.type}</li>
+        </ul>
+      )}
+      <label>
+        Private or public?
+        <select
+          name="privacy"
+          value={isPrivate}
+          onChange={(e) => setPrivate(e.target.value)}
+        >
+          <option value="" disabled>
+            Please select...
+          </option>
+          <option key={"Private"}>Private</option>
+          <option key={"Public"}>Public</option>
+        </select>
+        {errors.isPrivate && (
           <ul className="error-messages-group-form">
-            <li className="error-detail-group-form">{errors.name}</li>
+            <li className="error-detail-group-form">{errors.isPrivate}</li>
           </ul>
         )}
-        <label>
-          About
-          <textarea
-            type="text"
-            value={about}
-            onChange={(e) => setAbout(e.target.value)}
-          />
-        </label>
-        {errors.about && (
-          <ul className="error-messages-group-form">
-            <li className="error-detail-group-form">{errors.about}</li>
-          </ul>
-        )}
-        <label>
-          Type
-          <select
-            name="attendType"
-            value={type}
-            onChange={(e) => setType(e.target.value)}
-          >
-            <option value="" disabled>
-              Please select a type...
-            </option>
-            <option key={"Online"}>Online</option>
-            <option key={"In person"}>In person</option>
-          </select>
-        </label>
-        {errors.type && (
-          <ul className="error-messages-group-form">
-            <li className="error-detail-group-form">{errors.type}</li>
-          </ul>
-        )}
-        <label>
-          Private or public?
-          <select
-            name="privacy"
-            value={isPrivate}
-            onChange={(e) => setPrivate(e.target.value)}
-          >
-            <option value="" disabled>
-              Please select...
-            </option>
-            <option key={"Private"}>Private</option>
-            <option key={"Public"}>Public</option>
-          </select>
-          {errors.isPrivate && (
-            <ul className="error-messages-group-form">
-              <li className="error-detail-group-form">{errors.isPrivate}</li>
-            </ul>
-          )}
-          {/* <input
+        {/* <input
           type="radio"
           name="isPrivate"
           //   value="private"
@@ -222,53 +227,53 @@ const GroupForm = ({ group, formType }) => {
           onChange={(e) => setPrivate(e.target.value)}
         />
         public */}
-          {/* NOTE!!!! */}
-          {/* For some reason, I can't get the preview imgae link when I update */}
-        </label>
-        {update && (
-          <label>
-            Preview image
-            <input
-              type="text"
-              value={previewImage}
-              onChange={(e) => setPreviewImg(e.target.value)}
-            />
-          </label>
-        )}
-        {errors.previewImg && (
-          <ul className="error-messages-group-form">
-            <li className="error-detail-group-form">{errors.previewImg}</li>
-          </ul>
-        )}
-        {/* <AddImage /> */}
+        {/* NOTE!!!! */}
+        {/* For some reason, I can't get the preview imgae link when I update */}
+      </label>
+      {update && (
         <label>
-          City
+          Preview image
           <input
             type="text"
-            value={city}
-            onChange={(e) => setCity(e.target.value)}
+            value={previewImage}
+            onChange={(e) => setPreviewImg(e.target.value)}
           />
         </label>
-        {errors.city && (
-          <ul className="error-messages-group-form">
-            <li className="error-detail-group-form">{errors.city}</li>
-          </ul>
-        )}
-        <label>
-          State
-          <input
-            type="text"
-            value={state}
-            onChange={(e) => setState(e.target.value)}
-          />
-        </label>
-        {errors.state && (
-          <ul className="error-messages-group-form">
-            <li className="error-detail-group-form">{errors.state}</li>
-          </ul>
-        )}
-        <button>Submit</button>
-      </div>
+      )}
+      {errors.previewImg && (
+        <ul className="error-messages-group-form">
+          <li className="error-detail-group-form">{errors.previewImg}</li>
+        </ul>
+      )}
+      {/* <AddImage /> */}
+      <label>
+        City
+        <input
+          type="text"
+          value={city}
+          onChange={(e) => setCity(e.target.value)}
+        />
+      </label>
+      {errors.city && (
+        <ul className="error-messages-group-form">
+          <li className="error-detail-group-form">{errors.city}</li>
+        </ul>
+      )}
+      <label>
+        State
+        <input
+          type="text"
+          value={state}
+          onChange={(e) => setState(e.target.value)}
+        />
+      </label>
+      {errors.state && (
+        <ul className="error-messages-group-form">
+          <li className="error-detail-group-form">{errors.state}</li>
+        </ul>
+      )}
+      <button>Submit</button>
+      {/* </div> */}
     </form>
   );
 };
