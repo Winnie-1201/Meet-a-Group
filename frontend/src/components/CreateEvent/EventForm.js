@@ -91,7 +91,7 @@ const EventForm = ({ event, groupId, formType }) => {
   };
   return (
     <form onSubmit={handleSubmit} className="event-form">
-      <h2>{formType}</h2>
+      <h1>{formType}</h1>
       <label>
         Event name
         <input
