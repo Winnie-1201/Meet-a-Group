@@ -7,7 +7,7 @@ const groups = [
     organizerId: 1,
     name: "Mini Adventures For Free - Hiking, Dancing, Sports & More",
     about:
-      "Our meetups include hikes,biking, dancing,Classes, picnics, sport games, concerts, happy hour, and whatever else that attracts interest. Meet at bars, parks, baseball/basketball games, rec-leagues, or anywhere that sounds fun. Not just for singles, not just for couples... ",
+      "Our meetups include hikes,biking, dancing,Classes, picnics, sport games, concerts, happy hour, and whatever else that attracts interest. Meet at bars, or anywhere that sounds fun.",
     type: "In person",
     private: false,
     city: "Flagstaff",
@@ -17,7 +17,7 @@ const groups = [
     organizerId: 2,
     name: "San Francisco Pets and Fun Paint Party Meetup",
     about:
-      "Join us at Dog friendly restaurant Barking Dog on SF upper East side or in Central Park. How about an Online Sip and Paint Party with all your friends. Artist will email you a drawing of your pet or mail you the full Pet Portrait Fun Art Kit with all the supplies.",
+      "Join us at Dog friendly restaurant Barking Dog on SF upper East side or in Central Park. How about an Online Sip and Paint Party with all your friends.",
     type: "In person",
     private: false,
     city: "San Francisco",
@@ -27,7 +27,7 @@ const groups = [
     organizerId: 3,
     name: "NY to Anywhere, Road Trips Meetup Group (car not needed)",
     about:
-      "This group for anyone that loves road trips. Short trips, long trips, it does not matter, if you have a story or an interest in meeting likeminded individuals with the bug for exploration, let's meet, share stories and plan the next adventure. We take these trips together using a passenger van or a bus.",
+      "This group for anyone that loves road trips. Short trips, long trips, it does not matter, if you have a story or an interest in meeting likeminded individuals with the bug for exploration.",
     type: "In person",
     private: false,
     city: "New York",
