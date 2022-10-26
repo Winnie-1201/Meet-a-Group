@@ -47,6 +47,10 @@ const GroupDetails = () => {
   let isEvent = false;
   // if (!events) return null;
   if (!events) isEvent = true;
+
+  // console.log("group about ----------------", group.about);
+  // const aboutArr = group.about.val().split("/\n/");
+  // console.log("group about arr ----------", aboutArr);
   return (
     <>
       <div className="group-details-body">
@@ -87,8 +91,8 @@ const GroupDetails = () => {
                 <button
                   className="button-about"
                   onClick={() => {
-                    setEvents(!showEvents);
-                    setAbout(!showAbout);
+                    setEvents(false);
+                    setAbout(true);
                   }}
                 >
                   About
@@ -98,8 +102,8 @@ const GroupDetails = () => {
                 <button
                   className="button-events button-details"
                   onClick={() => {
-                    setEvents(!showEvents);
-                    setAbout(!showAbout);
+                    setEvents(true);
+                    setAbout(false);
                   }}
                 >
                   Events
@@ -153,14 +157,14 @@ const GroupDetails = () => {
           {showAbout && (
             <div className="group-detail-hidden-about">
               <div className="group-detail-left flex-grow-one">
-                <p className="group-detail-about">
+                <div className="group-detail-about">
                   <h2>
                     <span>What we're about</span>
                   </h2>
                   <div>
                     <p>{group?.about}</p>
                   </div>
-                </p>
+                </div>
               </div>
               {/* {currentUser && currentUser.id === group.organizerId && (
               <>
@@ -220,10 +224,10 @@ const GroupDetails = () => {
                 </div>
               ))}
 
-              {isEvent && (
+              {showEvents && events.length === 0 && (
                 <>
-                  <p>There is no event in your group yet</p>
-                  <Link to="/events/new">Create your first event!</Link>
+                  <p>There is no event in this group yet</p>
+                  {/* <Link to="/events/new">Create your first event!</Link> */}
                 </>
               )}
               {/* </div> */}
