@@ -5,12 +5,12 @@
 const groupImages = [
   {
     groupId: 1,
-    url: "http://drive.google.com/uc?export=view&id=1mQx88tWT6d0t73_CN9xy8bwfvByyNHJT",
+    url: "http://drive.google.com/uc?export=view&id=1wGwNUwdMBEjM4x2MzRirh_lJ8XN7lVZB",
     preview: true,
   },
   {
     groupId: 2,
-    url: "http://drive.google.com/uc?export=view&id=1FI6hmtrNCK_5EbbAS7o0Zc6lCcI1Xvr6",
+    url: "http://drive.google.com/uc?export=view&id=1wGwNUwdMBEjM4x2MzRirh_lJ8XN7lVZB",
     preview: true,
   },
   {
@@ -18,18 +18,6 @@ const groupImages = [
     url: "http://drive.google.com/uc?export=view&id=1wGwNUwdMBEjM4x2MzRirh_lJ8XN7lVZB",
     preview: true,
   },
-  // {
-  //   url: "",
-  //   preview: "",
-  // },
-  // {
-  //   url: "",
-  //   preview: "",
-  // },
-  // {
-  //   url: "",
-  //   preview: "",
-  // },
 ];
 
 module.exports = {

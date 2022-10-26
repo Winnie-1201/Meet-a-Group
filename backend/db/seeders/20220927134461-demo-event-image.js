@@ -3,34 +3,19 @@
 const eventImages = [
   {
     eventId: 1,
-    url: "http://drive.google.com/uc?export=view&id=1BIlbjRI8loGaQD3uPczIZeKqk5AY0-Z4",
+    url: "http://drive.google.com/uc?export=view&id=1wGwNUwdMBEjM4x2MzRirh_lJ8XN7lVZB",
     preview: true,
   },
   {
     eventId: 2,
-    url: "http://drive.google.com/uc?export=view&id=1KKIkoTmPVyWA8U7j8gBJn7WGNJR9l4HK",
+    url: "http://drive.google.com/uc?export=view&id=1wGwNUwdMBEjM4x2MzRirh_lJ8XN7lVZB",
     preview: true,
   },
   {
     eventId: 3,
-    url: "http://drive.google.com/uc?export=view&id=1urmijsNQnIaCXBrtHz9EV5QRvmV9kfdt",
+    url: "http://drive.google.com/uc?export=view&id=1wGwNUwdMBEjM4x2MzRirh_lJ8XN7lVZB",
     preview: true,
   },
-  // {
-  //   eventId: 1,
-  //   url: "",
-  //   preview: true,
-  // },
-  // {
-  //   eventId: 2,
-  //   url: "",
-  //   preview: "",
-  // },
-  // {
-  //   eventId: 3,
-  //   url: "",
-  //   preview: "",
-  // },
 ];
 
 module.exports = {
