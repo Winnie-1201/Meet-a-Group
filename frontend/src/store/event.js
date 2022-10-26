@@ -151,7 +151,7 @@ const eventsReducer = (state = initialState, action) => {
       return newEvents;
     case LOAD_ONE:
       // newEvents = { allEvents: {}, singleEvent: {} };
-      newEvents = { ...state };
+      newEvents = { ...state, ...state.allEvents, ...state.singleEvent };
       const singleEvent = {};
       singleEvent[action.event.id] = action.event;
       newEvents.singleEvent = singleEvent;

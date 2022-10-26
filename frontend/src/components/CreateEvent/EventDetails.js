@@ -29,8 +29,11 @@ const EventDetails = () => {
   useEffect(() => {
     helpDelay(eventId);
     // dispatch(getGroupByUserThunk());
-    dispatch(getGroupById(event?.groupId));
   }, [dispatch]);
+
+  useEffect(() => {
+    // adding event, re-render when event state change
+  }, [dispatch, event]);
 
   const handleDelete = async (e) => {
     e.preventDefault();

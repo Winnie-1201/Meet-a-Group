@@ -154,7 +154,7 @@ const groupsReducer = (state = initialState, action) => {
       // console.log("LOAD: new state in reducer", newState);
       return newState;
     case LOAD_ONE:
-      newState = { allGroups: {}, singleGroup: {} };
+      newState = { ...state, ...state.allGroups, ...state.singleGroup };
       const singleGroup = {};
       singleGroup[action.group.id] = action.group;
       newState.singleGroup = singleGroup;
