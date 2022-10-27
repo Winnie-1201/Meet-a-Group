@@ -51,7 +51,7 @@ const GroupDetails = () => {
           <div className="top-detail">
             <div className="group-detail-image flex-grow-three">
               <img
-                src={`${group.GroupImages[0].url}`}
+                src={`${group.GroupImages[0]?.url}`}
                 className="group-detail-img"
               />
             </div>
