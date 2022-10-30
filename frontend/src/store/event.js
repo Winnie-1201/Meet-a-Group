@@ -55,7 +55,7 @@ export const getEvents = () => async (dispatch) => {
 
   if (response.ok) {
     const events = await response.json();
-    // console.log("all events in thunk=========", events);
+    console.log("all events in thunk=========", events);
     dispatch(load(events.Events));
     return events;
   }
@@ -67,7 +67,7 @@ export const getEventById = (eventId) => async (dispatch) => {
 
   if (response.ok) {
     const event = await response.json();
-    // console.log("An event by eventId in thunk========", event);
+    console.log("An event by eventId in thunk========", event);
     dispatch(loadOne(event));
     return event;
   }
@@ -141,6 +141,7 @@ const eventsReducer = (state = initialState, action) => {
   let newEvents;
   switch (action.type) {
     case LOAD_EVENTS:
+      console.log("the state in event reducer", state);
       newEvents = { allEvents: {}, singleEvent: {} };
       const allEvents = {};
       // console.log("event in load events", action.events[0]);
@@ -148,14 +149,16 @@ const eventsReducer = (state = initialState, action) => {
         allEvents[event.id] = { ...event };
       });
       newEvents.allEvents = { ...allEvents };
+      console.log("the state in event reducer", newEvents);
       return newEvents;
     case LOAD_ONE:
       // newEvents = { allEvents: {}, singleEvent: {} };
+      console.log("the state in event reducer load one 1", state);
       newEvents = { allEvents: {}, singleEvent: {} };
       const singleEvent = {};
       singleEvent[action.event.id] = action.event;
       newEvents.singleEvent = singleEvent;
-
+      console.log("the state in event reducer load one 2", newEvents);
       return newEvents;
 
     case CREATE_EVENT:
