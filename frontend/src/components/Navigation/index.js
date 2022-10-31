@@ -33,7 +33,7 @@ const Navigation = () => {
             // <Link className="start-new-group" to="/login">
             //   Start a new group
             // </Link>
-            <LoginFormModal newGroup={true} />
+            <LoginFormModal newGroup={"newGroup"} />
           )}
           {currentUser && <ProfileButton user={currentUser} />}
           {!currentUser && (
@@ -41,7 +41,7 @@ const Navigation = () => {
               {/* <Link to="/login" className="login-link">
                 Log in
               </Link> */}
-              <LoginFormModal newGroup={false} />
+              <LoginFormModal />
               <SignupFormModal />
               {/* <Link to="/signup" className="signup-link">
                 Sign up

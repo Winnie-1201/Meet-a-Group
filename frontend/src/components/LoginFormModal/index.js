@@ -8,9 +8,24 @@ function LoginFormModal({ newGroup }) {
 
   return (
     <>
-      {newGroup && (
+      {newGroup === "newGroup" && (
         <button onClick={() => setShowModal(true)} className="start-new-group">
           Start a new group
+        </button>
+      )}
+
+      {newGroup === "newGroupHome" && (
+        <button
+          onClick={() => setShowModal(true)}
+          className="start-new-group-home"
+        >
+          Start a new group
+        </button>
+      )}
+
+      {newGroup === "home-login" && (
+        <button onClick={() => setShowModal(true)} className="join-meetagroup">
+          Join MeetaGroup
         </button>
       )}
       {!newGroup && (

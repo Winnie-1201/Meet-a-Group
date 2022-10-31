@@ -1,9 +1,10 @@
-// import { useSelector } from "react-redux";
-import { NavLink } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { Link, NavLink } from "react-router-dom";
+import LoginFormModal from "../LoginFormModal";
 import "./Home.css";
 
 const Home = () => {
-  // const currentUser = useSelector((state) => state.session.user);
+  const currentUser = useSelector((state) => state.session.user);
   // console.log("getting in the navigation component======================");
   return (
     <>
@@ -31,6 +32,7 @@ const Home = () => {
                 <img src="	https://secure.meetupstatic.com/next/images/shared/online_events.svg?w=1080" />
               </div>
             </div>
+
             <div className="main-div-two">
               <div className="two-top">
                 <div className="top-grid-pics">
@@ -142,6 +144,70 @@ const Home = () => {
                 </div>
                 {/* </div> */}
               </div>
+            </div>
+
+            <div className="main-div-five">
+              <h2>How Meetup works</h2>
+              <p>
+                Meet new people who share your interests through online and
+                in-person events. It's free to create an account
+              </p>
+              <div className="div-five-flex-container">
+                <div className="div-five-flex">
+                  <div className="div-five-flex-detail">
+                    <div className="flex-top-pic">
+                      <img src="https://secure.meetupstatic.com/next/images/shared/handsUp.svg?w=256" />
+                    </div>
+                    <div className="flex-bottom-text">
+                      <Link className="bottom-text-link" to="/groups">
+                        <h3>Join a group</h3>
+                      </Link>
+                      <p>
+                        Do what you love, meet others who love it, find your
+                        community. The rest is history!
+                      </p>
+                    </div>
+                  </div>
+                  <div className="div-five-flex-detail">
+                    <div className="flex-top-pic">
+                      <img src="https://secure.meetupstatic.com/next/images/shared/ticket.svg?w=256" />
+                    </div>
+                    <div className="flex-bottom-text">
+                      <Link className="bottom-text-link" to="/events">
+                        <h3>Find an event</h3>
+                      </Link>
+                      <p>
+                        Events are happening on just about any topic you can
+                        think of, from online gaming and photography to yoga and
+                        hiking.
+                      </p>
+                    </div>
+                  </div>
+                  <div className="div-five-flex-detail">
+                    <div className="flex-top-pic">
+                      <img src="https://secure.meetupstatic.com/next/images/shared/joinGroup.svg?w=256" />
+                    </div>
+                    <div className="flex-bottom-text">
+                      {currentUser && (
+                        <Link
+                          className="bottom-text-link"
+                          to="/groups/current/new"
+                        >
+                          <h3>Start a group</h3>
+                        </Link>
+                      )}
+                      {!currentUser && (
+                        <LoginFormModal newGroup={"newGroupHome"} />
+                      )}
+                      <p>
+                        You don't have to an expert to gather people together
+                        and explore shred interests.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {!currentUser && <LoginFormModal newGroup={"home-login"} />}
             </div>
 
             <div className="main-div-four">
