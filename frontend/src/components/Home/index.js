@@ -1,10 +1,29 @@
-import { useSelector } from "react-redux";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, NavLink } from "react-router-dom";
+import { getEvents } from "../../store/event";
+import { getGroups } from "../../store/group";
 import LoginFormModal from "../LoginFormModal";
 import "./Home.css";
 
 const Home = () => {
+  const dispatch = useDispatch();
   const currentUser = useSelector((state) => state.session.user);
+  const events = Object.values(
+    useSelector((state) => state.event.allEvents)
+  ).sort(
+    (a, b) =>
+      new Date(a.startDate) - new Date() - (new Date(b.startDate) - new Date())
+  );
+  const groups = Object.values(useSelector((state) => state.group.allGroups));
+  console.log(events, groups);
+
+  useEffect(() => {
+    dispatch(getEvents());
+    dispatch(getGroups());
+  }, [dispatch]);
+
+  if (!groups || !events) return null;
   // console.log("getting in the navigation component======================");
   return (
     <>
@@ -223,17 +242,73 @@ const Home = () => {
                       Explore more events
                     </NavLink>
                   </div>
+
                   <div className="one-body">
-                    <div className="one-body-detail">
-                      <ul className="detail-list-flex">
-                        {/* put the events details here later */}
-                        <li className="list-one">list one</li>
-                        <li className="list-two">list one</li>
-                        <li className="list-three">list one</li>
-                        <li className="list-four">list one</li>
-                      </ul>
-                    </div>
+                    {/* <div className="one-body-detail"> */}
+                    <ul className="detail-list-flex">
+                      {/* put the events details here later */}
+                      {events.map((event) => (
+                        <li key={event.id} className="detail-list-li">
+                          <Link
+                            to={`/events/${event.id}`}
+                            className="list-detail-flex"
+                          >
+                            <div className="list-detail-top">
+                              <div className="event-type-home">
+                                <i className="fa-solid fa-video" />
+                                <p>{event.type} Event</p>
+                              </div>
+                              <img
+                                src={`${event.previewImage}`}
+                                className="list-detail-top-img"
+                              />
+                            </div>
+                            <div className="list-detail-middle-flex">
+                              <div className="list-detail-middle-flex-top">
+                                <p className="event-date-home">
+                                  {new Intl.DateTimeFormat("en-US", {
+                                    weekday: "short",
+                                  })
+                                    .format(new Date(event.startDate))
+                                    .toUpperCase()}
+                                  ,{" "}
+                                  {new Intl.DateTimeFormat("en-US", {
+                                    month: "short",
+                                  })
+                                    .format(new Date(event.startDate))
+                                    .toUpperCase()}{" "}
+                                  {new Date(event.startDate).getDate()}·{" "}
+                                  {new Date(event.startDate).getHours()}:
+                                  {new Date(event.startDate).getMinutes()}
+                                  {new Date(event.startDate).getMinutes() == 0
+                                    ? 0
+                                    : ""}{" "}
+                                  {new Date(event.startDate).getHours() >= 12
+                                    ? "PM"
+                                    : "AM"}
+                                  {/* {event.startDate} */}
+                                </p>
+                                <p className="event-name-home">{event.name}</p>
+                                <p className="event-group-name-home">
+                                  {event.Group.name}
+                                </p>
+                              </div>
+                              {/* <div className="list-detail-bottom-detail-flex"> */}
+                              <p className="event-attend-home">
+                                {event.numAttending} Attend
+                              </p>
+                              {/* </div> */}
+                            </div>
+                          </Link>
+                        </li>
+                      ))}
+                      {/* <li className="list-one"></li>
+                      <li className="list-two">list one</li>
+                      <li className="list-three">list one</li>
+                      <li className="list-four">list one</li> */}
+                    </ul>
                   </div>
+                  {/* </div> */}
                 </div>
 
                 <div className="four-flex-two">
@@ -248,15 +323,32 @@ const Home = () => {
                     </NavLink>
                   </div>
                   <div className="two-body">
-                    <div className="two-body-detail-two">
-                      <ul className="detail-two-list-flex">
-                        {/* put the groups details here later */}
-                        <li className="detail-list-one">list one</li>
+                    {/* <div className="two-body-detail-two"> */}
+                    <ul className="detail-list-flex">
+                      {/* put the groups details here later */}
+                      {groups.map((group) => (
+                        <li key={group.id} className="detail-list-li">
+                          <div className="group-container-flex">
+                            <Link
+                              to={`/groups/${group.id}`}
+                              className="container-top-flex"
+                            >
+                              <img
+                                src={group.previewImage}
+                                className="container-top-img"
+                              />
+                              <h3>{group.name}</h3>
+                            </Link>
+                            {/* not sure how to get the relevant event */}
+                          </div>
+                        </li>
+                      ))}
+                      {/* <li className="detail-list-one">list one</li>
                         <li className="detail-list-two">list one</li>
-                        <li className="detail-list-three">list one</li>
-                      </ul>
-                    </div>
+                        <li className="detail-list-three">list one</li> */}
+                    </ul>
                   </div>
+                  {/* </div> */}
                 </div>
               </div>
             </div>
