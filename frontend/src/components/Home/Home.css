@@ -66,6 +66,7 @@ h3 {
   box-sizing: border-box;
   margin-top: 64px;
   margin-bottom: 64px;
+  padding: 0 16px;
 }
 
 .one-left {
@@ -103,6 +104,7 @@ h3 {
 .main-div-two {
   display: flex;
   flex-direction: column;
+  padding: 0 16px;
 }
 
 .two-top {
@@ -173,6 +175,7 @@ h3 {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   margin-top: 80px;
+  padding: 0 16px;
 }
 
 .three-flex-left {
@@ -258,7 +261,7 @@ h3 {
 }
 
 .main-div-four {
-  margin: 64px 0;
+  padding: 64px 16px;
 }
 
 .four-flex {
@@ -307,4 +310,76 @@ h3 {
 .detail-list-two,
 .detail-list-three {
   margin-left: 20px;
+}
+
+/* add pading to all section 0 16px */
+.main-div-five {
+  padding: 80px 16px;
+  text-align: center;
+  max-width: 1120px;
+  width: 100%;
+}
+
+.main-div-five h2 {
+  font-size: 32px;
+  margin-bottom: 8px;
+  font-weight: 600px;
+  /* line-height: 36px; */
+}
+
+.main-div-five p {
+  width: 50%;
+  text-align: center;
+  margin: 0 auto 40px auto;
+  line-height: 1.5em;
+}
+
+.div-five-flex-container {
+  margin-bottom: 60px;
+}
+
+.div-five-flex {
+  display: flex;
+}
+
+.div-five-flex-detail {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 24px;
+  width: 33.33%;
+}
+
+.flex-top-pic {
+  width: 160px;
+  height: 151px;
+}
+
+.flex-bottom-text {
+  margin-top: 8px;
+}
+
+.bottom-text-link {
+  text-decoration: none;
+  margin-bottom: 12px;
+}
+
+.bottom-text-link:hover {
+  text-decoration: underline #008294 2px;
+}
+
+.bottom-text-link h3 {
+  color: #008294;
+  font-size: 22px;
+  font-weight: 600;
+  padding-bottom: 12px;
+}
+
+.flex-bottom-text p {
+  font-size: 16px;
+  font-weight: 400;
+  text-align: center;
+  line-height: 1.5em;
+  width: 100%;
+  /* margin: 0; */
 }
