@@ -352,8 +352,12 @@ const Home = () => {
                 </div>
               </div>
             </div>
+
+            {/* the story part work on in if have time */}
+            <div className="main-div-six"></div>
           </div>
         </main>
+        <footer className="main-footer"></footer>
       </div>
     </>
   );
