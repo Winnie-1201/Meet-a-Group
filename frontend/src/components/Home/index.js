@@ -1,6 +1,5 @@
-import { useSelector } from "react-redux";
-import { NavLink, Link, Redirect } from "react-router-dom";
-import ProfileButton from "../Navigation/ProfileButton";
+// import { useSelector } from "react-redux";
+import { NavLink } from "react-router-dom";
 import "./Home.css";
 
 const Home = () => {

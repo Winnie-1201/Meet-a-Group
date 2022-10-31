@@ -2,6 +2,9 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import ProfileButton from "../Navigation/ProfileButton";
 import "./HomeBar.css";
+import LoginFormModal from "../LoginFormModal";
+
+import SignupFormModal from "../SingupFormModal";
 
 const HomeBar = () => {
   const currentUser = useSelector((state) => state.session.user);
@@ -18,12 +21,14 @@ const HomeBar = () => {
           {currentUser && <ProfileButton user={currentUser} />}
           {!currentUser && (
             <div className="user">
-              <Link to="/login" className="login-link">
+              {/* <Link to="/login" className="login-link">
                 Log in
-              </Link>
-              <Link to="/signup" className="signup-link">
+              </Link> */}
+              <LoginFormModal />
+              <SignupFormModal />
+              {/* <Link to="/signup" className="signup-link">
                 Sign up
-              </Link>
+              </Link> */}
             </div>
           )}
         </div>

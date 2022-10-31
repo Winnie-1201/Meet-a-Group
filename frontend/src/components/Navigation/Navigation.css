@@ -72,9 +72,14 @@ html {
   display: flex;
   text-decoration: none;
   color: #008294;
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 500;
   margin-right: 40px;
+}
+
+.start-new-group:hover {
+  padding-bottom: 5px;
+  border-bottom: 4px solid #008294;
 }
 
 .user {

@@ -34,14 +34,15 @@ function App() {
             <HomeBar />
             <Home />
           </Route>
-          <Route path="/login">
-            <HomeBar />
-            <LoginFormPage />
-          </Route>
-          <Route path="/signup">
+          {/* <Route path="/login">
+            <HomeBar /> */}
+          {/* <LoginFormPage /> */}
+          {/* <Navigation /> */}
+          {/* </Route> */}
+          {/* <Route path="/signup">
             <HomeBar />
             <SignupFormPage />
-          </Route>
+          </Route> */}
           <Route exact path="/groups">
             <Navigation />
             <Groups />
