@@ -3,12 +3,20 @@ h2,
 h3 {
   margin: 0;
 } */
+body {
+  margin: 0;
+}
+
+#root {
+  position: relative;
+}
 
 .homepage {
   display: flex;
   flex-direction: column;
-  padding: 0 16px;
+  /* padding: 0 16px; */
   align-items: center;
+  /* position: relative; */
 }
 
 .home-header {
@@ -55,8 +63,17 @@ h3 {
   display: flex;
   flex-direction: column;
   align-items: center;
-  max-width: 1120px;
+  /* max-width: 1120px; */
   width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  overflow-x: auto;
+}
+
+.main-div {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 1120px;
 }
 
 .main-div-one {
@@ -262,6 +279,7 @@ h3 {
 
 .main-div-four {
   padding: 64px 16px;
+  margin-bottom: 160px;
 }
 
 .four-flex {
@@ -494,4 +512,82 @@ h3 {
   line-height: 1.5em;
   width: 100%;
   /* margin: 0; */
+}
+
+.main-footer {
+  padding-top: 16px;
+  color: rgb(246 247 248);
+  background-color: rgb(33 33 33);
+  width: 100%;
+  min-height: 350px;
+}
+
+.footer-container {
+  display: flex;
+  flex-direction: column;
+  padding: 0 16px 16px 16px;
+  margin: 0 auto;
+  max-width: 1120px;
+}
+
+.footer-one-flex {
+  display: flex;
+  margin-top: 8px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid rgb(246 247 248);
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.footer-one-detail {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.footer-two-flex {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 24px;
+}
+
+.footer-detail {
+  margin-bottom: 12px;
+  width: 33.33%;
+}
+
+.footer-title {
+  font-size: 18px;
+  /* line-height: 30px; */
+}
+
+.footer-list li {
+  margin: 8px 0;
+}
+
+.footer-button {
+  background-color: rgb(33 33 33);
+  border: none;
+  color: rgb(197 196 196);
+  font-weight: 400;
+  cursor: pointer;
+  line-height: 20px;
+  letter-spacing: 0;
+  font-size: 16px;
+  padding: 0;
+}
+
+.source-link {
+  color: rgb(197 196 196);
+  font-weight: 400;
+  cursor: pointer;
+  line-height: 20px;
+  letter-spacing: 0;
+  font-size: 16px;
+  text-decoration: none;
+}
+
+.footer-button:hover,
+.source-link:hover {
+  background-color: rgb(33 33 33);
+  color: rgb(154, 151, 151);
 }

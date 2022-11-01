@@ -28,6 +28,18 @@ function LoginFormModal({ newGroup }) {
           Join MeetaGroup
         </button>
       )}
+
+      {newGroup === "footerLogin" && (
+        <button onClick={() => setShowModal(true)} className="footer-button">
+          Log in
+        </button>
+      )}
+
+      {newGroup === "getStarted" && (
+        <button onClick={() => setShowModal(true)} className="get-started">
+          Get Started
+        </button>
+      )}
       {!newGroup && (
         <button onClick={() => setShowModal(true)} className="login-button">
           Log in

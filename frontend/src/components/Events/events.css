@@ -85,24 +85,3 @@ h3 {
   margin: 0px 5px 15px 5px;
   margin-top: auto;
 }
-
-.group-container-flex {
-  display: flex;
-  flex-direction: column;
-  padding: 12px;
-  border: 1px solid rgb(217 217 217);
-}
-
-.container-top-flex {
-  display: flex;
-  text-decoration: inherit;
-  color: black;
-  padding-bottom: 5px;
-}
-
-.container-top-img {
-  width: 55px;
-  height: 55px;
-  margin-right: 16px;
-  border-radius: 8px;
-}

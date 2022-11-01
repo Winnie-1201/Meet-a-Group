@@ -1,13 +1,16 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useHistory } from "react-router-dom";
 import { getEvents } from "../../store/event";
 import { getGroups } from "../../store/group";
 import LoginFormModal from "../LoginFormModal";
+import SignupFormModal from "../SingupFormModal";
+import * as sessionActions from "../../store/session";
 import "./Home.css";
 
 const Home = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
   const currentUser = useSelector((state) => state.session.user);
   const events = Object.values(
     useSelector((state) => state.event.allEvents)
@@ -22,6 +25,12 @@ const Home = () => {
     dispatch(getEvents());
     dispatch(getGroups());
   }, [dispatch]);
+
+  const handleLogout = (e) => {
+    e.preventDefault();
+    dispatch(sessionActions.logout());
+    history.push("/");
+  };
 
   if (!groups || !events) return null;
   // console.log("getting in the navigation component======================");
@@ -357,7 +366,71 @@ const Home = () => {
             <div className="main-div-six"></div>
           </div>
         </main>
-        <footer className="main-footer"></footer>
+        <footer className="main-footer">
+          <div className="footer-container">
+            <div className="footer-one-flex">
+              <div className="footer-one-detail">
+                Create your own Meetup group.
+                {currentUser && (
+                  <Link to="/groups/current/new" className="footer-new-group">
+                    Get Started
+                  </Link>
+                )}
+                {!currentUser && <LoginFormModal newGroup={"getStarted"} />}
+              </div>
+            </div>
+            <div className="footer-two-flex">
+              <div className="footer-detail">
+                <span className="footer-title">Your Account</span>
+                <ul className="footer-list">
+                  {currentUser && (
+                    <>
+                      <li>
+                        <Link to="/groups/current" className="source-link">
+                          Your groups
+                        </Link>
+                        <li className="icon-logout">
+                          <button
+                            className="icon-logout-button"
+                            onClick={handleLogout}
+                          >
+                            Log Out
+                          </button>
+                        </li>
+                      </li>
+                    </>
+                  )}
+                  {!currentUser && (
+                    <>
+                      <li>
+                        <SignupFormModal prop={"footerSignup"} />
+                      </li>
+                      <li>
+                        <LoginFormModal newGroup={"footerLogin"} />
+                      </li>
+                    </>
+                  )}
+                </ul>
+              </div>
+              <div className="footer-detail">
+                <span className="footer-title">Discover</span>
+                <ul className="footer-list">
+                  <li>
+                    <Link to="/groups" className="source-link">
+                      Groups
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to="/events" className="source-link">
+                      Events
+                    </Link>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div className="footer-three-flex"></div>
+          </div>
+        </footer>
       </div>
     </>
   );
