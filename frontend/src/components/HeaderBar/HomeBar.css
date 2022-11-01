@@ -56,33 +56,36 @@ h3 {
   flex-direction: column;
 }
 
-/* .img-one-home {
+.img-one-home {
   position: absolute;
-  left: 5%;
-  top: 15%;
+  left: 10%;
+  top: 20%;
   max-width: 100%;
   height: auto;
-} */
+  z-index: -1;
+}
 
-/* .img-two-home {
+.img-two-home {
   position: absolute;
-  left: 40%;
+  left: 25%;
   top: 5%;
   max-width: 75%;
   height: auto;
+  z-index: -1;
 }
 
 .img-three-home {
   position: absolute;
   top: 0;
-  right: 0;
+  right: 5%;
   left: unset;
   transform: unset;
-} */
+  z-index: -1;
+}
 
-.homepage {
+/* html {
   background-image: url("https://secure.meetupstatic.com/next/images/blobs/red-blob.svg");
-  background-position: 13% 20%;
+  background-position: 8% 22%;
   background-repeat: no-repeat;
 }
 
@@ -96,4 +99,4 @@ body {
   background-image: url("https://secure.meetupstatic.com/next/images/blobs/green-blob.svg");
   background-position: 90% 0%;
   background-repeat: no-repeat;
-}
+} */
