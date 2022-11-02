@@ -10,6 +10,10 @@ h3 {
   padding: 0 16px;
 } */
 
+button {
+  cursor: pointer;
+}
+
 .home-header {
   margin-bottom: 40px;
   /* position: relative; */

@@ -18,16 +18,34 @@ const Navigation = () => {
             MeetaGroup
           </Link>
           <div className="header-search-bar">
-            <input type="text" placeholder="Search for keywords" />
+            {/* <form className="header-search-form"> */}
+            {/* <div className="form-container-flex"> */}
+            <div className="form-detail-one">
+              <input type="text" placeholder="Search for keywords" />
+            </div>
+            <div className="form-detail-two">
+              <input type="text" placeholder="Enter location" />
+            </div>
+            <button className="search-button-flex">
+              <i className="fa-solid fa-magnifying-glass" />
+            </button>
+            {/* </div> */}
+            {/* </form> */}
+            {/* <input type="text" placeholder="Search for keywords" />
+            <input type="text" placeholder="Enter location" /> */}
           </div>
         </div>
 
         <div className="header-right">
           {currentUser && (
-            <Link className="start-new-group" to="/groups/current/new">
-              Start a new group
-            </Link>
+            <>
+              <Link className="start-new-group" to="/groups/current/new">
+                Start a new group
+              </Link>
+              <ProfileButton user={currentUser} />
+            </>
           )}
+          {/* {currentUser && <ProfileButton user={currentUser} />} */}
           {/* come back here to change it for more details */}
           {!currentUser && (
             // <Link className="start-new-group" to="/login">
@@ -35,7 +53,6 @@ const Navigation = () => {
             // </Link>
             <LoginFormModal newGroup={"newGroup"} />
           )}
-          {currentUser && <ProfileButton user={currentUser} />}
           {!currentUser && (
             <div className="user">
               {/* <Link to="/login" className="login-link">

@@ -6,17 +6,17 @@ const attendances = [
   {
     eventId: 1,
     userId: 1,
-    status: "pending",
+    status: "host",
   },
   {
     eventId: 2,
     userId: 2,
-    status: "member",
+    status: "host",
   },
   {
     eventId: 3,
     userId: 3,
-    status: "co-host",
+    status: "host",
   },
 ];
 
