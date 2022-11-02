@@ -22,9 +22,7 @@ const GroupDetails = () => {
     useSelector((state) => state.group.singleGroup)
   )[0];
 
-  const allMembers = Object.values(
-    useSelector((state) => state.member.allMembers)
-  );
+  const members = useSelector((state) => state.member.allMembers);
 
   const currentUser = useSelector((state) => state.session.user);
 
@@ -36,7 +34,7 @@ const GroupDetails = () => {
   // );
 
   useEffect(() => {
-    dispatch(getGroupById(groupId))
+    dispatch(getAllMembers(groupId))
       .then(() => dispatch(getEventByGroup(groupId)))
       .then(() => dispatch(getGroupById(groupId)))
       .then(() => setLoaded(true));
@@ -61,18 +59,26 @@ const GroupDetails = () => {
   // console.log("all member------------", allMembers);
 
   // check if the current user is the host
-  let isMember;
-  allMembers.forEach(
-    (member) => (isMember = member.id === currentUser.id ? true : false)
-  );
+  // let isMember;
 
-  // get the leader
+  let allMembers;
   const leaders = [];
-  Object.values(allMembers).forEach((member) => {
-    if (member.Memberships.status in ["host", "co-host"]) {
-      leaders.push(member);
-    }
-  });
+  if (isLoaded) {
+    allMembers = Object.values(members);
+    // allMembers.forEach(
+    //   (member) => (isMember = member.id === currentUser.id ? true : false)
+    // );
+    allMembers.forEach((member) => {
+      if (
+        member.Memberships[0].status === "co-host" ||
+        member.Memberships[0].status === "host"
+      ) {
+        leaders.push(member);
+      }
+    });
+  }
+  // get the leader
+  console.log("is member----", currentUser.id === group.organizerId);
   console.log("leader!!!!!-----", leaders);
   let isEvent = false;
   if (!events) isEvent = true;
@@ -317,7 +323,7 @@ const GroupDetails = () => {
                       </nav>
                     </div>
                     <div className="member-right">
-                      {isMember && showAllMembers && (
+                      {currentUser.id === group.organizerId && showAllMembers && (
                         <ul className="flex flex-column member-right-detail">
                           {allMembers.map((member) => (
                             <li key={member.id} className="member-name">
@@ -334,7 +340,7 @@ const GroupDetails = () => {
                           ))}
                         </ul>
                       )}
-                      {!isMember && showAllMembers && (
+                      {currentUser.id !== group.organizerId && showAllMembers && (
                         <div className="flex flex-column member-right-detail">
                           <div className="member-right-icon">
                             <i className="fa-solid fa-user-lock" />
