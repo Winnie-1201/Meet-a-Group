@@ -6,17 +6,17 @@ const memberships = [
   {
     userId: 1,
     groupId: 1,
-    status: "pending",
+    status: "host",
   },
   {
     userId: 2,
     groupId: 2,
-    status: "member",
+    status: "host",
   },
   {
     userId: 3,
     groupId: 3,
-    status: "co-host",
+    status: "host",
   },
 ];
 

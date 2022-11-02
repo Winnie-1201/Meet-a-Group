@@ -3,6 +3,7 @@ import thunk from "redux-thunk";
 import eventsReducer from "./event";
 import groupsReducer from "./group";
 import imagesReducer from "./image";
+import memberReducer from "./member";
 import sessionReducer from "./session";
 
 // create a rootReducer
@@ -11,6 +12,7 @@ const rootReducer = combineReducers({
   group: groupsReducer,
   image: imagesReducer,
   event: eventsReducer,
+  member: memberReducer,
 });
 
 // initialize enhancer

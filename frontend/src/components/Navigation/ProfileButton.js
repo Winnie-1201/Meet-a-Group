@@ -35,9 +35,10 @@ const ProfileButton = ({ user }) => {
   };
 
   return (
-    <div>
+    <>
       <button className="header-bar-icon-button" onClick={onClick}>
-        <i className="fa-regular fa-circle-user" />
+        {/* <i className="fa-regular fa-circle-user" /> */}
+        <div className="button-detail">{user.firstName[0]}</div>
       </button>
       {openMenu && (
         <ul className="icon-detail">
@@ -49,7 +50,7 @@ const ProfileButton = ({ user }) => {
               exact
               to={`/groups/current`}
             >
-              My groups
+              Your groups
             </NavLink>
           </li>
           <li className="icon-logout">
@@ -59,7 +60,7 @@ const ProfileButton = ({ user }) => {
           </li>
         </ul>
       )}
-    </div>
+    </>
   );
 };
 
