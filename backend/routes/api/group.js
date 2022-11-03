@@ -644,6 +644,8 @@ router.get("/:groupId/members", async (req, res, next) => {
   const cohost = await Membership.findOne({
     where: {
       groupId,
+      // changed
+      userId,
       status: "co-host",
     },
   });
@@ -670,7 +672,13 @@ router.get("/:groupId/members", async (req, res, next) => {
     res.json(result);
   } else {
     const members = await Membership.findAll({
-      where: { groupId },
+      where: {
+        groupId,
+        // changed
+        status: {
+          [Op.not]: "pending",
+        },
+      },
     });
 
     for (let i = 0; i < members.length; i++) {
@@ -678,11 +686,11 @@ router.get("/:groupId/members", async (req, res, next) => {
       const userInfo = await User.findByPk(memberId, {
         include: {
           model: Membership,
-          where: {
-            status: {
-              [Op.not]: "pending",
-            },
-          },
+          // where: {
+          //   status: {
+          //     [Op.not]: "pending",
+          //   },
+          // },
           attributes: ["status"],
         },
         attributes: ["id", "firstName", "lastName"],
