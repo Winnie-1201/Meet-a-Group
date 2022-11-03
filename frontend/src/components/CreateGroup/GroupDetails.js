@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useHistory, useParams } from "react-router-dom";
+import { Link, Redirect, useHistory, useParams } from "react-router-dom";
 import { getEventByGroup } from "../../store/event";
 import { getGroupById, removeGroup } from "../../store/group";
 import { getAllMembers, requestMembership } from "../../store/member";
@@ -73,18 +73,23 @@ const GroupDetails = () => {
     if (deleted) return history.push("/groups/current");
   };
 
-  let pending = false;
+  // let pending = false;
   const handleJoinGroup = async (e) => {
     e.preventDefault();
 
     const newMember = await dispatch(requestMembership(groupId));
+
     console.log("-----------new member created", newMember);
-    if (newMember) {
-      pending = newMember.status;
-      history.push(`/groups/${groupId}`);
-    }
+    // if (newMember) {
+    //   // pending = newMember.status;
+
+    //   // history.push(`/groups/${groupId}`);
+    // }
   };
 
+  // console.log("pending is ---------------", pending);
+
+  // console.log("pending is", pending);
   // console.log("is pending ----", pending);
   // if (!group) return null;
   // if (!group?.Organizer) return null;
@@ -97,12 +102,15 @@ const GroupDetails = () => {
   let allMembers;
 
   let groupMember = false;
+  let pending = false;
   let host = false;
   const leaders = [];
   if (isLoaded) {
-    for (let key of Object.keys(members)) {
+    for (let [key, value] of Object.entries(members)) {
       if (currentUser.id == key) groupMember = true;
+      if (currentUser.id == key && value.status === "pending") pending = true;
     }
+
     allMembers = Object.values(members);
     // allMembers.forEach(
     //   (member) => (isMember = member.id === currentUser.id ? true : false)
@@ -141,6 +149,8 @@ const GroupDetails = () => {
   // console.log("leader!!!!!-----", leaders);
   let isEvent = false;
   if (!events) isEvent = true;
+
+  console.log("pending------", pending);
 
   return (
     isLoaded && (
@@ -278,7 +288,7 @@ const GroupDetails = () => {
                         </button>
                       </li>
                     )}
-                    {!groupMember && pending === "pending" && (
+                    {groupMember && pending && (
                       <li>
                         <button
                           className="request-to-join"

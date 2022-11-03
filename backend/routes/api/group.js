@@ -663,6 +663,9 @@ router.get("/:groupId/members", async (req, res, next) => {
       const userInfo = await User.findByPk(memberId, {
         include: {
           model: Membership,
+          where: {
+            groupId,
+          },
           attributes: ["status"],
         },
         attributes: ["id", "firstName", "lastName"],

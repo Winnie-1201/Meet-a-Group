@@ -11,12 +11,12 @@ const get = (members) => {
   };
 };
 
-const getOne = (member) => {
-  return {
-    type: GETONE,
-    member,
-  };
-};
+// const getOne = (member) => {
+//   return {
+//     type: GETONE,
+//     member,
+//   };
+// };
 
 // thunk: get all members by groupId
 export const getAllMembers = (groupId) => async (dispatch) => {
@@ -43,7 +43,7 @@ export const requestMembership = (groupId) => async (dispatch) => {
   const member = await response.json();
   console.log("new member in thunk", member);
   if (response.ok) {
-    await dispatch(getOne(member));
+    await dispatch(getAllMembers(groupId));
     return member;
   }
 };
