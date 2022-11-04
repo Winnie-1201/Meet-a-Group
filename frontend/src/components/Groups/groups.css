@@ -28,7 +28,6 @@ h3 {
   display: grid;
   height: 180px;
   width: 100%;
-
   grid-template-columns: 1fr 2fr;
   grid-template-areas: "pic details";
   text-decoration: none;
