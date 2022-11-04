@@ -25,6 +25,12 @@ const Events = () => {
               <Link to={`/events/${event.id}`} className="one-event-link">
                 <div className="event-image">
                   <img src={event.previewImage} className="event-img" />
+                  <div className="event-type">
+                    <div className="event-type-icon">
+                      <i className="fa-solid fa-video" />
+                    </div>
+                    <span>{event.type} Event</span>
+                  </div>
                 </div>
                 <div className="one-event-detail">
                   <p className="event-date">
@@ -53,7 +59,6 @@ const Events = () => {
                   <p className="event-attendees">
                     {event.numAttending} attendees
                   </p>
-                  <p className="event-type">{event.type} Event</p>
                 </div>
               </Link>
             </div>

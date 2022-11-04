@@ -20,6 +20,7 @@ h3 {
 
 .one-event {
   margin-top: 20px;
+  width: 100%;
   border-bottom: 1px solid rgb(202, 197, 197);
 }
 
@@ -44,8 +45,8 @@ h3 {
 }
 
 .event-img {
-  width: 170px;
-  height: 110px;
+  width: 180px;
+  height: 100px;
   border-radius: 8px;
 }
 
@@ -70,7 +71,7 @@ h3 {
 }
 
 .event-location {
-  margin: 0 5px 15px 5px;
+  margin: 0 5px 20px 5px;
   font-size: 14px;
   font-weight: 500;
 }
@@ -78,11 +79,30 @@ h3 {
 .event-attendees {
   font-size: 14px;
   margin-left: 5px;
-  margin-top: auto;
+  /* margin-top: auto; */
+}
+
+.event-image {
+  position: relative;
+  margin-right: 15px;
 }
 
 .event-type {
-  font-size: 14px;
-  margin: 0px 5px 15px 5px;
-  margin-top: auto;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 8px;
+  left: 8px;
+  font-size: 12px;
+  background-color: white;
+  padding: 2px 8px 2px 4px;
+  border-radius: 5px;
+}
+
+.event-type-icon .fa-video {
+  font-size: 12px;
+  width: 20px;
+  height: 20px;
+  padding-right: 4px;
 }
