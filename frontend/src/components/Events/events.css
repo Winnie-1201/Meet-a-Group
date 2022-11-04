@@ -13,7 +13,8 @@ h3 {
 .all-events {
   display: flex;
   flex-direction: column;
-  margin: 0 10px 10px 16px;
+  /*  */
+  margin: 0 auto 10px auto;
   max-width: 640px;
 }
 
