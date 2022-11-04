@@ -53,9 +53,9 @@ const Events = () => {
                   </p>
                   <p className="event-name">{event.name}</p>
                   <p className="event-group">{event.Group.name}</p>
-                  <p className="event-location">
+                  {/* <p className="event-location">
                     {event.Group.city}, {event.Group.state}
-                  </p>
+                  </p> */}
                   <p className="event-attendees">
                     {event.numAttending} attendees
                   </p>

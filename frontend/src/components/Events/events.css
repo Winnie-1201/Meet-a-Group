@@ -66,7 +66,8 @@ h3 {
 }
 
 .event-group {
-  margin: 5px;
+  /* margin: 5px; */
+  margin: 0 5px 20px 5px;
   font-size: 14px;
 }
 
@@ -79,6 +80,7 @@ h3 {
 .event-attendees {
   font-size: 14px;
   margin-left: 5px;
+  margin-top: 15px;
   /* margin-top: auto; */
 }
 
