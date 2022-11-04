@@ -3,7 +3,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, Redirect, useHistory, useParams } from "react-router-dom";
 import { getEventByGroup } from "../../store/event";
 import { getGroupById, removeGroup } from "../../store/group";
-import { getAllMembers, requestMembership } from "../../store/member";
+import {
+  changeStatusThunk,
+  deleteMembershipThunk,
+  getAllMembers,
+  getStatusThunk,
+  requestMembership,
+} from "../../store/member";
 import "./GroupDetails.css";
 
 function getRandomColor() {
@@ -15,16 +21,6 @@ function getRandomColor() {
   return color;
 }
 
-// function getYourColor(firstName) {
-//   var letters = "ABCDEF0123456789";
-
-//   var color = "#";
-//   for (var i = 0; i < 6; i++) {
-//     color += letters[Math.floor((firstName.length / 10) * 16)];
-//   }
-//   return color;
-// }
-
 const GroupDetails = () => {
   const { groupId } = useParams();
   const dispatch = useDispatch();
@@ -35,37 +31,24 @@ const GroupDetails = () => {
   const [showMembers, setMembers] = useState(false);
   const [showAllMembers, setAllMembers] = useState(true);
   const [showLeader, setLeader] = useState(false);
+  const [updateMembership, setMembership] = useState("");
   const [isLoaded, setLoaded] = useState(false);
 
   const group = Object.values(
     useSelector((state) => state.group.singleGroup)
   )[0];
-
   const members = useSelector((state) => state.member.allMembers);
-
   const currentUser = useSelector((state) => state.session.user);
-
   const events = Object.values(useSelector((state) => state.event.allEvents));
-  // console.log("all members", allMembers);
-  // console.log(
-  //   "the group in groupdetails in GroupDetails component====================",
-  //   group
-  // );
+  const status = useSelector((state) => state.member.status);
 
   useEffect(() => {
     dispatch(getAllMembers(groupId))
+      .then(() => dispatch(getStatusThunk(groupId)))
       .then(() => dispatch(getEventByGroup(groupId)))
       .then(() => dispatch(getGroupById(groupId)))
       .then(() => setLoaded(true));
-    // dispatch(getAllMembers(groupId));
-    // dispatch(getEventByGroup(groupId));
-    // dispatch(getGroupById(groupId));
   }, [dispatch]);
-
-  // console.log(
-  //   "here are all the events in GroupDetaisl comp===========",
-  //   events
-  // );
 
   const handleDelete = async (e) => {
     e.preventDefault();
@@ -73,85 +56,97 @@ const GroupDetails = () => {
     if (deleted) return history.push("/groups/current");
   };
 
-  // let pending = false;
   const handleJoinGroup = async (e) => {
     e.preventDefault();
-
-    const newMember = await dispatch(requestMembership(groupId));
-
-    console.log("-----------new member created", newMember);
-    // if (newMember) {
-    //   // pending = newMember.status;
-
-    //   // history.push(`/groups/${groupId}`);
-    // }
+    await dispatch(requestMembership(groupId));
+    await dispatch(getStatusThunk(groupId));
   };
 
-  // console.log("pending is ---------------", pending);
+  const handleDeleteMembership = async (e) => {
+    e.preventDefault();
+    await dispatch(deleteMembershipThunk(groupId, currentUser.id));
+    await dispatch(getStatusThunk(groupId));
+    await dispatch(getAllMembers(groupId));
+  };
 
-  // console.log("pending is", pending);
-  // console.log("is pending ----", pending);
-  // if (!group) return null;
-  // if (!group?.Organizer) return null;
-  // const allMembers = Object.values(members);
-  // console.log("all member------------", allMembers);
+  const handleChangeMembership = async (updates) => {
+    // e.preventDefault();
+    await dispatch(changeStatusThunk(groupId, updates));
+    await dispatch(getStatusThunk(groupId));
+    await dispatch(getAllMembers(groupId));
+  };
 
-  // check if the current user is the host
-  // let isMember;
+  // const handleEditMembership = async (e) => {
+  //   e.preventDefault();
+  //   await dispatch(changeStatusThunk())
+  // }
 
   let allMembers;
+  let memberStatus;
+  let pendingStatus;
 
   let groupMember = false;
-  let pending = false;
   let host = false;
-  const leaders = [];
+  let cohost = false;
+  let pending = false;
+  let leaders = [];
   if (isLoaded) {
-    for (let [key, value] of Object.entries(members)) {
-      if (currentUser.id == key) groupMember = true;
-      if (currentUser.id == key && value.status === "pending") pending = true;
+    // check if current user is the host or cohost of the group
+    // only host / cohost can see the member with pending;
+    if (status?.length > 0) {
+      host = status[0].status === "host" ? true : false;
+      cohost = status[0].status === "co-host" ? true : false;
+      // check if the current user is the group member;
+      // only group member can see the member list
+      groupMember =
+        status[0].status === "member" || host || cohost ? true : false;
+
+      // check if the current user request to join the group yet;
+      pending = status[0].status === "pending" ? true : false;
     }
-
     allMembers = Object.values(members);
-    // allMembers.forEach(
-    //   (member) => (isMember = member.id === currentUser.id ? true : false)
-    // );
-    allMembers.forEach((member) => {
-      if (
-        member.Memberships[0].status === "co-host" ||
-        member.Memberships[0].status === "host"
-      ) {
-        leaders.push(member);
-      }
-    });
+    leaders = allMembers.filter(
+      (member) =>
+        member.Memberships[0].status === "host" ||
+        member.Memberships[0].status === "co-host"
+    );
 
-    // console.log(allMembers, "------", currentUser);
-    if (currentUser.id === group.organizerId) host = true;
+    leaders = leaders.sort(
+      (a, b) => b.Memberships[0].status - a.Memberships[0].status
+    );
 
-    // let memberWithoutPending = allMembers.filter(
-    //   (member) => member.Memberships[0].status !== "pending"
-    // );
-
-    // pending =
-    //   allMembers.filter(
-    //     (member) =>
-    //       member.Memberships[0].status === "pending" &&
-    //       member.id === currentUser.id
-    //   ).length > 0
-    //     ? true
-    //     : false;
-
-    // allMembers = host ? allMembers : memberWithoutPending;
+    memberStatus = allMembers
+      .filter((member) => member.Memberships[0].status === "member")
+      .sort((a, b) => a.firstName - b.firstName);
+    pendingStatus = allMembers
+      .filter((member) => member.Memberships[0].status === "pending")
+      .sort((a, b) => a.firstName - b.firstName);
   }
 
-  // console.log("all member and current status", allMembers, currentUser);
-  // get the leader
-  // console.log("is member----", currentUser.id === group.organizerId);
-  // console.log("leader!!!!!-----", leaders);
-  let isEvent = false;
-  if (!events) isEvent = true;
+  //   for (let [key, value] of Object.entries(members)) {
+  //     if (currentUser.id == key) groupMember = true;
+  //     if (currentUser.id == key && value.status === "pending") pending = true;
+  //   }
 
-  console.log("pending------", pending);
+  //   allMembers = Object.values(members);
+  //   allMembers.forEach((member) => {
+  //     if (
+  //       member.Memberships[0].status === "co-host" ||
+  //       member.Memberships[0].status === "host"
+  //     ) {
+  //       leaders.push(member);
+  //     }
+  //   });
+  //   if (currentUser.id === group.organizerId) host = true;
+  // }
 
+  // let isEvent = false;
+  // if (!events) isEvent = true;
+  // // let pending = false;
+  // if (status && status[0].status === "pending" && status[0].groupId == groupId)
+  //   pending = true;
+
+  // console.log(status);
   return (
     isLoaded && (
       <>
@@ -182,9 +177,6 @@ const GroupDetails = () => {
                   </p>
                 </div>
               </div>
-              {/* <p>
-          Organizer: {group.Organizer?.lastName}, {group.Organizer?.firstName}
-        </p> */}
             </div>
             {/* <div className="group-detail-middle-bar-container"> */}
           </div>
@@ -236,16 +228,12 @@ const GroupDetails = () => {
                     {/* {currentUser && currentUser.id === group.organizerId && ( */}
                     {host && (
                       <li>
-                        {/* <> */}
                         <Link
                           className="edit-group"
                           to={`/groups/current/${groupId}/edit`}
                         >
-                          Edit
+                          <p>Edit</p>
                         </Link>
-                        {/* <button onClick={handleDelete}>Delete</button>
-              </> */}
-                        {/* <span className="button-members button-details">Members</span> */}
                       </li>
                     )}
                     {/* {currentUser && currentUser.id === group.organizerId && ( */}
@@ -262,16 +250,12 @@ const GroupDetails = () => {
                         {/* </> */}
                       </li>
                     )}
-                    {/* <span className="button-photos  button-details">Photots</span> */}
-                    {/* <li>
-                <span className="button-discussion button-details">
-                  Discussion
-                </span>
-              </li>
-              <li>
-                <span className="button-more button-details">More</span>
-              </li> */}
-                    {!groupMember && !host && (
+                  </ul>
+                </div>
+
+                <div className="group-detail-middle-bar-right">
+                  <ul className="middle-bar">
+                    {!groupMember && !pending && (
                       <li>
                         <button
                           className="request-to-join"
@@ -281,29 +265,33 @@ const GroupDetails = () => {
                         </button>
                       </li>
                     )}
-                    {groupMember && (
-                      <li>
-                        <button className="request-to-join">
-                          Leave the group
-                        </button>
-                      </li>
-                    )}
-                    {groupMember && pending && (
+                    {(groupMember || pending) && (
                       <li>
                         <button
+                          className="leave-group request-to-join"
+                          onClick={handleDeleteMembership}
+                        >
+                          <span>Leave the group</span>
+                        </button>
+                        {/* <div class="icon-leave-group">
+                          <i className="fa fa-remove" />
+                          <i className="fa fa-check" />
+                        </div> */}
+                      </li>
+                    )}
+                    {/* <li></li> */}
+                    {pending && (
+                      <li className="pending-status">
+                        {/* <button
                           className="request-to-join"
                           onClick={handleJoinGroup}
-                        >
-                          Request is pending
-                        </button>
+                        > */}
+                        Your member status: {status[0].status}
+                        {/* </button> */}
                       </li>
                     )}
                   </ul>
                 </div>
-
-                {/* <div className="group-detail-middle-bar-right">
-                  
-                </div> */}
               </div>
             </div>
           </div>
@@ -401,7 +389,7 @@ const GroupDetails = () => {
                               >
                                 All members
                               </button>
-                              <p>{allMembers.length}</p>
+                              <p>{allMembers?.length}</p>
                             </div>
                           </li>
                           <li>
@@ -424,9 +412,9 @@ const GroupDetails = () => {
                     <div className="member-right">
                       {/* {currentUser &&
                         currentUser.id === group.organizerId && */}
-                      {(host || groupMember) && showAllMembers && (
+                      {groupMember && showAllMembers && (
                         <ul className="flex flex-column member-right-detail">
-                          {allMembers.map((member) => (
+                          {leaders?.map((member) => (
                             <li key={member.id} className="member-name">
                               {/* <div className="member-name"> */}
                               <div
@@ -449,10 +437,109 @@ const GroupDetails = () => {
                               {/* </div> */}
                             </li>
                           ))}
+                          {memberStatus?.map((member) => (
+                            <li key={member.id} className="member-name">
+                              {/* <div className="member-name"> */}
+                              <div
+                                className="member-image"
+                                style={{
+                                  backgroundColor: getRandomColor(),
+                                }}
+                              >
+                                <span>
+                                  {member.firstName[0]}
+                                  {member.lastName[0]}
+                                </span>
+                              </div>
+                              <div className="member-status">
+                                <span>
+                                  {member.firstName} {member.lastName}
+                                </span>
+                                <div className="status-change">
+                                  <p>{member.Memberships[0].status}</p>
+                                  {host && (
+                                    <button
+                                      className="status-change-button"
+                                      onClick={() =>
+                                        handleChangeMembership({
+                                          memberId: member.id,
+                                          status: "co-host",
+                                        })
+                                      }
+                                    >
+                                      Change to co-host
+                                    </button>
+                                  )}
+                                </div>
+                              </div>
+                              {/* </div> */}
+                            </li>
+                          ))}
+
+                          {(host || cohost) &&
+                            pendingStatus?.map((member) => (
+                              <li key={member.id} className="member-name">
+                                {/* <div className="member-name"> */}
+                                <div
+                                  className="member-image"
+                                  style={{
+                                    backgroundColor: getRandomColor(),
+                                  }}
+                                >
+                                  <span>
+                                    {member.firstName[0]}
+                                    {member.lastName[0]}
+                                  </span>
+                                </div>
+                                <div className="member-status">
+                                  <span>
+                                    {member.firstName} {member.lastName}
+                                  </span>
+                                  <div className="status-change">
+                                    <p>{member.Memberships[0].status}</p>
+                                    <button
+                                      className="status-change-button"
+                                      onClick={() =>
+                                        handleChangeMembership({
+                                          memberId: member.id,
+                                          status: "member",
+                                        })
+                                      }
+                                    >
+                                      Change to member
+                                    </button>
+                                  </div>
+                                </div>
+                                {/* </div> */}
+                              </li>
+                            ))}
+
+                          {/* {allMembers?.map((member) => (
+                            <li key={member.id} className="member-name">
+                              <div
+                                className="member-image"
+                                style={{
+                                  backgroundColor: getRandomColor(),
+                                }}
+                              >
+                                <span>
+                                  {member.firstName[0]}
+                                  {member.lastName[0]}
+                                </span>
+                              </div>
+                              <div className="member-status">
+                                <span>
+                                  {member.firstName} {member.lastName}
+                                </span>
+                                <p>{member.Memberships[0].status}</p>
+                              </div>
+                    
+                            </li>
+                          ))} */}
                         </ul>
                       )}
                       {/* {(!currentUser || currentUser.id !== group.organizerId) && */}
-                      {!groupMember && !host && (showAllMembers || showLeader) && (
+                      {!groupMember && (showAllMembers || showLeader) && (
                         <div className="flex flex-column no-current-user">
                           <div className="member-right-icon">
                             <i className="fa-solid fa-user-lock" />
@@ -467,7 +554,7 @@ const GroupDetails = () => {
                       )}
                       {/* {currentUser &&
                         currentUser.id === group.organizerId && */}
-                      {(groupMember || host) && showLeader && (
+                      {groupMember && showLeader && (
                         <ul className="flex flex-column member-right-detail">
                           {leaders.map((leader) => (
                             <li key={leader.id} className="member-name">

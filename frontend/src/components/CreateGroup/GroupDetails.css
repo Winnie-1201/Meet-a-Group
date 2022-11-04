@@ -57,6 +57,8 @@
   display: flex;
   padding: 0;
   margin: 0;
+  /* justify-content: center; */
+  align-items: center;
   white-space: nowrap;
 }
 
@@ -103,13 +105,12 @@
 
 .button-about,
 .button-events,
-.edit-group,
+.edit-group p,
 .group-detail-delete-button {
   font-size: 18px;
   color: #2e3e48;
   border: none;
   background-color: white;
-
   padding: 10px 20px;
 }
 
@@ -127,6 +128,46 @@
   border: 1px solid #f67070;
 }
 
+/* .leave-group {
+  color: white;
+  background-color: #f65858;
+  font-size: 16px;
+  border: 1px solid #f65858;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.310, -0.105, 0.430, 1.400);;
+}
+
+.leave-group span, 
+.icon-leave-group {
+  display: block;
+    height: 100%;
+    text-align: center;
+    position: absolute;
+    top: 0;
+}
+
+.leave-group span {
+  width: 72%;
+  line-height: inherit;
+  font-size: 22px;
+  text-transform: uppercase;
+  left: 0;
+  transition: all 0.25s cubic-bezier(0.310, -0.105, 0.430, 1.400);;
+}
+
+.leave-group span::after{
+
+    content: '';
+    background-color: #a53125;
+    width: 2px;
+    height: 70%;
+    position: absolute;
+    top: 15%;
+    right: -1px;
+} */
+
 /* .group-detail-middle-bar-right {
   display: flex;
   justify-content: flex-start;
@@ -139,8 +180,8 @@
 .button-events:focus,
 .button-about:hover,
 .button-about:focus,
-.edit-group:hover,
-.edit-group:focus {
+.edit-group p:hover,
+.edit-group p:focus {
   color: #00a2c7;
   background-color: white;
 }
@@ -149,6 +190,7 @@
 .group-detail-delete-button:focus {
   color: white;
   background-color: #f65858;
+  border-radius: 8px;
 }
 
 .edit-group {

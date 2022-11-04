@@ -515,12 +515,16 @@ router.post("/:groupId/membership", requireAuth, async (req, res, next) => {
   const memberPending = await Membership.findOne({
     where: {
       userId,
+      //changed
+      groupId,
       status: "pending",
     },
   });
   const member = await Membership.findOne({
     where: {
       userId,
+      //changed
+      groupId,
       status: "member",
     },
   });
@@ -628,7 +632,27 @@ router.put(
   }
 );
 
-// Get all members of a gorup specified by its id;
+// Get current user's status in a group specified by its id
+router.get("/:groupId/status", requireAuth, async (req, res, next) => {
+  const groupId = req.params.groupId;
+  const userId = req.user.id;
+
+  const group = await Group.findByPk(groupId);
+  if (!group) {
+    res.status(404).json({
+      message: "Group couldn't be found",
+      statusCode: 404,
+    });
+  }
+
+  const member = await Membership.findAll({
+    where: { groupId, userId },
+  });
+
+  return res.json(member);
+});
+
+// Get all members of a group specified by its id;
 router.get("/:groupId/members", async (req, res, next) => {
   const groupId = req.params.groupId;
   const userId = req.user.id;
