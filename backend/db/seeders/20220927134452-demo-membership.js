@@ -48,6 +48,48 @@ const memberships = [
     groupId: 1,
     status: "co-host",
   },
+
+  {
+    userId: 4,
+    groupId: 4,
+    status: "host",
+  },
+
+  {
+    userId: 1,
+    groupId: 5,
+    status: "host",
+  },
+  {
+    userId: 1,
+    groupId: 6,
+    status: "host",
+  },
+  {
+    userId: 2,
+    groupId: 7,
+    status: "host",
+  },
+  {
+    userId: 5,
+    groupId: 8,
+    status: "host",
+  },
+  {
+    userId: 6,
+    groupId: 9,
+    status: "host",
+  },
+  {
+    userId: 1,
+    groupId: 10,
+    status: "host",
+  },
+  {
+    userId: 2,
+    groupId: 11,
+    status: "host",
+  },
 ];
 
 module.exports = {
