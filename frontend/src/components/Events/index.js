@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { useSearch } from "../../context/search";
 import { getEvents, getSearchEvents } from "../../store/event";
-// import groupsReducer from "../../store/group";
 import "./events.css";
 
 const Events = () => {
