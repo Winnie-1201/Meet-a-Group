@@ -36,6 +36,7 @@ h3 {
 
 .event-imgage {
   grid-area: pic;
+  /* position: relative; */
 }
 
 .one-event-detail {
@@ -86,17 +87,17 @@ h3 {
 }
 
 .event-image {
-  /* position: relative; */
+  position: relative;
   margin-right: 15px;
 }
 
 .event-type {
-  /* position: absolute; */
+  position: absolute;
   display: flex;
   justify-content: center;
   align-items: center;
-  /* top: 8px;
-  left: 8px; */
+  top: 8px;
+  left: 8px;
   font-size: 12px;
   background-color: white;
   padding: 2px 8px 2px 4px;

@@ -17,6 +17,7 @@ html {
   top: 0;
   background-color: white;
   padding: 0 16px;
+  z-index: 100;
 }
 
 .header {
@@ -190,6 +191,8 @@ html {
   margin-left: auto;
   margin-right: auto;
   position: sticky;
+  /* z-index: the larger one put on top */
+  z-index: 100;
   top: 77px;
   background-color: white;
 }
@@ -197,10 +200,11 @@ html {
 .event-groups-content {
   /* padding: 0px 16px; */
   margin: 0 0 64px;
+  padding: 0 16px;
 }
 .events-groups {
   display: flex;
-  padding: 12px 0px 6px;
+  padding: 16px 0 6px 24px;
 }
 
 .group-link,

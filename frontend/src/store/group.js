@@ -67,16 +67,7 @@ export const getSearchGroups = (keywords, location) => async (dispatch) => {
     const groups = await response.json();
 
     let searchResult = groups.Groups.filter((group) => {
-      // console.log(
-      //   "keyword",
-      //   keywords,
-      //   location.length,
-      //   keywords != null,
-      //   location !== null,
-      //   "" === undefined
-      // );
-      if (keywords.length > 0 && location.length > 0) {
-        // console.log("...1");
+      if (keywords?.length > 0 && location?.length > 0) {
         return (
           group.name
             .toLowerCase()
@@ -84,13 +75,12 @@ export const getSearchGroups = (keywords, location) => async (dispatch) => {
             .includes(keywords.toLowerCase()) &&
           group.city.toLowerCase() === location.toLowerCase()
         );
-      } else if (keywords.length > 0) {
-        console.log("-----", group.name.toLowerCase().split(/([_\W])/));
+      } else if (keywords?.length > 0) {
         return group.name
           .toLowerCase()
           .split(/([_\W])/)
           .includes(keywords.toLowerCase());
-      } else if (location.length > 0) {
+      } else if (location?.length > 0) {
         return group.city.toLowerCase() === location.toLowerCase();
       } else {
         return group;

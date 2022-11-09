@@ -1,30 +1,42 @@
 import { useDispatch, useSelector } from "react-redux";
-import { NavLink, Link, useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import ProfileButton from "./ProfileButton";
 import "./Navigation.css";
 import LoginFormModal from "../LoginFormModal";
 
 import SignupFormModal from "../SingupFormModal";
-import { useState } from "react";
-import { useSearch } from "../../context/search";
+import { useEffect, useState } from "react";
 import { getSearchGroups } from "../../store/group";
 import { getSearchEvents } from "../../store/event";
+import { useSearch } from "../../context/search";
 
 const Navigation = () => {
   const currentUser = useSelector((state) => state.session.user);
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const { setKeywords, setLocation, keywords, location } = useSearch();
+  // const [keywords, setKeywords] = useState("");
+  // const [location, setLocation] = useState("");
+  const { keywords, location, setKeywords, setLocation } = useSearch();
+
+  useEffect(() => {
+    setKeywords(localStorage.getItem("keywords"));
+    setLocation(localStorage.getItem("location"));
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("keywords", keywords);
+    localStorage.setItem("location", location);
+  }, [keywords, location]);
 
   const handleSubmit = async (e) => {
-    // e.preventDefault();
+    e.preventDefault();
+
     const searchGroups = dispatch(getSearchGroups(keywords, location));
     const searchEvents = dispatch(getSearchEvents(keywords, location));
 
     if (searchEvents) history.push("/events");
     if (searchGroups) history.push("/groups");
-    // return the dispatch;
   };
 
   // console.log("getting in the navigation component======================");
@@ -36,11 +48,11 @@ const Navigation = () => {
             MeetaGroup
           </Link>
           <div className="header-search-bar">
-            {/* <form className="header-search-form"> */}
-            {/* <div className="form-container-flex"> */}
             <div className="form-detail-one">
               <input
                 type="text"
+                id="search-box"
+                value={keywords}
                 placeholder="Search for keywords"
                 onChange={(e) => setKeywords(e.target.value)}
               />
@@ -48,6 +60,8 @@ const Navigation = () => {
             <div className="form-detail-two">
               <input
                 type="text"
+                value={location}
+                id="search-box"
                 placeholder="Enter location"
                 onChange={(e) => setLocation(e.target.value)}
               />

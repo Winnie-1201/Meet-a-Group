@@ -46,7 +46,7 @@ function App() {
           </Route> */}
           <Route exact path="/groups">
             <Navigation />
-            <div className="event-groups-body">
+            {/* <div className="event-groups-body">
               <div className="event-groups-content">
                 <div className="events-groups">
                   <h2
@@ -59,14 +59,14 @@ function App() {
                   <h2 className="group-link active">Groups</h2>
                 </div>
               </div>
-            </div>
+            </div> */}
             {/* <Navigation /> */}
             <Groups />
           </Route>
           <Route exact path="/events">
             <Navigation />
             {/* <Navigation /> */}
-            <div className="event-groups-body">
+            {/* <div className="event-groups-body">
               <div className="event-groups-content">
                 <div className="events-groups">
                   <h2 className="event-link active">Events</h2>
@@ -79,7 +79,7 @@ function App() {
                   </h2>
                 </div>
               </div>
-            </div>
+            </div> */}
             <Events />
           </Route>
           <Route exact path="/events/group/:groupId/new">

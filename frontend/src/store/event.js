@@ -70,7 +70,6 @@ export const getSearchEvents = (keywords, location) => async (dispatch) => {
 
     let searchResult = events.Events.filter((event) => {
       if (keywords.length > 0 && location.length > 0) {
-        // console.log("...1");
         return (
           event.name
             .toLowerCase()
@@ -79,7 +78,6 @@ export const getSearchEvents = (keywords, location) => async (dispatch) => {
           event.Venue.city.toLowerCase() === location.toLowerCase()
         );
       } else if (keywords.length > 0) {
-        console.log("-----", event.name.toLowerCase().split(/([_\W])/));
         return event.name
           .toLowerCase()
           .split(/([_\W])/)
@@ -90,7 +88,6 @@ export const getSearchEvents = (keywords, location) => async (dispatch) => {
         return event;
       }
     });
-    // console.log(searchResult);
     await dispatch(load(searchResult));
     return searchResult;
   }

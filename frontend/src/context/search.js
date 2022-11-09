@@ -7,7 +7,7 @@ export const useSearch = () => useContext(SearchContext);
 export default function SearchProvider({ children }) {
   const [keywords, setKeywords] = useState("");
   const [location, setLocation] = useState("");
-  const [searchSubmit, setSearchSubmit] = useState(false);
+  // const [searchSubmit, setSearchSubmit] = useState(false);
 
   return (
     <SearchContext.Provider
@@ -16,8 +16,8 @@ export default function SearchProvider({ children }) {
         setKeywords,
         location,
         setLocation,
-        searchSubmit,
-        setSearchSubmit,
+        // searchSubmit,
+        // setSearchSubmit,
       }}
     >
       {children}
