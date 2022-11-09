@@ -50,7 +50,7 @@ const Events = () => {
         </div>
       </div>
       {events.length === 0 && (keywords?.length > 0 || location?.length > 0) && (
-        <div className="flex-column">
+        <div className="flex-column-groups">
           <div className="not-found-image">
             <img src="https://secure.meetupstatic.com/next/images/find/emptyResultsIcon.svg?w=384" />
           </div>
