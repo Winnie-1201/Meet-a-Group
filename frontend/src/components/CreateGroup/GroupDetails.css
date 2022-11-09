@@ -68,7 +68,8 @@
 
 .middle-bar-container {
   position: sticky;
-  top: 0;
+  top: 70px;
+  padding: 10px 0;
   background-color: white;
   box-shadow: 0 0 2px 0 rgb(46 62 72 / 12%), 0 2px 4px 0 rgb(46 62 72 / 12%);
   /* display: flex; */

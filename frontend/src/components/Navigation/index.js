@@ -1,17 +1,35 @@
-import { useSelector } from "react-redux";
-import { NavLink, Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { NavLink, Link, useHistory } from "react-router-dom";
 import ProfileButton from "./ProfileButton";
 import "./Navigation.css";
 import LoginFormModal from "../LoginFormModal";
 
 import SignupFormModal from "../SingupFormModal";
+import { useState } from "react";
+import { useSearch } from "../../context/search";
+import { getSearchGroups } from "../../store/group";
+import { getSearchEvents } from "../../store/event";
 
 const Navigation = () => {
   const currentUser = useSelector((state) => state.session.user);
+  const dispatch = useDispatch();
+  const history = useHistory();
+
+  const { setKeywords, setLocation, keywords, location } = useSearch();
+
+  const handleSubmit = async (e) => {
+    // e.preventDefault();
+    const searchGroups = dispatch(getSearchGroups(keywords, location));
+    const searchEvents = dispatch(getSearchEvents(keywords, location));
+
+    if (searchEvents) history.push("/events");
+    if (searchGroups) history.push("/groups");
+    // return the dispatch;
+  };
 
   // console.log("getting in the navigation component======================");
   return (
-    <>
+    <div className="header-bar-sticky">
       <div className="header">
         <div className="header-left">
           <Link to="/" className="home">
@@ -21,12 +39,20 @@ const Navigation = () => {
             {/* <form className="header-search-form"> */}
             {/* <div className="form-container-flex"> */}
             <div className="form-detail-one">
-              <input type="text" placeholder="Search for keywords" />
+              <input
+                type="text"
+                placeholder="Search for keywords"
+                onChange={(e) => setKeywords(e.target.value)}
+              />
             </div>
             <div className="form-detail-two">
-              <input type="text" placeholder="Enter location" />
+              <input
+                type="text"
+                placeholder="Enter location"
+                onChange={(e) => setLocation(e.target.value)}
+              />
             </div>
-            <button className="search-button-flex">
+            <button className="search-button-flex" onClick={handleSubmit}>
               <i className="fa-solid fa-magnifying-glass" />
             </button>
             {/* </div> */}
@@ -67,7 +93,7 @@ const Navigation = () => {
           )}
         </div>
       </div>
-      <div className="event-groups-body">
+      {/* <div className="event-groups-body">
         <div className="event-groups-content">
           <div className="events-groups">
             <NavLink to="/events" className="event-link">
@@ -78,8 +104,8 @@ const Navigation = () => {
             </NavLink>
           </div>
         </div>
-      </div>
-    </>
+      </div> */}
+    </div>
   );
 };
 

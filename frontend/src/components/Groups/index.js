@@ -2,13 +2,14 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getGroups } from "../../store/group";
+import { getGroups, getSearchGroups } from "../../store/group";
 import "./groups.css";
+import { useSearch } from "../../context/search";
 
 const Groups = () => {
   // const currentUser = useSelector((state) => state.session.user);
   const groups = Object.values(useSelector((state) => state.group.allGroups));
-
+  const { keywords, location } = useSearch();
   // console.log(
   //   "all of the groups in Groups component!!!!==============",
   //   groups
@@ -16,7 +17,8 @@ const Groups = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getGroups());
+    // dispatch(getGroups());
+    dispatch(getSearchGroups(keywords, location));
   }, [dispatch]);
 
   if (!groups.length) return null;

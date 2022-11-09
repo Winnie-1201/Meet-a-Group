@@ -1,17 +1,24 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { getEvents } from "../../store/event";
+import { useSearch } from "../../context/search";
+import { getEvents, getSearchEvents } from "../../store/event";
 // import groupsReducer from "../../store/group";
 import "./events.css";
 
 const Events = () => {
   const dispatch = useDispatch();
+  // listening and make the changes
   const events = Object.values(useSelector((state) => state.event.allEvents));
-  console.log("all the events in Events component===========", events);
+  // console.log("all the events in Events component===========", events);
 
+  const { keywords, location } = useSearch();
+
+  // console.log("---keywords----search", keywords, location, searchSubmit);
   useEffect(() => {
-    dispatch(getEvents());
+    // get the data
+    // dispatch(getEvents());
+    dispatch(getSearchEvents(keywords, location));
   }, [dispatch]);
 
   if (!events) return null;
