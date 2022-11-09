@@ -10,6 +10,7 @@ import { restoreCSRF, csrfFetch } from "./store/csrf";
 // for testing the session action and reducer
 import * as sessionActions from "./store/session";
 import { ModalProvider } from "./context/Modal";
+import SearchProvider from "./context/search";
 
 const store = configureStore();
 
@@ -26,9 +27,11 @@ function Root() {
   return (
     <Provider store={store}>
       <ModalProvider>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
+        <SearchProvider>
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
+        </SearchProvider>
       </ModalProvider>
     </Provider>
   );

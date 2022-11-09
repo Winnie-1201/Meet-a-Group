@@ -342,6 +342,11 @@ body {
   margin-right: 20px;
 }
 
+.detail-list-group {
+  width: 300px;
+  min-height: 150px;
+}
+
 .list-detail-top {
   width: auto;
   position: relative;

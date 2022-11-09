@@ -187,7 +187,9 @@ const GroupDetails = () => {
                   <ul className="middle-bar">
                     <li>
                       <button
-                        className="button-about"
+                        className={`button-about${
+                          showAbout === true ? "-color" : ""
+                        } button-details`}
                         onClick={() => {
                           setEvents(false);
                           setAbout(true);
@@ -200,7 +202,9 @@ const GroupDetails = () => {
                     </li>
                     <li>
                       <button
-                        className="button-events button-details"
+                        className={`button-events${
+                          showEvents === true ? "-color" : ""
+                        } button-details`}
                         onClick={() => {
                           setEvents(true);
                           setAbout(false);
@@ -213,7 +217,9 @@ const GroupDetails = () => {
                     </li>
                     <li>
                       <button
-                        className="button-events button-details"
+                        className={`button-events${
+                          showMembers === true ? "-color" : ""
+                        } button-details`}
                         onClick={() => {
                           setEvents(false);
                           setAbout(false);
@@ -323,7 +329,7 @@ const GroupDetails = () => {
                 <div className="group-detail-hidden-events">
                   {/* <div className="hidden-events-left"> */}
                   <div className="hidden-events-top">
-                    <h3>Incoming events:</h3>
+                    <h3>Upcoming events:</h3>
                     <div className="hidden-events-link">
                       {currentUser && currentUser.id === group.organizerId && (
                         <Link
@@ -378,10 +384,16 @@ const GroupDetails = () => {
                     <div className="flex flex-column sticky-member">
                       <nav className="padding-left-top-bottom">
                         <ul>
-                          <li>
+                          <li
+                            className={`all-members${
+                              showAllMembers === true ? "-color" : ""
+                            }`}
+                          >
                             <div className="flex member-number">
                               <button
-                                className="all-members"
+                                className={`all-members${
+                                  showAllMembers === true ? "-color" : ""
+                                }`}
                                 onClick={() => {
                                   setAllMembers(true);
                                   setLeader(false);
@@ -389,13 +401,25 @@ const GroupDetails = () => {
                               >
                                 All members
                               </button>
-                              <p>{allMembers?.length}</p>
+                              <p
+                                className={`all-members${
+                                  showAllMembers === true ? "-color" : ""
+                                }`}
+                              >
+                                {allMembers?.length}
+                              </p>
                             </div>
                           </li>
-                          <li>
+                          <li
+                            className={`leadership${
+                              showLeader === true ? "-color" : ""
+                            }`}
+                          >
                             <div className="flex member-number">
                               <button
-                                className="leadership"
+                                className={`leadership${
+                                  showLeader === true ? "-color" : ""
+                                }`}
                                 onClick={() => {
                                   setAllMembers(false);
                                   setLeader(true);
@@ -403,7 +427,13 @@ const GroupDetails = () => {
                               >
                                 Leadership team
                               </button>
-                              <p>{leaders.length}</p>
+                              <p
+                                className={`leadership${
+                                  showLeader === true ? "-color" : ""
+                                }`}
+                              >
+                                {leaders.length}
+                              </p>
                             </div>
                           </li>
                         </ul>

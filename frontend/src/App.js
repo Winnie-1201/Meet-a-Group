@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, useHistory, NavLink } from "react-router-dom";
 import LoginFormPage from "./components/LoginFormPage";
 import SignupFormPage from "./components/SignupFormPage";
 import Groups from "./components/Groups";
@@ -19,6 +19,7 @@ import HomeBar from "./components/HeaderBar";
 
 function App() {
   const dispatch = useDispatch();
+  const history = useHistory();
   const [isLoaded, setIsLoaded] = useState(false);
   useEffect(() => {
     dispatch(sessionActions.restoreUser()).then(() => setIsLoaded(true));
@@ -45,10 +46,40 @@ function App() {
           </Route> */}
           <Route exact path="/groups">
             <Navigation />
+            {/* <div className="event-groups-body">
+              <div className="event-groups-content">
+                <div className="events-groups">
+                  <h2
+                    // to="/events"
+                    className="event-link inactive"
+                    onClick={() => history.push("/events")}
+                  >
+                    Events
+                  </h2>
+                  <h2 className="group-link active">Groups</h2>
+                </div>
+              </div>
+            </div> */}
+            {/* <Navigation /> */}
             <Groups />
           </Route>
           <Route exact path="/events">
             <Navigation />
+            {/* <Navigation /> */}
+            {/* <div className="event-groups-body">
+              <div className="event-groups-content">
+                <div className="events-groups">
+                  <h2 className="event-link active">Events</h2>
+                  <h2
+                    // to="/groups"
+                    className="group-link inactive"
+                    onClick={() => history.push("/groups")}
+                  >
+                    Groups
+                  </h2>
+                </div>
+              </div>
+            </div> */}
             <Events />
           </Route>
           <Route exact path="/events/group/:groupId/new">

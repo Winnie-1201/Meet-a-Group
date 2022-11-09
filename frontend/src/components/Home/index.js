@@ -1,8 +1,8 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, NavLink, useHistory } from "react-router-dom";
-import { getEvents } from "../../store/event";
-import { getGroups } from "../../store/group";
+import { getEvents, getSearchEvents } from "../../store/event";
+import { getGroups, getSearchGroups } from "../../store/group";
 import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SingupFormModal";
 import * as sessionActions from "../../store/session";
@@ -12,6 +12,10 @@ const Home = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const currentUser = useSelector((state) => state.session.user);
+
+  const [searchThing, setSearchThing] = useState("");
+  const [city, setCity] = useState("");
+
   const events = Object.values(
     useSelector((state) => state.event.allEvents)
   ).sort(
@@ -19,12 +23,27 @@ const Home = () => {
       new Date(a.startDate) - new Date() - (new Date(b.startDate) - new Date())
   );
   const groups = Object.values(useSelector((state) => state.group.allGroups));
-  console.log(events, groups);
+
+  useEffect(() => {
+    localStorage.setItem("keywords", searchThing);
+    localStorage.setItem("location", city);
+  }, [searchThing, city]);
 
   useEffect(() => {
     dispatch(getEvents());
     dispatch(getGroups());
   }, [dispatch]);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    await dispatch(getSearchGroups(searchThing, city));
+    const searchEvents = await dispatch(getSearchEvents(searchThing, city));
+    // console.log("searching at home", searchEvents);
+    if (searchEvents) history.push("/events");
+    // if (searchGroups) history.push("/groups");
+    // return the dispatch;
+  };
 
   const handleLogout = (e) => {
     e.preventDefault();
@@ -119,11 +138,18 @@ const Home = () => {
                 <form className="input-button">
                   <div className="three-input-area-flex">
                     <div className="input-area-one">
-                      <input type="text" placeholder={`Search for "tennis"`} />
+                      <input
+                        type="text"
+                        value={searchThing}
+                        placeholder={`Search for "tennis"`}
+                        onChange={(e) => setSearchThing(e.target.value)}
+                      />
                     </div>
                     <div className="input-area-two">
                       <input
                         type="text"
+                        value={city}
+                        onChange={(e) => setCity(e.target.value)}
                         placeholder="Neighborhood or City or zip"
                       />
                     </div>
@@ -131,10 +157,15 @@ const Home = () => {
                   {/* --
                   --- */}
                   {/* change it back to button later> */}
-                  {/* <button className="three-search-button">Search</button> */}
-                  <div className="three-search-button">
+                  <button
+                    className="three-search-button"
+                    onClick={handleSubmit}
+                  >
+                    Search
+                  </button>
+                  {/* <div className="three-search-button">
                     <p>Search</p>
-                  </div>
+                  </div> */}
                   {/* --
                   --- */}
                   {/* </div> */}
@@ -242,7 +273,7 @@ const Home = () => {
               <div className="four-flex">
                 <div className="four-flex-one">
                   <div className="one-header-flex">
-                    <h2>Upcoming online events</h2>
+                    <h2>Upcoming events</h2>
                     {/* put the events link here all events */}
                     {/* <div className="explore-link">
                       <p>Explore more events</p>
@@ -340,7 +371,7 @@ const Home = () => {
                           <div className="group-container-flex">
                             <Link
                               to={`/groups/${group.id}`}
-                              className="container-top-flex"
+                              className="container-top-flex  detail-list-group"
                             >
                               <img
                                 src={group.previewImage}

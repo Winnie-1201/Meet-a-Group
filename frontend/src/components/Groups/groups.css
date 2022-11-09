@@ -87,3 +87,33 @@ h3 {
   text-overflow: ellipsis;
   color: #757575;
 }
+
+.flex-column-groups {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 96px 0 144px 0;
+}
+
+.not-found-image {
+  margin-bottom: 24px;
+}
+
+.not-found-text {
+  font-size: 22px;
+  font-weight: 550;
+  padding: 10px 0;
+  text-align: center;
+}
+
+.not-found-button {
+  border: none;
+  color: #008294;
+  text-decoration: underline;
+  padding: 12px 0;
+  font-size: 18px;
+  background-color: white;
+}
+.not-found-button:hover {
+  background-color: white;
+}

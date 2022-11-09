@@ -68,7 +68,8 @@
 
 .middle-bar-container {
   position: sticky;
-  top: 0;
+  top: 70px;
+  padding: 10px 0;
   background-color: white;
   box-shadow: 0 0 2px 0 rgb(46 62 72 / 12%), 0 2px 4px 0 rgb(46 62 72 / 12%);
   /* display: flex; */
@@ -176,14 +177,20 @@
   margin-right: 30px;
 } */
 
-.button-events:hover,
-.button-events:focus,
-.button-about:hover,
-.button-about:focus,
-.edit-group p:hover,
-.edit-group p:focus {
+.button-details:hover,
+.edit-group p:hover {
   color: #00a2c7;
   background-color: white;
+}
+
+.button-events-color,
+.button-about-color {
+  color: #00a2c7;
+  background-color: white;
+  border: none;
+  background-color: white;
+  padding: 10px 20px;
+  font-size: 18px;
 }
 
 .group-detail-delete-button:hover,
@@ -415,22 +422,32 @@
 }
 
 .all-members,
-.leadership,
-.member-number p {
+.leadership {
   background-color: white;
   border: none;
   font-size: 18px;
   color: rgba(46, 62, 72, 0.35);
-}
-
-.all-members,
-.leadership {
   cursor: pointer;
 }
 
 .all-members:hover,
-.leadership:hover {
+.leadership:hover,
+.all-members-color:hover,
+.leadership-color:hover {
   background-color: #fff;
+}
+
+.all-members-color,
+.leadership-color {
+  color: #00a2c7;
+  background-color: white;
+  border: none;
+  font-size: 18px;
+}
+
+li.all-members-color,
+li.leadership-color {
+  border-right: 3px solid #00a2c7;
 }
 
 .member-right {

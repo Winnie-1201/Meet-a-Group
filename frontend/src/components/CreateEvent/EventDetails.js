@@ -72,7 +72,7 @@ const EventDetails = () => {
     <>
       {/* <p>here is the event detail</p> */}
       <div className="event-details-flex">
-        <div className="event-details-flex-grow"></div>
+        {/* <div className="event-details-flex-grow"></div> */}
         <div className="event-details-top">
           <div className="event-details-top-title">
             <h1>{event.name}</h1>
@@ -105,7 +105,7 @@ const EventDetails = () => {
                 </div>
                 <div className="event-detail-text">
                   <div className="event-detail-text-top-flex">
-                    <h2>Detail</h2>
+                    <h2>Details</h2>
                   </div>
                   <div className="event-detail-text-bottom">
                     <p>{event.description}</p>
@@ -233,7 +233,8 @@ const EventDetails = () => {
                   })
                     .format(newStartDate)
                     .toUpperCase()}{" "}
-                  · {newStartDate.getHours()} : {newStartDate.getMinutes()}
+                  {newStartDate.getDate()} · {newStartDate.getHours()} :{" "}
+                  {newStartDate.getMinutes()}
                   {newStartDate.getMinutes() == 0 ? 0 : ""}{" "}
                   {newStartDate.getHours() >= 12 ? "PM" : "AM"}
                 </div>

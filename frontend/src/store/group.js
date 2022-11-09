@@ -59,6 +59,39 @@ export const getGroups = () => async (dispatch) => {
   }
 };
 
+// thunk: loading all groups with filter;
+export const getSearchGroups = (keywords, location) => async (dispatch) => {
+  const response = await fetch("/api/groups/");
+
+  if (response.ok) {
+    const groups = await response.json();
+
+    let searchResult = groups.Groups.filter((group) => {
+      if (keywords?.length > 0 && location?.length > 0) {
+        return (
+          group.name
+            .toLowerCase()
+            .split(/([_\W])/)
+            .includes(keywords.toLowerCase()) &&
+          group.city.toLowerCase() === location.toLowerCase()
+        );
+      } else if (keywords?.length > 0) {
+        return group.name
+          .toLowerCase()
+          .split(/([_\W])/)
+          .includes(keywords.toLowerCase());
+      } else if (location?.length > 0) {
+        return group.city.toLowerCase() === location.toLowerCase();
+      } else {
+        return group;
+      }
+    });
+    // console.log(searchResult);
+    await dispatch(load(searchResult));
+    return searchResult;
+  }
+};
+
 // thunk: get details of a group from an id:
 export const getGroupById = (groupId) => async (dispatch) => {
   const response = await fetch(`/api/groups/${groupId}`);

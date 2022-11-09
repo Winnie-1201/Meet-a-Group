@@ -55,9 +55,41 @@ export const getEvents = () => async (dispatch) => {
 
   if (response.ok) {
     const events = await response.json();
-    console.log("all events in thunk=========", events);
+    // console.log("all events in thunk=========", events);
     dispatch(load(events.Events));
     return events;
+  }
+};
+
+// thunk: loading all groups with filter;
+export const getSearchEvents = (keywords, location) => async (dispatch) => {
+  const response = await fetch("/api/events/");
+
+  if (response.ok) {
+    const events = await response.json();
+
+    let searchResult = events.Events.filter((event) => {
+      if (keywords.length > 0 && location.length > 0) {
+        return (
+          event.name
+            .toLowerCase()
+            .split(/([_\W])/)
+            .includes(keywords.toLowerCase()) &&
+          event.Venue.city.toLowerCase() === location.toLowerCase()
+        );
+      } else if (keywords.length > 0) {
+        return event.name
+          .toLowerCase()
+          .split(/([_\W])/)
+          .includes(keywords.toLowerCase());
+      } else if (location.length > 0) {
+        return event.Venue.city.toLowerCase() === location.toLowerCase();
+      } else {
+        return event;
+      }
+    });
+    await dispatch(load(searchResult));
+    return searchResult;
   }
 };
 
