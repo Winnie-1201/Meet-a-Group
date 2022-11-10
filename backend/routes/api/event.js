@@ -425,6 +425,10 @@ router.get("/:eventId/attendees", async (req, res, next) => {
       const attendeeInfo = await User.findByPk(userId, {
         include: {
           model: Attendance,
+          // the thing changed in attendees branch
+          where: {
+            eventId,
+          },
           attributes: ["status"],
         },
         attributes: ["id", "firstName", "lastName"],
@@ -434,7 +438,13 @@ router.get("/:eventId/attendees", async (req, res, next) => {
     res.json(result);
   } else {
     const attendees = await Attendance.findAll({
-      where: { eventId },
+      // the thing changed in attendees branch
+      where: {
+        eventId,
+        status: {
+          [Op.not]: "pending",
+        },
+      },
     });
 
     for (let i = 0; i < attendees.length; i++) {
@@ -442,11 +452,11 @@ router.get("/:eventId/attendees", async (req, res, next) => {
       const attendeeInfo = await User.findByPk(userId, {
         include: {
           model: Attendance,
-          where: {
-            status: {
-              [Op.not]: "pending",
-            },
-          },
+          // where: {
+          //   status: {
+          //     [Op.not]: "pending",
+          //   },
+          // },
           attributes: ["status"],
         },
         attributes: ["id", "firstName", "lastName"],

@@ -11,12 +11,12 @@ const get = (attendees) => {
   };
 };
 
-const getStatus = (status) => {
-  return {
-    type: STATUS,
-    status,
-  };
-};
+// const getStatus = (status) => {
+//   return {
+//     type: STATUS,
+//     status,
+//   };
+// };
 
 // thunk: get all attendees by eventId
 export const getAllAttendees = (eventId) => async (dispatch) => {
@@ -36,32 +36,32 @@ export const getAllAttendees = (eventId) => async (dispatch) => {
 };
 
 // thunk: request attendance for an event specified by id;
-export const requestMembership = (groupId) => async (dispatch) => {
-  const response = await csrfFetch(`/api/groups/${groupId}/membership`, {
+export const requestAttendance = (eventId) => async (dispatch) => {
+  const response = await csrfFetch(`/api/events/${eventId}/attendance`, {
     method: "POST",
   });
-  const member = await response.json();
-  console.log("new member in thunk", member);
+  const attendee = await response.json();
+  console.log("new attendee in thunk", attendee);
   if (response.ok) {
-    await dispatch(getAllMembers(groupId));
-    return member;
+    await dispatch(getAllAttendees(eventId));
+    return attendee;
   }
 };
 
 // thunk: get the stutas of current user in specific group
-export const getStatusThunk = (groupId) => async (dispatch) => {
-  const response = await csrfFetch(`/api/groups/${groupId}/status`);
+// export const getStatusThunk = (groupId) => async (dispatch) => {
+//   const response = await csrfFetch(`/api/groups/${groupId}/status`);
 
-  if (response.ok) {
-    const status = await response.json();
-    console.log("status in thunk-------", status);
-    await dispatch(getStatus(status));
-  }
-};
+//   if (response.ok) {
+//     const status = await response.json();
+//     console.log("status in thunk-------", status);
+//     await dispatch(getStatus(status));
+//   }
+// };
 
 // thunk: change the status for specified group by id;
-export const changeStatusThunk = (groupId, updates) => async (dispatch) => {
-  const response = await csrfFetch(`/api/groups/${groupId}/membership`, {
+export const changeStatusThunk = (eventId, updates) => async (dispatch) => {
+  const response = await csrfFetch(`/api/events/${eventId}/attendance`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -70,14 +70,14 @@ export const changeStatusThunk = (groupId, updates) => async (dispatch) => {
   });
 
   if (response.ok) {
-    await dispatch(getAllMembers(groupId));
+    await dispatch(getAllAttendees(eventId));
   }
 };
 
 // thunk: delete membership to a group specified by id
-export const deleteMembershipThunk =
-  (groupId, memberId) => async (dispatch) => {
-    const response = await csrfFetch(`/api/groups/${groupId}/membership`, {
+export const deleteAttendanceThunk =
+  (eventId, memberId) => async (dispatch) => {
+    const response = await csrfFetch(`/api/events/${eventId}/attendance`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -86,30 +86,30 @@ export const deleteMembershipThunk =
     });
 
     if (response.ok) {
-      await dispatch(getAllMembers(groupId));
+      await dispatch(getAllAttendees(eventId));
     }
   };
 
 // reducer
 // const initialState = { allMembers: {}, singleMember: {} };
 
-const memberReducer = (state = {}, action) => {
+const attendeeReducer = (state = {}, action) => {
   let newState;
   switch (action.type) {
     case GET:
-      const allMembers = {};
+      const allAttendees = {};
       //   console.log(newState);
-      console.log(action.members, "==============");
-      action.members.forEach((member) => {
-        allMembers[member.id] = member;
+      console.log(action.attendees, "==============");
+      action.attendees.forEach((attendee) => {
+        allAttendees[attendee.id] = attendee;
       });
-      newState = { ...state, allMembers: allMembers };
+      newState = { ...state, allAttendees: allAttendees };
       return newState;
-    case STATUS:
-      // const currentState = {};
+    // case STATUS:
+    //   // const currentState = {};
 
-      newState = { ...state, status: action.status };
-      return newState;
+    //   newState = { ...state, status: action.status };
+    //   return newState;
     // case GETONE:
     //   const singleMember = {};
     //   singleMember[action.member.memberId] = action.member;
@@ -120,4 +120,4 @@ const memberReducer = (state = {}, action) => {
   }
 };
 
-export default memberReducer;
+export default attendeeReducer;

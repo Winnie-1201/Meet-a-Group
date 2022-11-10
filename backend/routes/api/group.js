@@ -649,6 +649,7 @@ router.get("/:groupId/status", requireAuth, async (req, res, next) => {
     where: { groupId, userId },
   });
 
+  // console.log("member in backend", member);
   return res.json(member);
 });
 

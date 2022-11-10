@@ -54,6 +54,7 @@ export const getStatusThunk = (groupId) => async (dispatch) => {
 
   if (response.ok) {
     const status = await response.json();
+
     console.log("status in thunk-------", status);
     await dispatch(getStatus(status));
   }
@@ -109,6 +110,7 @@ const memberReducer = (state = {}, action) => {
       // const currentState = {};
 
       newState = { ...state, status: action.status };
+      // console.log("new state in status", newState);
       return newState;
     // case GETONE:
     //   const singleMember = {};
