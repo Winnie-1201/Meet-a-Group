@@ -135,9 +135,9 @@ router.get("/", async (req, res, next) => {
     const numMembers = await Membership.findAll({
       where: {
         groupId: id,
-        status: {
-          [Op.in]: ["member", "co-host"],
-        },
+        // status: {
+        //   [Op.in]: ["member", "co-host"],
+        // },
       },
     });
     group.numMembers = numMembers.length;
@@ -249,8 +249,20 @@ router.post("/:groupId/images", requireAuth, async (req, res, next) => {
 // Get all groups joined or organized by the current user;
 router.get("/current", requireAuth, async (req, res, next) => {
   const currUserId = req.user.id;
+
+  const memberships = await Membership.findAll({
+    where: {
+      userId: currUserId,
+    },
+  });
+
+  let groupIds = {};
+  memberships.forEach((membership) => {
+    groupIds[membership.groupId] = membership.groupId;
+  });
+
   const groups = await Group.findAll({
-    where: { organizerId: currUserId },
+    where: { organizerId: { [Op.in]: Object.values(groupIds) } },
   });
 
   let result = {};
@@ -276,10 +288,12 @@ router.get("/current", requireAuth, async (req, res, next) => {
     }
     const numMembers = await Membership.findAll({
       where: {
-        userId: currUserId,
-        status: {
-          [Op.in]: ["member", "co-host"],
-        },
+        // CHANGE!!!
+        // userId: currUserId,
+        // status: {
+        //   [Op.in]: ["member", "co-host"],
+        // },
+        groupId,
       },
     });
     groupJoin.numMembers = numMembers.length;

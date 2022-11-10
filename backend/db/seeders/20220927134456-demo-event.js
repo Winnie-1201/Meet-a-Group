@@ -3,6 +3,7 @@
 // const { Venue, Group } = require("../models");
 
 const events = [
+  // 1
   {
     venueId: 1,
     groupId: 1,
@@ -15,6 +16,7 @@ const events = [
     startDate: new Date("2022-11-02 8:00:00"),
     endDate: new Date("2022-11-02 17:00:00"),
   },
+  // 2
   {
     venueId: 2,
     groupId: 2,
@@ -26,6 +28,7 @@ const events = [
     startDate: new Date("2022-11-04 7:00:00"),
     endDate: new Date("2022-11-04 9:00:00"),
   },
+  // 3
   {
     venueId: 3,
     groupId: 3,
@@ -38,7 +41,7 @@ const events = [
     startDate: new Date("2022-11-11 8:00:00"),
     endDate: new Date("2022-11-11 17:00:00"),
   },
-
+  // 4
   {
     venueId: 1,
     groupId: 1,
@@ -51,6 +54,7 @@ const events = [
     startDate: new Date("2022-11-11 8:00:00"),
     endDate: new Date("2022-11-11 17:00:00"),
   },
+  // 5
   {
     venueId: 1,
     groupId: 4,
@@ -63,6 +67,7 @@ const events = [
     startDate: new Date("2022-11-11 8:00:00"),
     endDate: new Date("2022-11-11 17:00:00"),
   },
+  // 6
   {
     venueId: 1,
     groupId: 5,
@@ -75,6 +80,7 @@ const events = [
     startDate: new Date("2022-11-11 8:00:00"),
     endDate: new Date("2022-11-11 17:00:00"),
   },
+  // 7
   {
     venueId: 1,
     groupId: 6,
@@ -87,6 +93,7 @@ const events = [
     startDate: new Date("2022-11-11 8:00:00"),
     endDate: new Date("2022-11-11 17:00:00"),
   },
+  // 8
   {
     venueId: 1,
     groupId: 7,
@@ -99,6 +106,7 @@ const events = [
     startDate: new Date("2022-11-11 8:00:00"),
     endDate: new Date("2022-11-11 17:00:00"),
   },
+  // 9
   {
     venueId: 3,
     groupId: 8,
@@ -111,6 +119,7 @@ const events = [
     startDate: new Date("2022-11-11 8:00:00"),
     endDate: new Date("2022-11-11 17:00:00"),
   },
+  // 10
   {
     venueId: 3,
     groupId: 9,
@@ -123,6 +132,7 @@ const events = [
     startDate: new Date("2022-11-11 8:00:00"),
     endDate: new Date("2022-11-11 17:00:00"),
   },
+  // 11
   {
     venueId: 1,
     groupId: 10,
@@ -135,33 +145,6 @@ const events = [
     startDate: new Date("2022-11-11 8:00:00"),
     endDate: new Date("2022-11-11 17:00:00"),
   },
-  // {
-  //   name: "",
-  //   description: "",
-  //   type: "",
-  //   capacity: "",
-  //   price: "",
-  //   startDate: "",
-  //   endDate: "",
-  // },
-  // {
-  //   name: "",
-  //   description: "",
-  //   type: "",
-  //   capacity: "",
-  //   price: "",
-  //   startDate: "",
-  //   endDate: "",
-  // },
-  // {
-  //   name: "",
-  //   description: "",
-  //   type: "",
-  //   capacity: "",
-  //   price: "",
-  //   startDate: "",
-  //   endDate: "",
-  // },
 ];
 module.exports = {
   async up(queryInterface, Sequelize) {
