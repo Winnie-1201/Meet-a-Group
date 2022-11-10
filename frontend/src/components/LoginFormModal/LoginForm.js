@@ -81,7 +81,16 @@ const LoginForm = () => {
           setPassword("password");
         }}
       >
-        Demo user
+        Demo user1
+      </button>
+      <button
+        type="submit"
+        onClick={() => {
+          setCredential("user1@user.io");
+          setPassword("password2");
+        }}
+      >
+        Demo user2
       </button>
     </form>
     // </section>

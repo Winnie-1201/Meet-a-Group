@@ -107,19 +107,17 @@ const GroupDetails = () => {
     allMembers = Object.values(members);
     leaders = allMembers.filter(
       (member) =>
-        member.Memberships[0].status === "host" ||
-        member.Memberships[0].status === "co-host"
+        member.Membership.status === "host" ||
+        member.Membership.status === "co-host"
     );
 
-    leaders = leaders.sort(
-      (a, b) => b.Memberships[0].status - a.Memberships[0].status
-    );
+    leaders = leaders.sort((a, b) => b.Membership.status - a.Membership.status);
 
     memberStatus = allMembers
-      .filter((member) => member.Memberships[0].status === "member")
+      .filter((member) => member.Membership.status === "member")
       .sort((a, b) => a.firstName - b.firstName);
     pendingStatus = allMembers
-      .filter((member) => member.Memberships[0].status === "pending")
+      .filter((member) => member.Membership.status === "pending")
       .sort((a, b) => a.firstName - b.firstName);
   }
 
@@ -462,7 +460,7 @@ const GroupDetails = () => {
                                 <span>
                                   {member.firstName} {member.lastName}
                                 </span>
-                                <p>{member.Memberships[0].status}</p>
+                                <p>{member.Membership.status}</p>
                               </div>
                               {/* </div> */}
                             </li>
@@ -486,7 +484,7 @@ const GroupDetails = () => {
                                   {member.firstName} {member.lastName}
                                 </span>
                                 <div className="status-change">
-                                  <p>{member.Memberships[0].status}</p>
+                                  <p>{member.Membership.status}</p>
                                   {host && (
                                     <button
                                       className="status-change-button"
@@ -526,7 +524,7 @@ const GroupDetails = () => {
                                     {member.firstName} {member.lastName}
                                   </span>
                                   <div className="status-change">
-                                    <p>{member.Memberships[0].status}</p>
+                                    <p>{member.Membership.status}</p>
                                     <button
                                       className="status-change-button"
                                       onClick={() =>
@@ -604,7 +602,7 @@ const GroupDetails = () => {
                                 <span>
                                   {leader.firstName} {leader.lastName}
                                 </span>
-                                <p>{leader.Memberships[0].status}</p>
+                                <p>{leader.Membership.status}</p>
                               </div>
                               {/* </div> */}
                             </li>

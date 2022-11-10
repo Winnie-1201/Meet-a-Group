@@ -6,10 +6,10 @@ import "./MyGroups.css";
 
 const MyGroups = () => {
   const groups = Object.values(useSelector((state) => state.group.allGroups));
-  // console.log(
-  //   "here is all my groups in MyGroups component!!!!=======================",
-  //   groups
-  // );
+  console.log(
+    "here is all my groups in MyGroups component!!!!=======================",
+    groups
+  );
   const dispatch = useDispatch();
 
   const helpDelay = async () => {
