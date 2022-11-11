@@ -1,7 +1,12 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory, useParams } from "react-router-dom";
-import { getAllAttendees, requestAttendance } from "../../store/attendence";
+import {
+  changeStatusThunk,
+  deleteAttendanceThunk,
+  getAllAttendees,
+  requestAttendance,
+} from "../../store/attendence";
 import { getEventById, deleteEvent } from "../../store/event";
 import { getGroupById, getGroupByUserThunk } from "../../store/group";
 import { getStatusThunk } from "../../store/member";
@@ -25,6 +30,8 @@ const EventDetails = () => {
 
   const status = useSelector((state) => state.member.status);
   let attendees = useSelector((state) => state.attendee.allAttendees);
+
+  console.log("status in event details--------", status);
 
   useEffect(() => {
     // dispatch(getEventById(eventId))
@@ -54,6 +61,20 @@ const EventDetails = () => {
     // await dispatch()
   };
 
+  const handleJoinGroup = () => {
+    history.push(`/groups/${group.id}`);
+  };
+
+  const handleChangeAttendance = async (updates) => {
+    await dispatch(changeStatusThunk(eventId, updates));
+    await dispatch(getAllAttendees(eventId));
+  };
+
+  const handleLeaveEvent = async () => {
+    await dispatch(deleteAttendanceThunk(eventId, currentUser.id));
+    await dispatch(getAllAttendees(eventId));
+  };
+
   // if (!event) return null;
   // if (!event.EventImages) return null;
   // if (!group) return null;
@@ -69,41 +90,85 @@ const EventDetails = () => {
     "Friday",
     "Saturday",
   ];
+
+  let memberStatus;
+  let pendingStatus;
+
+  let eventMember = false;
+  let host = false;
+  let cohost = false;
+  let pending = false;
+  // let groupMember = false;
+
   if (isLoaded) {
     // const newStartDate = new Date(event.startDate);
     // const newEndDate = new Date(event.endDate);
     newStartDate = new Date(event.startDate);
     newEndDate = new Date(event.endDate);
+
     attendees = Object.values(attendees);
+
+    if (status?.length > 0) {
+      host = status[0].status === "host" ? true : false;
+      cohost = status[0].status === "co-host" ? true : false;
+      eventMember =
+        status[0].status === "member" || host || cohost ? true : false;
+      pending = status[0].status === "pending" ? true : false;
+    }
+
+    memberStatus = attendees
+      .filter((attendee) => attendee.Attendances.status !== "pending")
+      .sort((a, b) => a.firstName - b.firstName);
+    pendingStatus = attendees
+      .filter((attendee) => attendee.Attendances.status === "pending")
+      .sort((a, b) => a.firstName - b.firstName);
   }
 
   return (
     isLoaded &&
     isLoaded1 && (
       <>
+        {/* <div className="all-event-groups-body">
+          <div className="all-groups-events">
+            <h2
+            
+              className="back-to-event-link"
+              onClick={() => history.push("/events")}
+            >
+              All events
+            </h2>
+            <h2
+              className="back-to-group-link"
+              onClick={() => history.push("/groups")}
+            >
+              All groups
+            </h2>
+          </div>
+        </div> */}
         {/* <p>here is the event detail</p> */}
         <div className="event-details-flex">
           {/* <div className="event-details-flex-grow"></div> */}
           <div className="event-details-top">
             <div className="event-details-top-title">
               <h1>{event.name}</h1>
-              {currentUser &&
+              {/* {currentUser &&
                 group &&
                 event.groupId === group.id &&
-                currentUser.id === group.organizerId && (
-                  <div className="top-title-edit-delete">
-                    <Link className="edit-link" to={`/events/${eventId}/edit/`}>
-                      Edit
-                    </Link>
+                currentUser.id === group.organizerId && ( */}
+              {host && (
+                <div className="top-title-edit-delete">
+                  <Link className="edit-link" to={`/events/${eventId}/edit/`}>
+                    Edit
+                  </Link>
 
-                    <button
-                      className="top-title-delete-button"
-                      onClick={handleDelete}
-                    >
-                      Delete
-                    </button>
-                  </div>
-                )}
+                  <button
+                    className="top-title-delete-button"
+                    onClick={handleDelete}
+                  >
+                    Delete
+                  </button>
+                </div>
+              )}
             </div>
           </div>
 
@@ -124,11 +189,11 @@ const EventDetails = () => {
                   </div>
                   <div className="event-detail-attendees">
                     <div className="event-detail-attendees-title-flex">
-                      <h2>Attendees ({attendees.length})</h2>
+                      <h2>Attendees ({memberStatus.length})</h2>
                     </div>
                     {/* <div className="event-detail-attendees-card"> */}
                     <div className="card-detail-grid">
-                      {attendees.map((attendee) => (
+                      {memberStatus.map((attendee) => (
                         <div key={attendee.id} className="card-detail-flex">
                           <div className="card-detail-img">
                             <div className="card-detail-image">
@@ -140,12 +205,61 @@ const EventDetails = () => {
                             {attendee.firstName} {attendee.lastName[0]}.
                           </div>
                           <div className="card-detail-status">
-                            {attendee.Attendances[0].status === "host"
+                            {attendee.Attendances.status === "host"
                               ? "Organizer"
-                              : attendee.Attendances[0].status}
+                              : attendee.Attendances.status}
+                          </div>
+                          <div className="card-detail-status">
+                            {host && attendee.Attendances.status === "member" && (
+                              <button
+                                className="status-change-button"
+                                onClick={() =>
+                                  handleChangeAttendance({
+                                    userId: attendee.id,
+                                    status: "co-host",
+                                  })
+                                }
+                              >
+                                change to co-host
+                              </button>
+                            )}
                           </div>
                         </div>
                       ))}
+                      {(host || cohost) &&
+                        pendingStatus.map((attendee) => (
+                          <div key={attendee.id} className="card-detail-flex">
+                            <div className="card-detail-img">
+                              <div className="card-detail-image">
+                                {attendee.lastName[0]}
+                                {attendee.firstName[0]}
+                              </div>
+                            </div>
+                            <div className="card-detail-name">
+                              {attendee.firstName} {attendee.lastName[0]}.
+                            </div>
+                            <div className="card-detail-status">
+                              {attendee.Attendances.status === "host"
+                                ? "Organizer"
+                                : attendee.Attendances.status}
+                            </div>
+                            <div className="card-detail-status">
+                              {(host || cohost) && (
+                                <button
+                                  className="status-change-button"
+                                  onClick={() =>
+                                    handleChangeAttendance({
+                                      userId: attendee.id,
+                                      status: "member",
+                                    })
+                                  }
+                                >
+                                  change to member
+                                </button>
+                              )}
+                            </div>
+                          </div>
+                        ))}
                     </div>
                   </div>
                   <div className="event-detail-photos">
@@ -274,10 +388,32 @@ const EventDetails = () => {
                 </div>
               </div>
               <div className="bottom-right-flex">
-                <div className="price">price</div>
-                <button className="attend-button" onClick={handleAttendEvent}>
-                  Attend
-                </button>
+                <div className="price">
+                  {event.price === 0 ? "FREE" : `$${event.price}`}
+                </div>
+                {status.length <= 0 && (
+                  <button className="attend-button" onClick={handleJoinGroup}>
+                    Join the group to attend
+                  </button>
+                )}
+                {!eventMember && !pending && status.length > 0 && (
+                  <button className="attend-button" onClick={handleAttendEvent}>
+                    Attend
+                  </button>
+                )}
+                {(eventMember || pending) && !host && (
+                  <button className="attend-button" onClick={handleLeaveEvent}>
+                    Leave the event
+                  </button>
+                )}
+                {eventMember && (
+                  <p>
+                    You are{" "}
+                    {status[0].status === "member"
+                      ? "a member"
+                      : `the ${status[0].status}`}
+                  </p>
+                )}
               </div>
             </div>
           </div>

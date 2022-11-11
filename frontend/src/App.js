@@ -16,6 +16,7 @@ import EventDetails from "./components/CreateEvent/EventDetails";
 import EditEvent from "./components/CreateEvent/EditEvent";
 import Home from "./components/Home";
 import HomeBar from "./components/HeaderBar";
+import Footer from "./components/Footer";
 
 function App() {
   const dispatch = useDispatch();
@@ -30,23 +31,24 @@ function App() {
       {/* <Home isLoaded={isLoaded} /> */}
       {/* <HomeBar isLoaded={isLoaded} /> */}
       {isLoaded && (
-        <Switch>
-          <Route exact path="/">
-            <HomeBar />
-            <Home />
-          </Route>
-          {/* <Route path="/login">
+        <>
+          <Switch>
+            <Route exact path="/">
+              <HomeBar />
+              <Home />
+            </Route>
+            {/* <Route path="/login">
             <HomeBar /> */}
-          {/* <LoginFormPage /> */}
-          {/* <Navigation /> */}
-          {/* </Route> */}
-          {/* <Route path="/signup">
+            {/* <LoginFormPage /> */}
+            {/* <Navigation /> */}
+            {/* </Route> */}
+            {/* <Route path="/signup">
             <HomeBar />
             <SignupFormPage />
           </Route> */}
-          <Route exact path="/groups">
-            <Navigation />
-            {/* <div className="event-groups-body">
+            <Route exact path="/groups">
+              <Navigation />
+              {/* <div className="event-groups-body">
               <div className="event-groups-content">
                 <div className="events-groups">
                   <h2
@@ -60,13 +62,14 @@ function App() {
                 </div>
               </div>
             </div> */}
-            {/* <Navigation /> */}
-            <Groups />
-          </Route>
-          <Route exact path="/events">
-            <Navigation />
-            {/* <Navigation /> */}
-            {/* <div className="event-groups-body">
+              {/* <Navigation /> */}
+              <Groups />
+              {/* <Footer window={window} /> */}
+            </Route>
+            <Route exact path="/events">
+              <Navigation />
+              {/* <Navigation /> */}
+              {/* <div className="event-groups-body">
               <div className="event-groups-content">
                 <div className="events-groups">
                   <h2 className="event-link active">Events</h2>
@@ -80,37 +83,46 @@ function App() {
                 </div>
               </div>
             </div> */}
-            <Events />
-          </Route>
-          <Route exact path="/events/group/:groupId/new">
-            <Navigation />
-            <CreateEvent />
-          </Route>
-          <Route exact path="/events/:eventId/edit">
-            <Navigation />
-            <EditEvent />
-          </Route>
-          <Route exact path="/events/:eventId">
-            <Navigation />
-            <EventDetails />
-          </Route>
-          <Route exact path="/groups/current">
-            <Navigation />
-            <MyGroups />
-          </Route>
-          <Route exact path="/groups/current/new">
-            <Navigation />
-            <CreateGroup />
-          </Route>
-          <Route exact path="/groups/:groupId">
-            <Navigation />
-            <GroupDetails />
-          </Route>
-          <Route exact path="/groups/current/:groupId/edit">
-            <Navigation />
-            <EditGroup />
-          </Route>
-        </Switch>
+              <Events />
+              {/* <Footer window={window} /> */}
+            </Route>
+            <Route exact path="/events/group/:groupId/new">
+              <Navigation />
+              <CreateEvent />
+            </Route>
+            <Route exact path="/events/:eventId/edit">
+              <Navigation />
+              <EditEvent />
+              {/* <Footer window={window} /> */}
+            </Route>
+            <Route exact path="/events/:eventId">
+              <Navigation />
+              <EventDetails />
+              {/* <Footer window={window} /> */}
+            </Route>
+            <Route exact path="/groups/current">
+              <Navigation />
+              <MyGroups />
+              {/* <Footer window={window} /> */}
+            </Route>
+            <Route exact path="/groups/current/new">
+              <Navigation />
+              <CreateGroup />
+              {/* <Footer window={window} /> */}
+            </Route>
+            <Route exact path="/groups/:groupId">
+              <Navigation />
+              <GroupDetails />
+              {/* <Footer window={window} /> */}
+            </Route>
+            <Route exact path="/groups/current/:groupId/edit">
+              <Navigation />
+              <EditGroup />
+              {/* <Footer window={window} /> */}
+            </Route>
+          </Switch>
+          <Footer window={window} />
+        </>
       )}
     </>
   );

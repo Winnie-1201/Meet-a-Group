@@ -423,17 +423,28 @@ router.get("/:eventId/attendees", async (req, res, next) => {
     for (let i = 0; i < attendees.length; i++) {
       const userId = attendees[i].toJSON().userId;
       const attendeeInfo = await User.findByPk(userId, {
-        include: {
-          model: Attendance,
-          // the thing changed in attendees branch
-          where: {
-            eventId,
-          },
-          attributes: ["status"],
-        },
+        // include: {
+        //   model: Attendance,
+        //   // the thing changed in attendees branch
+        //   where: {
+        //     eventId,
+        //   },
+        //   attributes: ["status"],
+        // },
         attributes: ["id", "firstName", "lastName"],
       });
-      result.Attendees.push(attendeeInfo);
+
+      let attendeeInfo1 = attendeeInfo.toJSON();
+      let status = await Attendance.findOne({
+        where: {
+          eventId,
+          userId,
+        },
+        attributes: ["status"],
+      });
+      attendeeInfo1.Attendances = status.toJSON();
+
+      result.Attendees.push(attendeeInfo1);
     }
     res.json(result);
   } else {
@@ -450,18 +461,27 @@ router.get("/:eventId/attendees", async (req, res, next) => {
     for (let i = 0; i < attendees.length; i++) {
       const userId = attendees[i].toJSON().userId;
       const attendeeInfo = await User.findByPk(userId, {
-        include: {
-          model: Attendance,
-          // where: {
-          //   status: {
-          //     [Op.not]: "pending",
-          //   },
-          // },
-          attributes: ["status"],
-        },
+        // include: {
+        //   model: Attendance,
+        //   // where: {
+        //   //   status: {
+        //   //     [Op.not]: "pending",
+        //   //   },
+        //   // },
+        //   attributes: ["status"],
+        // },
         attributes: ["id", "firstName", "lastName"],
       });
-      result.Attendees.push(attendeeInfo);
+      let attendeeInfo1 = attendeeInfo.toJSON();
+      let status = await Attendance.findOne({
+        where: {
+          eventId,
+          userId,
+        },
+        attributes: ["status"],
+      });
+      attendeeInfo1.Attendances = status.toJSON();
+      result.Attendees.push(attendeeInfo1);
     }
     res.json(result);
   }

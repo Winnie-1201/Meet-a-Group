@@ -29,20 +29,23 @@
   background-color: rgb(239, 163, 11);
 }
 
+.icon-container {
+  position: relative;
+}
+
 .icon-detail {
   display: flex;
   flex-direction: column;
   position: absolute;
   right: 0;
   top: 86px;
+  z-index: 1;
   background-color: rgb(255 255 255);
   min-width: 160px;
   margin-right: 20px;
   border: 1px solid rgb(217 217 217);
-  /* min-height: 150px; */
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   padding: 12px 16px;
-  /* z-index: 1; */
   border-radius: 5px;
 }
 
@@ -53,34 +56,38 @@
 .icon-username,
 .icon-email,
 .icon-groups-link,
-.icon-logout {
+.icon-logout-header {
   margin-top: 12px;
   padding-bottom: 6px;
   font-size: 16px;
   font-weight: 300;
 }
 
-.icon-logout {
+.icon-logout-header {
   margin-bottom: 8px;
 }
 
-.icon-groups-navlink {
+.icon-groups-navlink,
+.icon-logout-header {
   text-decoration: none;
   color: black;
   font-size: 16px;
   font-family: BlinkMacSystemFont, Arial, sans-serif;
 }
 
-.icon-logout-button {
+.icon-logout-button-header {
   font-weight: 300;
+  border: none;
+  background-color: white;
   color: black;
   font-size: 16px;
+  padding: 0;
   font-family: BlinkMacSystemFont, Arial, sans-serif;
   cursor: pointer;
 }
 
 .icon-groups-navlink:hover,
-.icon-logout-button:hover {
+.icon-logout-button-header:hover {
   color: #008294;
   background-color: white;
 }

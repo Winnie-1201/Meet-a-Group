@@ -148,6 +148,23 @@ const GroupDetails = () => {
   return (
     isLoaded && (
       <>
+        {/* <div className="all-event-groups-body">
+          <div className="all-groups-events">
+            <h2
+              className="back-to-event-link"
+              onClick={() => history.push("/events")}
+            >
+              All events
+            </h2>
+            <h2
+              className="back-to-group-link"
+              onClick={() => history.push("/groups")}
+            >
+              All groups
+            </h2>
+          </div>
+        </div> */}
+        {/* </div> */}
         <div className="group-details-container">
           <div className="group-details-body">
             <div className="group-detail-page">

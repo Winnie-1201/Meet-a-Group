@@ -206,6 +206,7 @@ attendees cards detail here
 .card-detail-status {
   font-size: 14px;
   color: #757575;
+  margin-bottom: 12px;
 }
 
 .event-detail-photos-grid {
@@ -274,7 +275,7 @@ attendees cards detail here
 }
 
 .price {
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 600;
   margin-right: 20px;
 }
@@ -288,6 +289,12 @@ attendees cards detail here
   background-color: #f65858;
   border-radius: 8px;
   line-height: 32px;
+}
+
+.bottom-right-flex p {
+  font-size: 18px;
+  font-weight: 600;
+  margin-left: 5px;
 }
 
 .buttom-text-flex {

@@ -26,9 +26,16 @@ const HomeBar = () => {
       <div className="home-header">
         <div className="header-detail">
           <div className="header-left">
-            <Link to="/" className="home-title">
-              MeetaGroup
-            </Link>
+            {currentUser && (
+              <Link to="/groups" className="home-title">
+                MeetaGroup
+              </Link>
+            )}
+            {!currentUser && (
+              <Link to="/" className="home-title">
+                MeetaGroup
+              </Link>
+            )}
           </div>
           {currentUser && <ProfileButton user={currentUser} />}
           {!currentUser && (

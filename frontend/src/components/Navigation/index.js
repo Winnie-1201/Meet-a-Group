@@ -44,9 +44,16 @@ const Navigation = () => {
     <div className="header-bar-sticky">
       <div className="header">
         <div className="header-left">
-          <Link to="/" className="home">
-            MeetaGroup
-          </Link>
+          {currentUser && (
+            <Link to="/groups" className="home-title">
+              MeetaGroup
+            </Link>
+          )}
+          {!currentUser && (
+            <Link to="/" className="home-title">
+              MeetaGroup
+            </Link>
+          )}
           <div className="header-search-bar">
             <div className="form-detail-one">
               <input
