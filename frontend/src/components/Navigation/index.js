@@ -10,7 +10,7 @@ import { getSearchGroups } from "../../store/group";
 import { getSearchEvents } from "../../store/event";
 import { useSearch } from "../../context/search";
 
-const Navigation = () => {
+const Navigation = ({ window }) => {
   const currentUser = useSelector((state) => state.session.user);
   const dispatch = useDispatch();
   const history = useHistory();
@@ -45,12 +45,20 @@ const Navigation = () => {
       <div className="header">
         <div className="header-left">
           {currentUser && (
-            <Link to="/groups" className="home-title">
+            <Link
+              to="/groups"
+              className="home-title"
+              onClick={() => window.scrollTo(0, 0)}
+            >
               MeetaGroup
             </Link>
           )}
           {!currentUser && (
-            <Link to="/" className="home-title">
+            <Link
+              to="/"
+              className="home-title"
+              onClick={() => window.scrollTo(0, 0)}
+            >
               MeetaGroup
             </Link>
           )}

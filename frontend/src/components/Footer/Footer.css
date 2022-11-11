@@ -3,7 +3,7 @@
   color: rgb(246 247 248);
   background-color: rgb(33 33 33);
   width: 100%;
-  min-height: 350px;
+  min-height: 450px;
 }
 
 .footer-container {
@@ -75,6 +75,8 @@
   letter-spacing: 0;
   font-size: 18px;
   text-decoration: none;
+  border: none;
+  padding: 0;
   background-color: rgb(33 33 33);
 }
 

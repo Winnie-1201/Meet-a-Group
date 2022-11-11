@@ -15,11 +15,11 @@ const Footer = ({ window }) => {
   const history = useHistory();
   const currentUser = useSelector((state) => state.session.user);
 
-  const handleLogout = (e) => {
-    e.preventDefault();
-    dispatch(sessionActions.logout());
-    history.push("/");
-  };
+  //   const handleLogout = (e) => {
+  //     e.preventDefault();
+  //     dispatch(sessionActions.logout());
+  //     history.push("/groups");
+  //   };
   return (
     <footer className="main-footer">
       <div className="footer-container">
@@ -27,7 +27,11 @@ const Footer = ({ window }) => {
           <div className="footer-one-detail">
             Create your own Meetup group.
             {currentUser && (
-              <Link to="/groups/current/new" className="footer-new-group">
+              <Link
+                to="/groups/current/new"
+                className="get-started"
+                onClick={() => window.scrollTo(0, 0)}
+              >
                 Get Started
               </Link>
             )}
@@ -52,7 +56,12 @@ const Footer = ({ window }) => {
                   <li className="icon-logout">
                     <button
                       className="icon-logout-button"
-                      onClick={handleLogout}
+                      //   onClick={handleLogout}
+                      onClick={() => {
+                        dispatch(sessionActions.logout());
+                        history.push("/groups");
+                        window.scrollTo(0, 0);
+                      }}
                     >
                       Log out
                     </button>

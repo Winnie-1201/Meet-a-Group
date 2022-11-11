@@ -9,7 +9,7 @@ function SignupFormModal({ prop }) {
   return (
     <>
       {prop === "footerSignup" && (
-        <button onClick={() => setShowModal(true)} className="footer-button">
+        <button onClick={() => setShowModal(true)} className="source-link">
           Sign up
         </button>
       )}

@@ -34,7 +34,7 @@ function App() {
         <>
           <Switch>
             <Route exact path="/">
-              <HomeBar />
+              <HomeBar window={window} />
               <Home />
             </Route>
             {/* <Route path="/login">
@@ -47,7 +47,7 @@ function App() {
             <SignupFormPage />
           </Route> */}
             <Route exact path="/groups">
-              <Navigation />
+              <Navigation window={window} />
               {/* <div className="event-groups-body">
               <div className="event-groups-content">
                 <div className="events-groups">
@@ -67,7 +67,7 @@ function App() {
               {/* <Footer window={window} /> */}
             </Route>
             <Route exact path="/events">
-              <Navigation />
+              <Navigation window={window} />
               {/* <Navigation /> */}
               {/* <div className="event-groups-body">
               <div className="event-groups-content">
@@ -87,7 +87,7 @@ function App() {
               {/* <Footer window={window} /> */}
             </Route>
             <Route exact path="/events/group/:groupId/new">
-              <Navigation />
+              <Navigation window={window} />
               <CreateEvent />
             </Route>
             <Route exact path="/events/:eventId/edit">
@@ -96,27 +96,27 @@ function App() {
               {/* <Footer window={window} /> */}
             </Route>
             <Route exact path="/events/:eventId">
-              <Navigation />
+              <Navigation window={window} />
               <EventDetails />
               {/* <Footer window={window} /> */}
             </Route>
             <Route exact path="/groups/current">
-              <Navigation />
+              <Navigation window={window} />
               <MyGroups />
               {/* <Footer window={window} /> */}
             </Route>
             <Route exact path="/groups/current/new">
-              <Navigation />
+              <Navigation window={window} />
               <CreateGroup />
               {/* <Footer window={window} /> */}
             </Route>
             <Route exact path="/groups/:groupId">
-              <Navigation />
+              <Navigation window={window} />
               <GroupDetails />
               {/* <Footer window={window} /> */}
             </Route>
             <Route exact path="/groups/current/:groupId/edit">
-              <Navigation />
+              <Navigation window={window} />
               <EditGroup />
               {/* <Footer window={window} /> */}
             </Route>

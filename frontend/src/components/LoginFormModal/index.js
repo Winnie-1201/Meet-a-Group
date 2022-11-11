@@ -30,7 +30,7 @@ function LoginFormModal({ newGroup }) {
       )}
 
       {newGroup === "footerLogin" && (
-        <button onClick={() => setShowModal(true)} className="footer-button">
+        <button onClick={() => setShowModal(true)} className="source-link">
           Log in
         </button>
       )}

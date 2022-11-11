@@ -397,7 +397,7 @@ const Home = () => {
             <div className="main-div-six"></div>
           </div>
         </main>
-        <footer className="main-footer">
+        {/* <footer className="main-footer">
           <div className="footer-container">
             <div className="footer-one-flex">
               <div className="footer-one-detail">
@@ -461,7 +461,7 @@ const Home = () => {
             </div>
             <div className="footer-three-flex"></div>
           </div>
-        </footer>
+        </footer> */}
       </div>
     </>
   );
