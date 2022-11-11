@@ -24,18 +24,11 @@
 }
 
 .header-bar-icon-button:hover {
-  /* color: #0070f3;
-  background-color: white; */
   background-color: rgb(239, 163, 11);
 }
 
 .icon-container {
-  /* position: relative; */
   padding-right: 16px;
-  /* position: absolute; */
-  /* right: 0;
-  top: 86px;
-  z-index: 999; */
 }
 
 .icon-detail {
