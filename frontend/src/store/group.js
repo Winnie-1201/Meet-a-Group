@@ -1,6 +1,7 @@
 import { csrfFetch } from "./csrf";
 // import { LOAD_EVENTS } from "./event";
 import { createImg } from "./image";
+import { requestMembership } from "./member";
 
 const LOAD = "groups/getGroups";
 const LOAD_ONE = "groups/getOneGroup";
@@ -133,6 +134,7 @@ export const createGroup = (group, image) => async (dispatch) => {
     dispatch(create(group));
     // console.log("adding the img to the new created group in thunk", image);
     dispatch(createImg(image, groupId));
+    dispatch(requestMembership(groupId));
     return groupData;
   }
 };

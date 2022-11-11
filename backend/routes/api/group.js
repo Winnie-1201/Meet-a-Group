@@ -262,7 +262,7 @@ router.get("/current", requireAuth, async (req, res, next) => {
   });
 
   const groups = await Group.findAll({
-    where: { organizerId: { [Op.in]: Object.values(groupIds) } },
+    where: { id: { [Op.in]: Object.values(groupIds) } },
   });
 
   let result = {};
@@ -543,6 +543,13 @@ router.post("/:groupId/membership", requireAuth, async (req, res, next) => {
     },
   });
 
+  const hostYet = await Membership.findOne({
+    where: {
+      userId,
+      groupId,
+    },
+  });
+
   if (!group) {
     res.status(404).json({
       message: "Group couldn't be found",
@@ -557,6 +564,16 @@ router.post("/:groupId/membership", requireAuth, async (req, res, next) => {
     res.status(400).json({
       message: "User is already a member of the gorup",
       statusCode: 400,
+    });
+  } else if (group.organizerId === userId && !hostYet) {
+    const newMember = await Membership.create({
+      userId,
+      groupId,
+      status: "host",
+    });
+    res.json({
+      memberId: newMember.userId,
+      status: newMember.status,
     });
   } else {
     const newMember = await Membership.create({

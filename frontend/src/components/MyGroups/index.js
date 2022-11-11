@@ -110,7 +110,7 @@ const MyGroups = () => {
             </div>
           </div>
         )}
-        {showJoinedGroups && (
+        {showJoinedGroups && joinedGroups.length > 0 && (
           <div className="mygroups-detail">
             {joinedGroups.map((group) => (
               <div className="mygroup-info" key={group.name}>
@@ -132,6 +132,19 @@ const MyGroups = () => {
                 </div>
               </div>
             ))}
+          </div>
+        )}
+        {showJoinedGroups && joinedGroups.length === 0 && (
+          <div className="no-joined-groups">
+            <p className="no-joined-text">You have not joined any groups yet</p>
+            <p className="no-joined-text">
+              Click
+              <Link to="/groups" className="to-groups-link">
+                {" "}
+                here{" "}
+              </Link>
+              to join!
+            </p>
           </div>
         )}
       </div>
