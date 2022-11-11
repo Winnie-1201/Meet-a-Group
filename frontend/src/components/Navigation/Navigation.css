@@ -17,6 +17,7 @@ html {
   top: 0;
   background-color: white;
   padding: 0 16px;
+  z-index: 50;
   /* z-index: 100; */
 }
 
@@ -34,6 +35,10 @@ html {
 
 .event-groups-body {
   /* position: relative; */
+  position: sticky;
+  top: 77px;
+  background-color: white;
+  z-index: 5;
   border-bottom: 1px solid rgb(181, 177, 177);
 }
 
@@ -204,7 +209,7 @@ html {
 }
 .events-groups {
   display: flex;
-  padding: 16px 0 6px 24px;
+  padding: 26px 0 6px 24px;
 }
 
 .group-link,

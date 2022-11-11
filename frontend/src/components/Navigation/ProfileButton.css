@@ -31,15 +31,22 @@
 
 .icon-container {
   position: relative;
+  padding-right: 16px;
+  /* position: absolute; */
+  /* right: 0;
+  top: 86px;
+  z-index: 999; */
 }
 
 .icon-detail {
   display: flex;
   flex-direction: column;
+  inset: 0px 0px auto auto;
+  transform: translate3d(0px, 48px, 0px);
   position: absolute;
   right: 0;
-  top: 86px;
-  z-index: 1;
+  top: 30px;
+  /* z-index: 999; */
   background-color: rgb(255 255 255);
   min-width: 160px;
   margin-right: 20px;
