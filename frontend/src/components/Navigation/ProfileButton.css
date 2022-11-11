@@ -30,7 +30,7 @@
 }
 
 .icon-container {
-  position: relative;
+  /* position: relative; */
   padding-right: 16px;
   /* position: absolute; */
   /* right: 0;
@@ -46,6 +46,7 @@
   position: absolute;
   right: 0;
   top: 30px;
+  /* don't need z-index because it has the same as its parent */
   /* z-index: 999; */
   background-color: rgb(255 255 255);
   min-width: 160px;
@@ -56,10 +57,6 @@
   border-radius: 5px;
 }
 
-/* .icon-username  */
-/* {
-  padding: 0 6px 6px 6px;
-} */
 .icon-username,
 .icon-email,
 .icon-groups-link,

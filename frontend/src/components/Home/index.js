@@ -7,6 +7,8 @@ import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SingupFormModal";
 import * as sessionActions from "../../store/session";
 import "./Home.css";
+import Footer from "../Footer";
+import HomeBar from "../HeaderBar";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -55,6 +57,7 @@ const Home = () => {
   // console.log("getting in the navigation component======================");
   return (
     <>
+      <HomeBar window={window} />
       <div className="homepage">
         <main className="homepage-main">
           <div className="main-div">
@@ -463,6 +466,8 @@ const Home = () => {
           </div>
         </footer> */}
       </div>
+
+      <Footer window={window} />
     </>
   );
 };

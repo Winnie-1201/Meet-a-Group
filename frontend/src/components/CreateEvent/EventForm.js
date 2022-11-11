@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { createEvent, editEvent } from "../../store/event";
+import Footer from "../Footer";
+import Navigation from "../Navigation";
 import "./EventForm.css";
 
 const EventForm = ({ event, groupId, formType }) => {
@@ -92,108 +94,116 @@ const EventForm = ({ event, groupId, formType }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="event-form">
-      <h1>{formType}</h1>
-      <label>
-        Event name
-        <input
-          type="text"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
-      </label>
-      {errors.name && <p className="error-message-event-form">{errors.name}</p>}
-      <label>
-        Type
-        <select
-          name="attendType"
-          value={type}
-          onChange={(e) => setType(e.target.value)}
-        >
-          <option value="" disabled>
-            Please select a type...
-          </option>
-          <option>Online</option>
-          <option>In person</option>
-        </select>
-      </label>
-      {errors.type && <p className="error-message-event-form">{errors.type}</p>}
-      <label>
-        Capacity
-        <input
-          type="number"
-          value={capacity}
-          onChange={(e) => setCapacity(e.target.value)}
-        />
-      </label>
-      {errors.capacity && (
-        <p className="error-message-event-form">{errors.capacity}</p>
-      )}
-      <label>
-        Price
-        <input
-          type="number"
-          value={price}
-          onChange={(e) => setPrice(e.target.value)}
-        />
-      </label>
-      {errors.price && (
-        <p className="error-message-event-form">{errors.price}</p>
-      )}
-      {create && (
+    <>
+      <Navigation window={window} />
+      <form onSubmit={handleSubmit} className="event-form">
+        <h1>{formType}</h1>
         <label>
-          Preview image
+          Event name
           <input
             type="text"
-            value={previewImage}
-            onChange={(e) => setPreviewImg(e.target.value)}
+            value={name}
+            onChange={(e) => setName(e.target.value)}
           />
         </label>
-      )}
-      {create && errors.previewImage && (
-        <p className="error-message-event-form">{errors.previewImage}</p>
-      )}
-      <label>
-        Description
-        <textarea
-          type="text"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-        />
-      </label>
-      {errors.description && (
-        <p className="error-message-event-form">{errors.description}</p>
-      )}
-      <label>
-        Start Date (i.e. 2023-11-19 20:00:00)
-        <input
-          type="text"
-          value={startDate}
-          onChange={(e) => setStartDate(e.target.value)}
-        />
-      </label>
-      {errors.startDate && (
-        <p className="error-message-event-form">{errors.startDate}</p>
-      )}
-      {errors.validStartDate && (
-        <p className="error-message-event-form">{errors.validStartDate}</p>
-      )}
-      <label>
-        End Date (i.e. 2023-11-19 21:00:00)
-        <input
-          type="text"
-          value={endDate}
-          onChange={(e) => setEndDate(e.target.value)}
-        />
-      </label>
-      {errors.endDate && (
-        <p className="error-message-event-form">{errors.endDate}</p>
-      )}
-      {errors.validEndDate && (
-        <p className="error-message-event-form">{errors.validEndDate}</p>
-      )}
-      <button>Submit</button>
-    </form>
+        {errors.name && (
+          <p className="error-message-event-form">{errors.name}</p>
+        )}
+        <label>
+          Type
+          <select
+            name="attendType"
+            value={type}
+            onChange={(e) => setType(e.target.value)}
+          >
+            <option value="" disabled>
+              Please select a type...
+            </option>
+            <option>Online</option>
+            <option>In person</option>
+          </select>
+        </label>
+        {errors.type && (
+          <p className="error-message-event-form">{errors.type}</p>
+        )}
+        <label>
+          Capacity
+          <input
+            type="number"
+            value={capacity}
+            onChange={(e) => setCapacity(e.target.value)}
+          />
+        </label>
+        {errors.capacity && (
+          <p className="error-message-event-form">{errors.capacity}</p>
+        )}
+        <label>
+          Price
+          <input
+            type="number"
+            value={price}
+            onChange={(e) => setPrice(e.target.value)}
+          />
+        </label>
+        {errors.price && (
+          <p className="error-message-event-form">{errors.price}</p>
+        )}
+        {create && (
+          <label>
+            Preview image
+            <input
+              type="text"
+              value={previewImage}
+              onChange={(e) => setPreviewImg(e.target.value)}
+            />
+          </label>
+        )}
+        {create && errors.previewImage && (
+          <p className="error-message-event-form">{errors.previewImage}</p>
+        )}
+        <label>
+          Description
+          <textarea
+            type="text"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+          />
+        </label>
+        {errors.description && (
+          <p className="error-message-event-form">{errors.description}</p>
+        )}
+        <label>
+          Start Date (i.e. 2023-11-19 20:00:00)
+          <input
+            type="text"
+            value={startDate}
+            onChange={(e) => setStartDate(e.target.value)}
+          />
+        </label>
+        {errors.startDate && (
+          <p className="error-message-event-form">{errors.startDate}</p>
+        )}
+        {errors.validStartDate && (
+          <p className="error-message-event-form">{errors.validStartDate}</p>
+        )}
+        <label>
+          End Date (i.e. 2023-11-19 21:00:00)
+          <input
+            type="text"
+            value={endDate}
+            onChange={(e) => setEndDate(e.target.value)}
+          />
+        </label>
+        {errors.endDate && (
+          <p className="error-message-event-form">{errors.endDate}</p>
+        )}
+        {errors.validEndDate && (
+          <p className="error-message-event-form">{errors.validEndDate}</p>
+        )}
+        <button>Submit</button>
+      </form>
+      <Footer window={window} />
+    </>
   );
 };
 

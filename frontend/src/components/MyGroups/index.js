@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { getGroupByUserThunk } from "../../store/group";
+import Footer from "../Footer";
+import Navigation from "../Navigation";
 import "./MyGroups.css";
 
 const MyGroups = () => {
@@ -45,13 +47,15 @@ const MyGroups = () => {
     );
 
   return (
-    <div>
+    <>
+      <Navigation window={window} />
       <div className="mygroups-body">
         <div className="mygroups-header">
           <h2
             onClick={() => {
               setHostGroups(true);
               setJoinGroups(false);
+              window.scrollTo(0, 0);
             }}
             className={`${
               showHostedGroups === true ? "change-color" : ""
@@ -63,6 +67,7 @@ const MyGroups = () => {
             onClick={() => {
               setHostGroups(false);
               setJoinGroups(true);
+              window.scrollTo(0, 0);
             }}
             className={`${
               showJoinedGroups === true ? "change-color" : ""
@@ -130,7 +135,9 @@ const MyGroups = () => {
           </div>
         )}
       </div>
-    </div>
+
+      <Footer window={window} />
+    </>
   );
 };
 

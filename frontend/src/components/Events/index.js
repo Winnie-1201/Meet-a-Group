@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { useSearch } from "../../context/search";
 import { getEvents, getSearchEvents } from "../../store/event";
+import Footer from "../Footer";
+import Navigation from "../Navigation";
 import "./events.css";
 
 const Events = () => {
@@ -35,6 +37,7 @@ const Events = () => {
 
   return (
     <>
+      <Navigation window={window} />
       <div className="event-groups-body">
         <div className="event-groups-content">
           <div className="events-groups">
@@ -42,7 +45,10 @@ const Events = () => {
             <h2
               // to="/groups"
               className="group-link"
-              onClick={() => history.push("/groups")}
+              onClick={() => {
+                window.scrollTo(0, 0);
+                history.push("/groups");
+              }}
             >
               Groups
             </h2>
@@ -113,6 +119,7 @@ const Events = () => {
           </div>
         </div>
       )}
+      <Footer window={window} />
     </>
   );
 };

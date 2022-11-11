@@ -10,6 +10,8 @@ import {
   getStatusThunk,
   requestMembership,
 } from "../../store/member";
+import Footer from "../Footer";
+import Navigation from "../Navigation";
 import "./GroupDetails.css";
 
 function getRandomColor() {
@@ -148,6 +150,7 @@ const GroupDetails = () => {
   return (
     isLoaded && (
       <>
+        <Navigation window={window} />
         {/* <div className="all-event-groups-body">
           <div className="all-groups-events">
             <h2
@@ -633,6 +636,7 @@ const GroupDetails = () => {
             </div>
           </div>
         </div>
+        <Footer window={window} />
       </>
     )
   );

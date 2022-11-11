@@ -283,8 +283,8 @@
   margin: 0 20px;
   padding-top: 40px;
   flex-direction: column;
-  position: sticky;
-  top: 3rem;
+  /* position: sticky;
+  top: 3rem; */
 }
 
 .group-detail-organizer,

@@ -26,7 +26,7 @@ const HomeBar = ({ window }) => {
       <div className="home-header">
         <div className="header-detail">
           <div className="header-left">
-            {currentUser && (
+            {/* {currentUser && (
               <Link
                 to="/groups"
                 className="home-title"
@@ -43,7 +43,14 @@ const HomeBar = ({ window }) => {
               >
                 MeetaGroup
               </Link>
-            )}
+            )} */}
+            <Link
+              to="/"
+              className="home-title"
+              onClick={() => window.scrollTo(0, 0)}
+            >
+              MeetaGroup
+            </Link>
           </div>
           {currentUser && <ProfileButton user={currentUser} />}
           {!currentUser && (

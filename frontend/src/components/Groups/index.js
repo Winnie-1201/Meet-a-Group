@@ -5,6 +5,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { getGroups, getSearchGroups } from "../../store/group";
 import "./groups.css";
 import { useSearch } from "../../context/search";
+import Footer from "../Footer";
+import Navigation from "../Navigation";
 
 const Groups = () => {
   // const currentUser = useSelector((state) => state.session.user);
@@ -37,6 +39,7 @@ const Groups = () => {
 
   return (
     <>
+      <Navigation window={window} />
       <div className="full-width">
         <div className="event-groups-body">
           <div className="event-groups-content">
@@ -44,7 +47,10 @@ const Groups = () => {
               <h2
                 // to="/events"
                 className="event-link"
-                onClick={() => history.push("/events")}
+                onClick={() => {
+                  window.scrollTo(0, 0);
+                  history.push("/events");
+                }}
               >
                 Events
               </h2>
@@ -101,6 +107,7 @@ const Groups = () => {
         </div>
       )}
       {/* <div className="event-groups-content"> */}
+      <Footer window={window} />
     </>
   );
 };

@@ -10,6 +10,8 @@ import {
 import { getEventById, deleteEvent } from "../../store/event";
 import { getGroupById, getGroupByUserThunk } from "../../store/group";
 import { getStatusThunk } from "../../store/member";
+import Footer from "../Footer";
+import Navigation from "../Navigation";
 import "./EventDetails.css";
 
 const EventDetails = () => {
@@ -128,6 +130,7 @@ const EventDetails = () => {
     isLoaded &&
     isLoaded1 && (
       <>
+        <Navigation window={window} />
         {/* <div className="all-event-groups-body">
           <div className="all-groups-events">
             <h2
@@ -418,6 +421,7 @@ const EventDetails = () => {
             </div>
           </div>
         </div>
+        <Footer window={window} />
       </>
     )
   );
