@@ -7,9 +7,12 @@ import "./groups.css";
 import { useSearch } from "../../context/search";
 import Footer from "../Footer";
 import Navigation from "../Navigation";
+import LoginFormModal from "../LoginFormModal";
+import { Modal } from "../../context/Modal";
+import LoginForm from "../LoginFormModal/LoginForm";
 
 const Groups = () => {
-  // const currentUser = useSelector((state) => state.session.user);
+  const currentUser = useSelector((state) => state.session.user);
   const history = useHistory();
   const groups = Object.values(useSelector((state) => state.group.allGroups));
 
@@ -17,6 +20,7 @@ const Groups = () => {
   const location = localStorage.getItem("location");
 
   const { setKeywords, setLocation } = useSearch();
+  const [click, setClick] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -37,28 +41,39 @@ const Groups = () => {
     if (reset) history.push("/groups");
   };
 
+  const handleIfLogin = (groupId) => {
+    // console.log("---------handle login running", groupId);
+    if (currentUser) {
+      // console.log("if current user working", currentUser);
+      history.push(`/groups/${groupId}`);
+    } else {
+      // console.log("else statement is working-------");
+      setClick(true);
+    }
+  };
+
   return (
     <>
       <Navigation window={window} />
-      <div className="full-width">
-        <div className="event-groups-body">
-          <div className="event-groups-content">
-            <div className="events-groups">
-              <h2
-                // to="/events"
-                className="event-link"
-                onClick={() => {
-                  window.scrollTo(0, 0);
-                  history.push("/events");
-                }}
-              >
-                Events
-              </h2>
-              <h2 className="group-link active">Groups</h2>
-            </div>
+      {/* <div className="full-width"> */}
+      <div className="event-groups-body">
+        <div className="event-groups-content">
+          <div className="events-groups">
+            <h2
+              // to="/events"
+              className="event-link"
+              onClick={() => {
+                window.scrollTo(0, 0);
+                history.push("/events");
+              }}
+            >
+              Events
+            </h2>
+            <h2 className="group-link active">Groups</h2>
           </div>
         </div>
       </div>
+      {/* </div> */}
       {groups.length === 0 && (keywords?.length > 0 || location?.length > 0) && (
         <div className="flex-column-groups">
           <div className="not-found-image">
@@ -78,13 +93,18 @@ const Groups = () => {
           </button>
         </div>
       )}
+      {groups.length == 0 && <div className="min-height"></div>}
       {groups.length > 0 && (
         <div className="all-groups-body">
           <div className="all-groups">
             {/* <h2 className="group-header">All groups</h2> */}
             {groups.map((group) => (
-              <div className="one-group" key={group.id}>
-                <Link to={`/groups/${group.id}`} className="one-group-link">
+              <div
+                className="one-group"
+                key={group.id}
+                onClick={() => handleIfLogin(group.id)}
+              >
+                <div className="one-group-link">
                   <div className="group-image">
                     <img className="group-img" src={`${group?.previewImage}`} />
                   </div>
@@ -98,13 +118,18 @@ const Groups = () => {
                       {group.numMembers} members · {group.type}
                     </p>
                   </div>
-                </Link>
+                </div>
               </div>
             ))}
           </div>
           <div></div>
           {/* </div> */}
         </div>
+      )}
+      {!currentUser && click && (
+        <Modal onClose={() => setClick(false)}>
+          <LoginForm />
+        </Modal>
       )}
       {/* <div className="event-groups-content"> */}
       <Footer window={window} />

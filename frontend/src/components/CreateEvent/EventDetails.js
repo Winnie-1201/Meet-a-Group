@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory, useParams } from "react-router-dom";
+import { Modal } from "../../context/Modal";
 import {
   changeStatusThunk,
   deleteAttendanceThunk,
@@ -11,6 +12,8 @@ import { getEventById, deleteEvent } from "../../store/event";
 import { getGroupById, getGroupByUserThunk } from "../../store/group";
 import { getStatusThunk } from "../../store/member";
 import Footer from "../Footer";
+import LoginFormModal from "../LoginFormModal";
+import LoginForm from "../LoginFormModal/LoginForm";
 import Navigation from "../Navigation";
 import "./EventDetails.css";
 
@@ -22,6 +25,7 @@ const EventDetails = () => {
   const [isLoaded1, setLoaded1] = useState(false);
 
   const currentUser = useSelector((state) => state.session.user);
+
   const event = Object.values(
     useSelector((state) => state.event.singleEvent)
   )[0];
@@ -125,6 +129,14 @@ const EventDetails = () => {
       .filter((attendee) => attendee.Attendances.status === "pending")
       .sort((a, b) => a.firstName - b.firstName);
   }
+
+  // if (!currentUser) {
+  //   return (
+  //     <Modal>
+  //       <LoginForm />
+  //     </Modal>
+  //   );
+  // }
 
   return (
     isLoaded &&

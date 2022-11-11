@@ -61,11 +61,12 @@ const Navigation = ({ window }) => {
               MeetaGroup
             </Link>
           )}
+
           <div className="header-search-bar">
             <div className="form-detail-one">
               <input
                 type="text"
-                id="search-box"
+                // id="search-box"
                 value={keywords}
                 placeholder="Search for keywords"
                 onChange={(e) => setKeywords(e.target.value)}
@@ -75,7 +76,7 @@ const Navigation = ({ window }) => {
               <input
                 type="text"
                 value={location}
-                id="search-box"
+                // id="search-box"
                 placeholder="Enter location"
                 onChange={(e) => setLocation(e.target.value)}
               />

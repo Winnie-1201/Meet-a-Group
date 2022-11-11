@@ -16,6 +16,7 @@ button {
 
 .home-header {
   margin-bottom: 40px;
+  padding-top: 20px;
   /* position: relative; */
 }
 
@@ -29,6 +30,7 @@ button {
   display: flex;
   flex-direction: row;
   align-items: center;
+  padding-left: 16px;
 }
 
 .home-title {
@@ -86,21 +88,3 @@ button {
   transform: unset;
   z-index: -1;
 }
-
-/* html {
-  background-image: url("https://secure.meetupstatic.com/next/images/blobs/red-blob.svg");
-  background-position: 8% 22%;
-  background-repeat: no-repeat;
-}
-
-body {
-  background-image: url("https://secure.meetupstatic.com/next/images/blobs/yellow-blob.svg");
-  background-position: 50% 5%;
-  background-repeat: no-repeat;
-}
-
-#root {
-  background-image: url("https://secure.meetupstatic.com/next/images/blobs/green-blob.svg");
-  background-position: 90% 0%;
-  background-repeat: no-repeat;
-} */

@@ -67,7 +67,7 @@
 }
 
 .source-link,
-.icon-logout-button {
+.icon-logout-button-footer {
   color: rgb(197 196 196);
   font-weight: 400;
   cursor: pointer;
@@ -82,7 +82,7 @@
 
 .footer-button:hover,
 .source-link:hover,
-.icon-logout-button:hover {
+.icon-logout-button-footer:hover {
   background-color: rgb(33 33 33);
   color: rgb(154, 151, 151);
 }

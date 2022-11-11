@@ -88,25 +88,26 @@ const Home = () => {
                 <div className="top-grid-pics">
                   <div className="grid-one-flex-content">
                     <img src="https://secure.meetupstatic.com/next/images/indexPage/category1.webp?w=3840" />
-                    <p className="nav-link" to="the-event">
+                    {/* needs to change to links */}
+                    {/* <p className="nav-link" to="the-event">
                       Make new friends
-                    </p>
+                    </p> */}
                   </div>
                   <div className="grid-two-flex-content">
                     <img src="https://secure.meetupstatic.com/next/images/indexPage/category2.webp?w=3840" />
-                    <p className="nav-link" to="the-event">
+                    {/* <p className="nav-link" to="the-event">
                       Explore the outdoors
-                    </p>
+                    </p> */}
                   </div>
                   <div className="grid-three-flex-content">
                     <img src="https://secure.meetupstatic.com/next/images/indexPage/category3.webp?w=3840" />
-                    <p className="nav-link" to="the-event">
+                    {/* <p className="nav-link" to="the-event">
                       Connect over tech
-                    </p>
+                    </p> */}
                   </div>
                 </div>
               </div>
-              <div className="two-middle">
+              {/* <div className="two-middle">
                 <div className="flex-two-content">
                   <div className="content-detail">
                     <p>Boost your career</p>
@@ -131,7 +132,7 @@ const Home = () => {
                   </div>
                 </div>
               </div>
-              <div className="tow-bottom"></div>
+              <div className="tow-bottom"></div> */}
             </div>
 
             <div className="main-div-three-grid">
@@ -144,7 +145,7 @@ const Home = () => {
                       <input
                         type="text"
                         value={searchThing}
-                        placeholder={`Search for "tennis"`}
+                        placeholder={`Search for "hiking"`}
                         onChange={(e) => setSearchThing(e.target.value)}
                       />
                     </div>
@@ -153,32 +154,22 @@ const Home = () => {
                         type="text"
                         value={city}
                         onChange={(e) => setCity(e.target.value)}
-                        placeholder="Neighborhood or City or zip"
+                        placeholder="Enter the city"
                       />
                     </div>
                   </div>
-                  {/* --
-                  --- */}
-                  {/* change it back to button later> */}
+
                   <button
                     className="three-search-button"
                     onClick={handleSubmit}
                   >
                     Search
                   </button>
-                  {/* <div className="three-search-button">
-                    <p>Search</p>
-                  </div> */}
-                  {/* --
-                  --- */}
-                  {/* </div> */}
                 </form>
               </div>
-              <div className="three-flex-right">
-                {/* <div className="right-top"> */}
+              {/* <div className="three-flex-right">
                 <h2>{`See what's happening`}</h2>
-                {/* </div> */}
-                {/* <div className="right-bottom"> */}
+                
                 <div className="right-bottom-one-flex">
                   <div className="bottom-detail">
                     <p>Starting soon</p>
@@ -204,8 +195,8 @@ const Home = () => {
                     <p>Trending near you</p>
                   </div>
                 </div>
-                {/* </div> */}
-              </div>
+            
+              </div> */}
             </div>
 
             <div className="main-div-five">
@@ -221,7 +212,11 @@ const Home = () => {
                       <img src="https://secure.meetupstatic.com/next/images/shared/handsUp.svg?w=256" />
                     </div>
                     <div className="flex-bottom-text">
-                      <Link className="bottom-text-link" to="/groups">
+                      <Link
+                        className="bottom-text-link"
+                        to="/groups"
+                        onClick={() => window.scrollTo(0, 0)}
+                      >
                         <h3>Join a group</h3>
                       </Link>
                       <p>
@@ -235,7 +230,11 @@ const Home = () => {
                       <img src="https://secure.meetupstatic.com/next/images/shared/ticket.svg?w=256" />
                     </div>
                     <div className="flex-bottom-text">
-                      <Link className="bottom-text-link" to="/events">
+                      <Link
+                        className="bottom-text-link"
+                        to="/events"
+                        onClick={() => window.scrollTo(0, 0)}
+                      >
                         <h3>Find an event</h3>
                       </Link>
                       <p>
@@ -254,6 +253,7 @@ const Home = () => {
                         <Link
                           className="bottom-text-link"
                           to="/groups/current/new"
+                          onClick={() => window.scrollTo(0, 0)}
                         >
                           <h3>Start a group</h3>
                         </Link>

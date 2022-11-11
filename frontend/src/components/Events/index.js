@@ -1,21 +1,26 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
+import { Modal } from "../../context/Modal";
 import { useSearch } from "../../context/search";
 import { getEvents, getSearchEvents } from "../../store/event";
 import Footer from "../Footer";
+import LoginForm from "../LoginFormModal/LoginForm";
 import Navigation from "../Navigation";
 import "./events.css";
 
 const Events = () => {
   const dispatch = useDispatch();
+  const currentUser = useSelector((state) => state.session.user);
   const history = useHistory();
   const events = Object.values(useSelector((state) => state.event.allEvents));
 
   const keywords = localStorage.getItem("keywords");
   const location = localStorage.getItem("location");
 
-  const { setKeywords, setLocation } = useSearch();
+  const [click, setClick] = useState(false);
+
+  // const { setKeywords, setLocation } = useSearch();
 
   useEffect(() => {
     // dispatch(getGroups());
@@ -33,6 +38,17 @@ const Events = () => {
     // const reset = await dispatch(getEvents());
     // if (reset) history.push("/events");
     history.push("/groups");
+  };
+
+  const handleIfLogin = (eventId) => {
+    // console.log("---------handle login running", groupId);
+    if (currentUser) {
+      // console.log("if current user working", currentUser);
+      history.push(`/groups/${eventId}`);
+    } else {
+      // console.log("else statement is working-------");
+      setClick(true);
+    }
   };
 
   return (
@@ -68,12 +84,17 @@ const Events = () => {
           </button>
         </div>
       )}
+      {events.length == 0 && <div className="min-height"></div>}
       {events.length > 0 && (
         <div className="all-events-body">
           <div className="all-events">
             {events.map((event) => (
-              <div className="one-event" key={event.id}>
-                <Link to={`/events/${event.id}`} className="one-event-link">
+              <div
+                className="one-event"
+                key={event.id}
+                onClick={() => handleIfLogin(event.id)}
+              >
+                <div className="one-event-link">
                   <div className="event-image">
                     <img src={event.previewImage} className="event-img" />
                     <div className="event-type">
@@ -113,11 +134,16 @@ const Events = () => {
                       {event.numAttending} attendees
                     </p>
                   </div>
-                </Link>
+                </div>
               </div>
             ))}
           </div>
         </div>
+      )}
+      {!currentUser && click && (
+        <Modal onClose={() => setClick(false)}>
+          <LoginForm />
+        </Modal>
       )}
       <Footer window={window} />
     </>

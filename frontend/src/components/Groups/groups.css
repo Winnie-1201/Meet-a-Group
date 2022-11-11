@@ -4,6 +4,10 @@ h3 {
   margin: 0;
 } */
 
+.min-height {
+  min-height: 800px;
+}
+
 .all-groups-body {
   max-width: 1080px;
   margin-left: auto;
@@ -23,6 +27,7 @@ h3 {
   margin-top: 20px;
   width: 100%;
   border-bottom: 1px solid rgb(202, 197, 197);
+  cursor: pointer;
 }
 
 .one-group-link {

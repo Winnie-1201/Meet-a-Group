@@ -121,6 +121,7 @@ function App() {
               {/* <Footer window={window} /> */}
             </Route>
           </Switch>
+
           {/* <Footer window={window} /> */}
         </>
       )}

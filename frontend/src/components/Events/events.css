@@ -27,6 +27,7 @@ h3 {
   /*  */
   margin: 0 auto 10px auto;
   max-width: 640px;
+  cursor: pointer;
 }
 
 .one-event {

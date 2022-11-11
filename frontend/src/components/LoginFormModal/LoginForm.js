@@ -3,20 +3,21 @@ import * as sessionActions from "../../store/session";
 import { useDispatch, useSelector } from "react-redux";
 // import { Redirect } from "react-router-dom";
 import "./LoginForm.css";
+import { Redirect } from "react-router-dom";
 
 const LoginForm = () => {
   const dispatch = useDispatch();
   //   const history = useHistory();
-  // const sessionUser = useSelector((state) => state.session.user);
+  const sessionUser = useSelector((state) => state.session.user);
 
   console.log("in login form");
   const [credential, setCredential] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState([]);
 
-  // if (sessionUser) {
-  //   return <Redirect to="/" />;
-  // }
+  if (sessionUser) {
+    return <Redirect to="/groups" />;
+  }
 
   const getCredential = (e) => setCredential(e.target.value);
   const getPassword = (e) => setPassword(e.target.value);

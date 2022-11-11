@@ -55,7 +55,7 @@ const Footer = ({ window }) => {
                   </li>
                   <li className="icon-logout">
                     <button
-                      className="icon-logout-button"
+                      className="icon-logout-button-footer"
                       //   onClick={handleLogout}
                       onClick={() => {
                         dispatch(sessionActions.logout());
