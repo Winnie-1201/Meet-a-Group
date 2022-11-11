@@ -283,6 +283,7 @@ router.post("/:eventId/attendance", requireAuth, async (req, res, next) => {
   }
 
   const groupId = event.toJSON().groupId;
+  const group = await Group.findByPk(groupId);
   const member = await Membership.findOne({
     where: {
       groupId,
@@ -290,6 +291,25 @@ router.post("/:eventId/attendance", requireAuth, async (req, res, next) => {
       status: "member",
     },
   });
+
+  const hostYet = await Attendance.findOne({
+    where: {
+      userId: currUserId,
+      eventId,
+    },
+  });
+
+  if (currUserId === group.organizerId && !hostYet) {
+    const newAttend = await Attendance.create({
+      eventId,
+      userId: currUserId,
+      status: "host",
+    });
+    res.json({
+      userId: newAttend.userId,
+      status: "host",
+    });
+  }
 
   if (member) {
     const currAttend = await Attendance.findOne({

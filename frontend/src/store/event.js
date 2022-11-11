@@ -1,3 +1,4 @@
+import { getAllAttendees, requestAttendance } from "./attendence";
 import { csrfFetch } from "./csrf";
 import { createEventImage } from "./image";
 // import { createImg } from "./image";
@@ -163,6 +164,8 @@ export const createEvent = (event, groupId, image) => async (dispatch) => {
     // console.log("edit event in thunk========", event);
     await dispatch(create(event));
     await dispatch(createEventImage(image, eventId));
+    await dispatch(requestAttendance(eventId));
+    await dispatch(getAllAttendees());
     return event;
   }
 };

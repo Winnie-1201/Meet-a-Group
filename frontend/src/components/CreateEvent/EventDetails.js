@@ -338,7 +338,7 @@ const EventDetails = () => {
                               {new Intl.DateTimeFormat("en-US", {
                                 month: "long",
                               }).format(newStartDate)}{" "}
-                              {newStartDate.getDate()},
+                              {newStartDate.getDate()},{" "}
                               {newStartDate.getFullYear()} at{" "}
                               {newStartDate.getHours()} :{" "}
                               {newStartDate.getMinutes()}
@@ -350,7 +350,7 @@ const EventDetails = () => {
                               {new Intl.DateTimeFormat("en-US", {
                                 month: "long",
                               }).format(newEndDate)}{" "}
-                              {newEndDate.getDate()},{newEndDate.getFullYear()}{" "}
+                              {newEndDate.getDate()}, {newEndDate.getFullYear()}{" "}
                               at {newEndDate.getHours()} :{" "}
                               {newEndDate.getMinutes()}
                               {newStartDate.getMinutes() == 0 ? 0 : ""}{" "}

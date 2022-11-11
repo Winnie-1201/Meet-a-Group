@@ -23,7 +23,7 @@ export const getAllMembers = (groupId) => async (dispatch) => {
   const response = await fetch(`/api/groups/${groupId}/members`);
   const members = await response.json();
 
-  console.log("members in get all members thunk", members);
+  // console.log("members in get all members thunk", members);
 
   if (response.ok) {
     // const members = await response.json();
@@ -41,7 +41,7 @@ export const requestMembership = (groupId) => async (dispatch) => {
     method: "POST",
   });
   const member = await response.json();
-  console.log("new member in thunk", member);
+  // console.log("new member in thunk", member);
   if (response.ok) {
     await dispatch(getAllMembers(groupId));
     return member;
@@ -55,7 +55,7 @@ export const getStatusThunk = (groupId) => async (dispatch) => {
   if (response.ok) {
     const status = await response.json();
 
-    console.log("status in thunk-------", status);
+    // console.log("status in thunk-------", status);
     await dispatch(getStatus(status));
   }
 };
@@ -100,7 +100,7 @@ const memberReducer = (state = {}, action) => {
     case GET:
       const allMembers = {};
       //   console.log(newState);
-      console.log(action.members, "==============");
+      // console.log(action.members, "==============");
       action.members.forEach((member) => {
         allMembers[member.id] = member;
       });
