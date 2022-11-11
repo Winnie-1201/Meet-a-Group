@@ -29,7 +29,7 @@ function Root() {
       <ModalProvider>
         <SearchProvider>
           <BrowserRouter>
-            <App />
+            <App window={window} />
           </BrowserRouter>
         </SearchProvider>
       </ModalProvider>

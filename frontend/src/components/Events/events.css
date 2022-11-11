@@ -4,10 +4,21 @@ h3 {
   margin: 0;
 }
 
+.full-width {
+  width: 100%;
+  background-color: white;
+  position: sticky;
+  /* z-index: the larger one put on top */
+  z-index: 100;
+  top: 77px;
+  background-color: white;
+}
+
 .all-events-body {
   max-width: 1080px;
   margin-left: auto;
   margin-right: auto;
+  margin-bottom: 180px;
 }
 
 .all-events {

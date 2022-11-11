@@ -37,17 +37,19 @@ const Groups = () => {
 
   return (
     <>
-      <div className="event-groups-body">
-        <div className="event-groups-content">
-          <div className="events-groups">
-            <h2
-              // to="/events"
-              className="event-link"
-              onClick={() => history.push("/events")}
-            >
-              Events
-            </h2>
-            <h2 className="group-link active">Groups</h2>
+      <div className="full-width">
+        <div className="event-groups-body">
+          <div className="event-groups-content">
+            <div className="events-groups">
+              <h2
+                // to="/events"
+                className="event-link"
+                onClick={() => history.push("/events")}
+              >
+                Events
+              </h2>
+              <h2 className="group-link active">Groups</h2>
+            </div>
           </div>
         </div>
       </div>

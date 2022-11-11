@@ -40,6 +40,7 @@ const ProfileButton = ({ user }) => {
         {/* <i className="fa-regular fa-circle-user" /> */}
         <div className="button-detail">{user.firstName[0]}</div>
       </button>
+      {/* <div className="icon-container"> */}
       {openMenu && (
         <ul className="icon-detail">
           <li className="icon-username">{user.username}</li>
@@ -53,13 +54,17 @@ const ProfileButton = ({ user }) => {
               Your groups
             </NavLink>
           </li>
-          <li className="icon-logout">
-            <button className="icon-logout-button" onClick={handleLogout}>
+          <li className="icon-logout-header">
+            <button
+              className="icon-logout-button-header"
+              onClick={handleLogout}
+            >
               Log Out
             </button>
           </li>
         </ul>
       )}
+      {/* </div> */}
     </>
   );
 };

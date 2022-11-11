@@ -1,42 +1,50 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory, useParams } from "react-router-dom";
+import {
+  changeStatusThunk,
+  deleteAttendanceThunk,
+  getAllAttendees,
+  requestAttendance,
+} from "../../store/attendence";
 import { getEventById, deleteEvent } from "../../store/event";
 import { getGroupById, getGroupByUserThunk } from "../../store/group";
+import { getStatusThunk } from "../../store/member";
 import "./EventDetails.css";
 
 const EventDetails = () => {
   const { eventId } = useParams();
   const dispatch = useDispatch();
   const history = useHistory();
+  const [isLoaded, setLoaded] = useState(false);
+  const [isLoaded1, setLoaded1] = useState(false);
 
   const currentUser = useSelector((state) => state.session.user);
   const event = Object.values(
     useSelector((state) => state.event.singleEvent)
   )[0];
 
-  const events = useSelector((state) => state.event);
-
-  console.log("event details in EventDetails component=========", events);
-
   const group = Object.values(
     useSelector((state) => state.group.singleGroup)
   )[0];
 
-  // console.log("groups details in EventDetails component=========", group);
+  const status = useSelector((state) => state.member.status);
+  let attendees = useSelector((state) => state.attendee.allAttendees);
 
-  // const helpDelay = async (eventId) => {
-  //   await dispatch(getEventById(eventId));
-  // };
+  console.log("status in event details--------", status);
+
   useEffect(() => {
-    // helpDelay(eventId);
-    dispatch(getEventById(eventId));
-    // dispatch(getGroupByUserThunk());
+    // dispatch(getEventById(eventId))
+    dispatch(getAllAttendees(eventId))
+      .then(() => dispatch(getEventById(eventId)))
+      .then(() => setLoaded(true));
   }, [dispatch]);
 
-  // console.log("event----", event);
   useEffect(() => {
-    dispatch(getGroupById(event?.groupId));
+    dispatch(getGroupById(event?.groupId))
+      .then(() => dispatch(getStatusThunk(event?.groupId)))
+      .then(() => setLoaded1(true));
+
     // add event to re-render
   }, [dispatch, event]);
 
@@ -46,18 +54,33 @@ const EventDetails = () => {
     if (deleted) return history.push(`/groups/current`);
   };
 
-  if (!event) return null;
-  if (!event.EventImages) return null;
-  if (!group) return null;
+  const handleAttendEvent = async (e) => {
+    e.preventDefault();
 
-  // console.log("event group id in eventdetails", event.groupId);
+    await dispatch(requestAttendance(eventId));
+    // await dispatch()
+  };
 
-  // const group = Object.values(groups)[0];
+  const handleJoinGroup = () => {
+    history.push(`/groups/${group.id}`);
+  };
 
-  // console.log("allgroups---", group);
+  const handleChangeAttendance = async (updates) => {
+    await dispatch(changeStatusThunk(eventId, updates));
+    await dispatch(getAllAttendees(eventId));
+  };
 
-  const newStartDate = new Date(event.startDate);
-  const newEndDate = new Date(event.endDate);
+  const handleLeaveEvent = async () => {
+    await dispatch(deleteAttendanceThunk(eventId, currentUser.id));
+    await dispatch(getAllAttendees(eventId));
+  };
+
+  // if (!event) return null;
+  // if (!event.EventImages) return null;
+  // if (!group) return null;
+
+  let newStartDate;
+  let newEndDate;
   const days = [
     "Sunday",
     "Monday",
@@ -68,18 +91,71 @@ const EventDetails = () => {
     "Saturday",
   ];
 
+  let memberStatus;
+  let pendingStatus;
+
+  let eventMember = false;
+  let host = false;
+  let cohost = false;
+  let pending = false;
+  // let groupMember = false;
+
+  if (isLoaded) {
+    // const newStartDate = new Date(event.startDate);
+    // const newEndDate = new Date(event.endDate);
+    newStartDate = new Date(event.startDate);
+    newEndDate = new Date(event.endDate);
+
+    attendees = Object.values(attendees);
+
+    if (status?.length > 0) {
+      host = status[0].status === "host" ? true : false;
+      cohost = status[0].status === "co-host" ? true : false;
+      eventMember =
+        status[0].status === "member" || host || cohost ? true : false;
+      pending = status[0].status === "pending" ? true : false;
+    }
+
+    memberStatus = attendees
+      .filter((attendee) => attendee.Attendances.status !== "pending")
+      .sort((a, b) => a.firstName - b.firstName);
+    pendingStatus = attendees
+      .filter((attendee) => attendee.Attendances.status === "pending")
+      .sort((a, b) => a.firstName - b.firstName);
+  }
+
   return (
-    <>
-      {/* <p>here is the event detail</p> */}
-      <div className="event-details-flex">
-        {/* <div className="event-details-flex-grow"></div> */}
-        <div className="event-details-top">
-          <div className="event-details-top-title">
-            <h1>{event.name}</h1>
-            {currentUser &&
-              group &&
-              event.groupId === group.id &&
-              currentUser.id === group.organizerId && (
+    isLoaded &&
+    isLoaded1 && (
+      <>
+        {/* <div className="all-event-groups-body">
+          <div className="all-groups-events">
+            <h2
+            
+              className="back-to-event-link"
+              onClick={() => history.push("/events")}
+            >
+              All events
+            </h2>
+            <h2
+              className="back-to-group-link"
+              onClick={() => history.push("/groups")}
+            >
+              All groups
+            </h2>
+          </div>
+        </div> */}
+        {/* <p>here is the event detail</p> */}
+        <div className="event-details-flex">
+          {/* <div className="event-details-flex-grow"></div> */}
+          <div className="event-details-top">
+            <div className="event-details-top-title">
+              <h1>{event.name}</h1>
+              {/* {currentUser &&
+                group &&
+                event.groupId === group.id &&
+                currentUser.id === group.organizerId && ( */}
+              {host && (
                 <div className="top-title-edit-delete">
                   <Link className="edit-link" to={`/events/${eventId}/edit/`}>
                     Edit
@@ -93,119 +169,186 @@ const EventDetails = () => {
                   </button>
                 </div>
               )}
+            </div>
           </div>
-        </div>
 
-        <div className="event-details-middle-flex">
-          <div className="event-details-middle-details">
-            <div className="event-detail-flex">
-              <div className="event-detail-left-flex">
-                <div className="event-detail-img">
-                  <img src={`${event.EventImages[0].url}`} />
-                </div>
-                <div className="event-detail-text">
-                  <div className="event-detail-text-top-flex">
-                    <h2>Details</h2>
+          <div className="event-details-middle-flex">
+            <div className="event-details-middle-details">
+              <div className="event-detail-flex">
+                <div className="event-detail-left-flex">
+                  <div className="event-detail-img">
+                    <img src={`${event.EventImages[0].url}`} />
                   </div>
-                  <div className="event-detail-text-bottom">
-                    <p>{event.description}</p>
+                  <div className="event-detail-text">
+                    <div className="event-detail-text-top-flex">
+                      <h2>Details</h2>
+                    </div>
+                    <div className="event-detail-text-bottom">
+                      <p>{event.description}</p>
+                    </div>
                   </div>
-                </div>
-                <div className="event-detail-attendees">
-                  <div className="event-detail-attendees-title-flex">
-                    <h2>Attendees ({event.numAttending})</h2>
-                  </div>
-                  {/* <div className="event-detail-attendees-card">
+                  <div className="event-detail-attendees">
+                    <div className="event-detail-attendees-title-flex">
+                      <h2>Attendees ({memberStatus.length})</h2>
+                    </div>
+                    {/* <div className="event-detail-attendees-card"> */}
                     <div className="card-detail-grid">
-                      attendees-detail-later
+                      {memberStatus.map((attendee) => (
+                        <div key={attendee.id} className="card-detail-flex">
+                          <div className="card-detail-img">
+                            <div className="card-detail-image">
+                              {attendee.lastName[0]}
+                              {attendee.firstName[0]}
+                            </div>
+                          </div>
+                          <div className="card-detail-name">
+                            {attendee.firstName} {attendee.lastName[0]}.
+                          </div>
+                          <div className="card-detail-status">
+                            {attendee.Attendances.status === "host"
+                              ? "Organizer"
+                              : attendee.Attendances.status}
+                          </div>
+                          <div className="card-detail-status">
+                            {host && attendee.Attendances.status === "member" && (
+                              <button
+                                className="status-change-button"
+                                onClick={() =>
+                                  handleChangeAttendance({
+                                    userId: attendee.id,
+                                    status: "co-host",
+                                  })
+                                }
+                              >
+                                change to co-host
+                              </button>
+                            )}
+                          </div>
+                        </div>
+                      ))}
+                      {(host || cohost) &&
+                        pendingStatus.map((attendee) => (
+                          <div key={attendee.id} className="card-detail-flex">
+                            <div className="card-detail-img">
+                              <div className="card-detail-image">
+                                {attendee.lastName[0]}
+                                {attendee.firstName[0]}
+                              </div>
+                            </div>
+                            <div className="card-detail-name">
+                              {attendee.firstName} {attendee.lastName[0]}.
+                            </div>
+                            <div className="card-detail-status">
+                              {attendee.Attendances.status === "host"
+                                ? "Organizer"
+                                : attendee.Attendances.status}
+                            </div>
+                            <div className="card-detail-status">
+                              {(host || cohost) && (
+                                <button
+                                  className="status-change-button"
+                                  onClick={() =>
+                                    handleChangeAttendance({
+                                      userId: attendee.id,
+                                      status: "member",
+                                    })
+                                  }
+                                >
+                                  change to member
+                                </button>
+                              )}
+                            </div>
+                          </div>
+                        ))}
                     </div>
-                  </div> */}
-                </div>
-                <div className="event-detail-photos">
-                  <div className="event-detail-photos-title-flex">
-                    <h2>Photos ({event.EventImages.length})</h2>
                   </div>
-                  <div className="event-detail-photos-grid">
-                    {event.EventImages.map((img) => (
-                      <img key={img.id} src={img.url} />
-                    ))}
-                    {event.EventImages.length === 2 && (
-                      <div className="sample-photo-flex">
-                        <i className="fa-solid fa-camera" />
-                      </div>
-                    )}
-                    {event.EventImages.length === 1 && (
-                      <>
+                  <div className="event-detail-photos">
+                    <div className="event-detail-photos-title-flex">
+                      <h2>Photos ({event.EventImages.length})</h2>
+                    </div>
+                    <div className="event-detail-photos-grid">
+                      {event.EventImages.map((img) => (
+                        <img key={img.id} src={img.url} />
+                      ))}
+                      {event.EventImages.length === 2 && (
                         <div className="sample-photo-flex">
                           <i className="fa-solid fa-camera" />
                         </div>
-                        <div className="sample-photo-flex">
-                          <i className="fa-solid fa-camera" />
-                        </div>
-                      </>
-                    )}
+                      )}
+                      {event.EventImages.length === 1 && (
+                        <>
+                          <div className="sample-photo-flex">
+                            <i className="fa-solid fa-camera" />
+                          </div>
+                          <div className="sample-photo-flex">
+                            <i className="fa-solid fa-camera" />
+                          </div>
+                        </>
+                      )}
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              <div className="event-detail-right">
-                <div className="event-detail-right-sticky">
-                  <div className="right-group-info">
-                    <Link
-                      to={`/groups/${group?.id}`}
-                      className="group-info-link"
-                    >
-                      <div className="group-info-link-flex">
-                        <div className="group-info-img">
-                          <img src={group.GroupImages[0].url} />
-                        </div>
-                        <div className="group-info-text">
-                          <div className="group-info-title">{group.name}</div>
-                          <div className="group-info-privacy-flex">
-                            <span>
-                              {group.private === true ? "Private" : "Public"}{" "}
-                              group
-                            </span>
+                <div className="event-detail-right">
+                  <div className="event-detail-right-sticky">
+                    <div className="right-group-info">
+                      <Link
+                        to={`/groups/${group?.id}`}
+                        className="group-info-link"
+                      >
+                        <div className="group-info-link-flex">
+                          <div className="group-info-img">
+                            <img src={group.GroupImages[0].url} />
+                          </div>
+                          <div className="group-info-text">
+                            <div className="group-info-title">{group.name}</div>
+                            <div className="group-info-privacy-flex">
+                              <span>
+                                {group.private === true ? "Private" : "Public"}{" "}
+                                group
+                              </span>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    </Link>
-                  </div>
+                      </Link>
+                    </div>
 
-                  <div className="right-event-info">
-                    <div className="right-event-info-bottom">
-                      <div className="event-info-bottom-one-flex">
-                        <i className="fa-regular fa-clock" />
-                        <div className="event-info-time">
-                          <div>
-                            {days[newStartDate.getDay()]},{" "}
-                            {new Intl.DateTimeFormat("en-US", {
-                              month: "long",
-                            }).format(newStartDate)}{" "}
-                            {newStartDate.getDate()},
-                            {newStartDate.getFullYear()} at{" "}
-                            {newStartDate.getHours()} :{" "}
-                            {newStartDate.getMinutes()}
-                            {newStartDate.getMinutes() == 0 ? 0 : ""}{" "}
-                            {newStartDate.getHours() >= 12 ? "PM" : "AM"} to
-                          </div>
-                          <div>
-                            {days[newEndDate.getDay()]},{" "}
-                            {new Intl.DateTimeFormat("en-US", {
-                              month: "long",
-                            }).format(newEndDate)}{" "}
-                            {newEndDate.getDate()},{newEndDate.getFullYear()} at{" "}
-                            {newEndDate.getHours()} : {newEndDate.getMinutes()}
-                            {newStartDate.getMinutes() == 0 ? 0 : ""}{" "}
-                            {newEndDate.getHours() >= 12 ? "PM" : "AM"}
+                    <div className="right-event-info">
+                      <div className="right-event-info-bottom">
+                        <div className="event-info-bottom-one-flex">
+                          <i className="fa-regular fa-clock" />
+                          <div className="event-info-time">
+                            <div>
+                              {days[newStartDate.getDay()]},{" "}
+                              {new Intl.DateTimeFormat("en-US", {
+                                month: "long",
+                              }).format(newStartDate)}{" "}
+                              {newStartDate.getDate()},
+                              {newStartDate.getFullYear()} at{" "}
+                              {newStartDate.getHours()} :{" "}
+                              {newStartDate.getMinutes()}
+                              {newStartDate.getMinutes() == 0 ? 0 : ""}{" "}
+                              {newStartDate.getHours() >= 12 ? "PM" : "AM"} to
+                            </div>
+                            <div>
+                              {days[newEndDate.getDay()]},{" "}
+                              {new Intl.DateTimeFormat("en-US", {
+                                month: "long",
+                              }).format(newEndDate)}{" "}
+                              {newEndDate.getDate()},{newEndDate.getFullYear()}{" "}
+                              at {newEndDate.getHours()} :{" "}
+                              {newEndDate.getMinutes()}
+                              {newStartDate.getMinutes() == 0 ? 0 : ""}{" "}
+                              {newEndDate.getHours() >= 12 ? "PM" : "AM"}
+                            </div>
                           </div>
                         </div>
-                      </div>
 
-                      <div className="event-info-bottom-two-flex">
-                        <i className="fa-solid fa-video" />
-                        <div className="event-info-type">
-                          <p>{event.type} event</p>
+                        <div className="event-info-bottom-two-flex">
+                          <i className="fa-solid fa-video" />
+                          <div className="event-info-type">
+                            <p>{event.type} event</p>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -214,41 +357,69 @@ const EventDetails = () => {
               </div>
             </div>
           </div>
-        </div>
 
-        <div className="event-details-bottom-sticky">
-          <div className="event-details-bottom-text">
-            <div className="buttom-text-flex">
-              <div className="text-event-time">
-                {/* <time>{event.startDate}</time> */}
-                <div>
-                  {new Intl.DateTimeFormat("en-US", {
-                    weekday: "short",
-                  })
-                    .format(newStartDate)
-                    .toUpperCase()}
-                  ,{" "}
-                  {new Intl.DateTimeFormat("en-US", {
-                    month: "short",
-                  })
-                    .format(newStartDate)
-                    .toUpperCase()}{" "}
-                  {newStartDate.getDate()} · {newStartDate.getHours()} :{" "}
-                  {newStartDate.getMinutes()}
-                  {newStartDate.getMinutes() == 0 ? 0 : ""}{" "}
-                  {newStartDate.getHours() >= 12 ? "PM" : "AM"}
+          <div className="event-details-bottom-sticky">
+            <div className="event-details-bottom-text flex-between">
+              <div className="buttom-text-flex">
+                <div className="text-event-time">
+                  {/* <time>{event.startDate}</time> */}
+                  <div className="time-font">
+                    {new Intl.DateTimeFormat("en-US", {
+                      weekday: "short",
+                    })
+                      .format(newStartDate)
+                      .toUpperCase()}
+                    ,{" "}
+                    {new Intl.DateTimeFormat("en-US", {
+                      month: "short",
+                    })
+                      .format(newStartDate)
+                      .toUpperCase()}{" "}
+                    {newStartDate.getDate()} · {newStartDate.getHours()} :{" "}
+                    {newStartDate.getMinutes()}
+                    {newStartDate.getMinutes() == 0 ? 0 : ""}{" "}
+                    {newStartDate.getHours() >= 12 ? "PM" : "AM"}
+                  </div>
+                </div>
+                <div className="text-event-title">
+                  <p>
+                    {event.Venue.city}, {event.name}
+                  </p>
                 </div>
               </div>
-              <div className="text-event-title">
-                <p>
-                  {event.Venue.city}, {event.name}
-                </p>
+              <div className="bottom-right-flex">
+                <div className="price">
+                  {event.price === 0 ? "FREE" : `$${event.price}`}
+                </div>
+                {status.length <= 0 && (
+                  <button className="attend-button" onClick={handleJoinGroup}>
+                    Join the group to attend
+                  </button>
+                )}
+                {!eventMember && !pending && status.length > 0 && (
+                  <button className="attend-button" onClick={handleAttendEvent}>
+                    Attend
+                  </button>
+                )}
+                {(eventMember || pending) && !host && (
+                  <button className="attend-button" onClick={handleLeaveEvent}>
+                    Leave the event
+                  </button>
+                )}
+                {eventMember && (
+                  <p>
+                    You are{" "}
+                    {status[0].status === "member"
+                      ? "a member"
+                      : `the ${status[0].status}`}
+                  </p>
+                )}
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </>
+      </>
+    )
   );
 };
 

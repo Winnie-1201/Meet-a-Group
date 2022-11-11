@@ -107,19 +107,17 @@ const GroupDetails = () => {
     allMembers = Object.values(members);
     leaders = allMembers.filter(
       (member) =>
-        member.Memberships[0].status === "host" ||
-        member.Memberships[0].status === "co-host"
+        member.Membership.status === "host" ||
+        member.Membership.status === "co-host"
     );
 
-    leaders = leaders.sort(
-      (a, b) => b.Memberships[0].status - a.Memberships[0].status
-    );
+    leaders = leaders.sort((a, b) => b.Membership.status - a.Membership.status);
 
     memberStatus = allMembers
-      .filter((member) => member.Memberships[0].status === "member")
+      .filter((member) => member.Membership.status === "member")
       .sort((a, b) => a.firstName - b.firstName);
     pendingStatus = allMembers
-      .filter((member) => member.Memberships[0].status === "pending")
+      .filter((member) => member.Membership.status === "pending")
       .sort((a, b) => a.firstName - b.firstName);
   }
 
@@ -150,6 +148,23 @@ const GroupDetails = () => {
   return (
     isLoaded && (
       <>
+        {/* <div className="all-event-groups-body">
+          <div className="all-groups-events">
+            <h2
+              className="back-to-event-link"
+              onClick={() => history.push("/events")}
+            >
+              All events
+            </h2>
+            <h2
+              className="back-to-group-link"
+              onClick={() => history.push("/groups")}
+            >
+              All groups
+            </h2>
+          </div>
+        </div> */}
+        {/* </div> */}
         <div className="group-details-container">
           <div className="group-details-body">
             <div className="group-detail-page">
@@ -462,7 +477,7 @@ const GroupDetails = () => {
                                 <span>
                                   {member.firstName} {member.lastName}
                                 </span>
-                                <p>{member.Memberships[0].status}</p>
+                                <p>{member.Membership.status}</p>
                               </div>
                               {/* </div> */}
                             </li>
@@ -486,7 +501,7 @@ const GroupDetails = () => {
                                   {member.firstName} {member.lastName}
                                 </span>
                                 <div className="status-change">
-                                  <p>{member.Memberships[0].status}</p>
+                                  <p>{member.Membership.status}</p>
                                   {host && (
                                     <button
                                       className="status-change-button"
@@ -526,7 +541,7 @@ const GroupDetails = () => {
                                     {member.firstName} {member.lastName}
                                   </span>
                                   <div className="status-change">
-                                    <p>{member.Memberships[0].status}</p>
+                                    <p>{member.Membership.status}</p>
                                     <button
                                       className="status-change-button"
                                       onClick={() =>
@@ -604,7 +619,7 @@ const GroupDetails = () => {
                                 <span>
                                   {leader.firstName} {leader.lastName}
                                 </span>
-                                <p>{leader.Memberships[0].status}</p>
+                                <p>{leader.Membership.status}</p>
                               </div>
                               {/* </div> */}
                             </li>
