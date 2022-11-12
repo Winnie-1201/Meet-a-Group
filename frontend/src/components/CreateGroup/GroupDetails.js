@@ -46,30 +46,32 @@ const GroupDetails = () => {
 
   return (
     <>
-      <div className="group-details-body">
-        <div className="group-detail-page">
-          <div className="top-detail">
-            <div className="group-detail-image flex-grow-three">
-              <img
-                src={`${group.GroupImages[0]?.url}`}
-                className="group-detail-img"
-              />
-            </div>
-            <div className="group-detail flex-grow-two">
-              <h1 className="group-detial-name">{group.name}</h1>
-              <p className="group-detail-location">
-                {group.city}, {group.state}
-              </p>
-              <p className="group-detail-type">
-                {group.numMembers} members{" "}
-                {group.private === true ? "Private" : "Public"} group
-              </p>
-              <p className="group-detail-host">
-                Organized by{" "}
-                <span className="group-detail-firstname">
-                  {group.Organizer.firstName} {group.Organizer.lastName[0]}.
-                </span>
-              </p>
+      <div className="group-details-container">
+        <div className="group-details-body">
+          <div className="group-detail-page">
+            <div className="top-detail">
+              <div className="group-detail-image flex-grow-three">
+                <img
+                  src={`${group.GroupImages[0]?.url}`}
+                  className="group-detail-img"
+                />
+              </div>
+              <div className="group-detail flex-grow-two">
+                <h1 className="group-detial-name">{group.name}</h1>
+                <p className="group-detail-location">
+                  {group.city}, {group.state}
+                </p>
+                <p className="group-detail-type">
+                  {group.numMembers} members{" "}
+                  {group.private === true ? "Private" : "Public"} group
+                </p>
+                <p className="group-detail-host">
+                  Organized by{" "}
+                  <span className="group-detail-firstname">
+                    {group.Organizer.firstName} {group.Organizer.lastName[0]}.
+                  </span>
+                </p>
+              </div>
             </div>
           </div>
           {/* <p>
