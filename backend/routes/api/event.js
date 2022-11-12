@@ -121,7 +121,9 @@ router.get("/", validateQuery, async (req, res, next) => {
     const attendees = await Attendance.findAll({
       where: {
         eventId: event.id,
-        // status: "member",
+        status: {
+          [Op.not]: "pending",
+        },
       },
     });
 

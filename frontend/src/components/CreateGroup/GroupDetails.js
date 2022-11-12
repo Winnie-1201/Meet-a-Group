@@ -291,16 +291,17 @@ const GroupDetails = () => {
                     )}
                     {(groupMember || pending) && (
                       <li>
-                        <button
-                          className="leave-group request-to-join"
-                          onClick={handleDeleteMembership}
-                        >
-                          <span>Leave the group</span>
-                        </button>
-                        {/* <div class="icon-leave-group">
-                          <i className="fa fa-remove" />
-                          <i className="fa fa-check" />
-                        </div> */}
+                        {/* <> */}
+                        {!host && (
+                          <button
+                            className="leave-group request-to-join"
+                            onClick={handleDeleteMembership}
+                          >
+                            <span>Leave the group</span>
+                          </button>
+                        )}
+
+                        {host && <p>You are the host</p>}
                       </li>
                     )}
                     {/* <li></li> */}

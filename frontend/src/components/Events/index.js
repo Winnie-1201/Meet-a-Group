@@ -44,7 +44,7 @@ const Events = () => {
     // console.log("---------handle login running", groupId);
     if (currentUser) {
       // console.log("if current user working", currentUser);
-      history.push(`/groups/${eventId}`);
+      history.push(`/events/${eventId}`);
     } else {
       // console.log("else statement is working-------");
       setClick(true);
