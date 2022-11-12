@@ -1,3 +1,4 @@
+import { getAllAttendees, requestAttendance } from "./attendence";
 import { csrfFetch } from "./csrf";
 import { createEventImage } from "./image";
 // import { createImg } from "./image";
@@ -61,13 +62,45 @@ export const getEvents = () => async (dispatch) => {
   }
 };
 
+// thunk: loading all groups with filter;
+export const getSearchEvents = (keywords, location) => async (dispatch) => {
+  const response = await fetch("/api/events/");
+
+  if (response.ok) {
+    const events = await response.json();
+
+    let searchResult = events.Events.filter((event) => {
+      if (keywords.length > 0 && location.length > 0) {
+        return (
+          event.name
+            .toLowerCase()
+            .split(/([_\W])/)
+            .includes(keywords.toLowerCase()) &&
+          event.Venue.city.toLowerCase() === location.toLowerCase()
+        );
+      } else if (keywords.length > 0) {
+        return event.name
+          .toLowerCase()
+          .split(/([_\W])/)
+          .includes(keywords.toLowerCase());
+      } else if (location.length > 0) {
+        return event.Venue.city.toLowerCase() === location.toLowerCase();
+      } else {
+        return event;
+      }
+    });
+    await dispatch(load(searchResult));
+    return searchResult;
+  }
+};
+
 // get event by eventId thunk;
 export const getEventById = (eventId) => async (dispatch) => {
   const response = await fetch(`/api/events/${eventId}`);
 
   if (response.ok) {
     const event = await response.json();
-    // console.log("An event by eventId in thunk========", event);
+    console.log("An event by eventId in thunk========", event);
     dispatch(loadOne(event));
     return event;
   }
@@ -131,6 +164,8 @@ export const createEvent = (event, groupId, image) => async (dispatch) => {
     // console.log("edit event in thunk========", event);
     await dispatch(create(event));
     await dispatch(createEventImage(image, eventId));
+    await dispatch(requestAttendance(eventId));
+    await dispatch(getAllAttendees());
     return event;
   }
 };
@@ -141,6 +176,7 @@ const eventsReducer = (state = initialState, action) => {
   let newEvents;
   switch (action.type) {
     case LOAD_EVENTS:
+      console.log("the state in event reducer", state);
       newEvents = { allEvents: {}, singleEvent: {} };
       const allEvents = {};
       // console.log("event in load events", action.events[0]);
@@ -148,14 +184,16 @@ const eventsReducer = (state = initialState, action) => {
         allEvents[event.id] = { ...event };
       });
       newEvents.allEvents = { ...allEvents };
+      console.log("the state in event reducer", newEvents);
       return newEvents;
     case LOAD_ONE:
       // newEvents = { allEvents: {}, singleEvent: {} };
+      console.log("the state in event reducer load one 1", state);
       newEvents = { allEvents: {}, singleEvent: {} };
       const singleEvent = {};
       singleEvent[action.event.id] = action.event;
       newEvents.singleEvent = singleEvent;
-
+      console.log("the state in event reducer load one 2", newEvents);
       return newEvents;
 
     case CREATE_EVENT:

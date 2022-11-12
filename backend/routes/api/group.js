@@ -136,7 +136,7 @@ router.get("/", async (req, res, next) => {
       where: {
         groupId: id,
         status: {
-          [Op.in]: ["member", "co-host"],
+          [Op.not]: "pending",
         },
       },
     });
@@ -249,8 +249,20 @@ router.post("/:groupId/images", requireAuth, async (req, res, next) => {
 // Get all groups joined or organized by the current user;
 router.get("/current", requireAuth, async (req, res, next) => {
   const currUserId = req.user.id;
+
+  const memberships = await Membership.findAll({
+    where: {
+      userId: currUserId,
+    },
+  });
+
+  let groupIds = {};
+  memberships.forEach((membership) => {
+    groupIds[membership.groupId] = membership.groupId;
+  });
+
   const groups = await Group.findAll({
-    where: { organizerId: currUserId },
+    where: { id: { [Op.in]: Object.values(groupIds) } },
   });
 
   let result = {};
@@ -276,10 +288,12 @@ router.get("/current", requireAuth, async (req, res, next) => {
     }
     const numMembers = await Membership.findAll({
       where: {
-        userId: currUserId,
+        // CHANGE!!!
+        // userId: currUserId,
         status: {
-          [Op.in]: ["member", "co-host"],
+          [Op.not]: "pending",
         },
+        groupId,
       },
     });
     groupJoin.numMembers = numMembers.length;
@@ -515,13 +529,24 @@ router.post("/:groupId/membership", requireAuth, async (req, res, next) => {
   const memberPending = await Membership.findOne({
     where: {
       userId,
+      //changed
+      groupId,
       status: "pending",
     },
   });
   const member = await Membership.findOne({
     where: {
       userId,
+      //changed
+      groupId,
       status: "member",
+    },
+  });
+
+  const hostYet = await Membership.findOne({
+    where: {
+      userId,
+      groupId,
     },
   });
 
@@ -539,6 +564,16 @@ router.post("/:groupId/membership", requireAuth, async (req, res, next) => {
     res.status(400).json({
       message: "User is already a member of the gorup",
       statusCode: 400,
+    });
+  } else if (group.organizerId === userId && !hostYet) {
+    const newMember = await Membership.create({
+      userId,
+      groupId,
+      status: "host",
+    });
+    res.json({
+      memberId: newMember.userId,
+      status: newMember.status,
     });
   } else {
     const newMember = await Membership.create({
@@ -592,7 +627,11 @@ router.put(
       },
     });
     const preStatus = member.toJSON().status;
-    // console.log(status, preStatus);
+    // console.log("============");
+    // console.log("============");
+    // console.log("------1", status, preStatus, member);
+    // console.log("============");
+    // console.log("============");
 
     if (
       status === "member" &&
@@ -603,6 +642,11 @@ router.put(
         userId: memberId,
         status: status,
       });
+      // console.log("============");
+      // console.log("============");
+      // console.log("------2", status, preStatus, member);
+      // console.log("============");
+      // console.log("============");
       res.json({
         memberId: member.userId,
         status,
@@ -628,7 +672,28 @@ router.put(
   }
 );
 
-// Get all members of a gorup specified by its id;
+// Get current user's status in a group specified by its id
+router.get("/:groupId/status", requireAuth, async (req, res, next) => {
+  const groupId = req.params.groupId;
+  const userId = req.user.id;
+
+  const group = await Group.findByPk(groupId);
+  if (!group) {
+    res.status(404).json({
+      message: "Group couldn't be found",
+      statusCode: 404,
+    });
+  }
+
+  const member = await Membership.findAll({
+    where: { groupId, userId },
+  });
+
+  // console.log("member in backend", member);
+  return res.json(member);
+});
+
+// Get all members of a group specified by its id;
 router.get("/:groupId/members", async (req, res, next) => {
   const groupId = req.params.groupId;
   const userId = req.user.id;
@@ -644,6 +709,8 @@ router.get("/:groupId/members", async (req, res, next) => {
   const cohost = await Membership.findOne({
     where: {
       groupId,
+      // changed
+      userId,
       status: "co-host",
     },
   });
@@ -655,39 +722,81 @@ router.get("/:groupId/members", async (req, res, next) => {
     const members = await Membership.findAll({
       where: { groupId },
     });
-
+    // console.log("================");
+    // console.log("================");
+    // console.log("================");
+    // console.log("all members in the backend", members);
+    // console.log("================");
+    // console.log("================");
+    // console.log("================");
     for (let i = 0; i < members.length; i++) {
       const memberId = members[i].toJSON().userId;
       const userInfo = await User.findByPk(memberId, {
-        include: {
-          model: Membership,
-          attributes: ["status"],
-        },
+        // include: {
+        //   model: Membership,
+        //   where: {
+        //     groupId,
+        //     userId: memberId,
+        //   },
+        //   attributes: ["status"],
+        // },
         attributes: ["id", "firstName", "lastName"],
       });
-      result.Members.push(userInfo);
+
+      let userInfo1 = userInfo.toJSON();
+      let status = await Membership.findOne({
+        where: {
+          groupId,
+          userId: memberId,
+        },
+        attributes: ["status"],
+      });
+      userInfo1.Membership = status.toJSON();
+      // console.log("================");
+      // console.log("================");
+      // console.log("================");
+      // console.log("userInfo in the backend!!", userInfo);
+      // console.log("================");
+      // console.log("================");
+      // console.log("================");
+      result.Members.push(userInfo1);
     }
     res.json(result);
   } else {
     const members = await Membership.findAll({
-      where: { groupId },
+      where: {
+        groupId,
+        // changed
+        status: {
+          [Op.not]: "pending",
+        },
+      },
     });
 
     for (let i = 0; i < members.length; i++) {
       const memberId = members[i].toJSON().userId;
       const userInfo = await User.findByPk(memberId, {
-        include: {
-          model: Membership,
-          where: {
-            status: {
-              [Op.not]: "pending",
-            },
-          },
-          attributes: ["status"],
-        },
+        // the following does not work
+        // it will include all memberships of the current user
+        // include: {
+        //   model: Membership,
+        //   // },
+        //   attributes: ["status"],
+        // },
         attributes: ["id", "firstName", "lastName"],
       });
-      result.Members.push(userInfo);
+
+      let userInfo1 = userInfo.toJSON();
+      let status = await Membership.findOne({
+        where: {
+          groupId,
+          userId: memberId,
+        },
+        attributes: ["status"],
+      });
+      userInfo1.Membership = status.toJSON();
+
+      result.Members.push(userInfo1);
     }
     res.json(result);
   }

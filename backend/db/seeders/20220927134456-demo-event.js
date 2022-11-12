@@ -3,6 +3,7 @@
 // const { Venue, Group } = require("../models");
 
 const events = [
+  // 1
   {
     venueId: 1,
     groupId: 1,
@@ -15,6 +16,7 @@ const events = [
     startDate: new Date("2022-11-02 8:00:00"),
     endDate: new Date("2022-11-02 17:00:00"),
   },
+  // 2
   {
     venueId: 2,
     groupId: 2,
@@ -26,6 +28,7 @@ const events = [
     startDate: new Date("2022-11-04 7:00:00"),
     endDate: new Date("2022-11-04 9:00:00"),
   },
+  // 3
   {
     venueId: 3,
     groupId: 3,
@@ -38,33 +41,110 @@ const events = [
     startDate: new Date("2022-11-11 8:00:00"),
     endDate: new Date("2022-11-11 17:00:00"),
   },
-  // {
-  //   name: "",
-  //   description: "",
-  //   type: "",
-  //   capacity: "",
-  //   price: "",
-  //   startDate: "",
-  //   endDate: "",
-  // },
-  // {
-  //   name: "",
-  //   description: "",
-  //   type: "",
-  //   capacity: "",
-  //   price: "",
-  //   startDate: "",
-  //   endDate: "",
-  // },
-  // {
-  //   name: "",
-  //   description: "",
-  //   type: "",
-  //   capacity: "",
-  //   price: "",
-  //   startDate: "",
-  //   endDate: "",
-  // },
+  // 4
+  {
+    venueId: 1,
+    groupId: 1,
+    name: "Let's visit Sleepy Hollow and Kykuit and Philips Manor",
+    description:
+      "Hudson Valley is still full of fall colors. There aren't too many places that are synonyms with Halloween than Sleepy Hollow, the home of the Headless Horseman. ",
+    type: "In person",
+    capacity: 20,
+    price: 30.0,
+    startDate: new Date("2022-11-11 8:00:00"),
+    endDate: new Date("2022-11-11 17:00:00"),
+  },
+  // 5
+  {
+    venueId: 1,
+    groupId: 4,
+    name: "Let's visit Sleepy Hollow and Kykuit and Philips Manor",
+    description:
+      "Hudson Valley is still full of fall colors. There aren't too many places that are synonyms with Halloween than Sleepy Hollow, the home of the Headless Horseman. ",
+    type: "In person",
+    capacity: 20,
+    price: 30.0,
+    startDate: new Date("2022-11-11 8:00:00"),
+    endDate: new Date("2022-11-11 17:00:00"),
+  },
+  // 6
+  {
+    venueId: 1,
+    groupId: 5,
+    name: "Let's visit Sleepy Hollow and Kykuit and Philips Manor",
+    description:
+      "Hudson Valley is still full of fall colors. There aren't too many places that are synonyms with Halloween than Sleepy Hollow, the home of the Headless Horseman. ",
+    type: "In person",
+    capacity: 20,
+    price: 30.0,
+    startDate: new Date("2022-11-11 8:00:00"),
+    endDate: new Date("2022-11-11 17:00:00"),
+  },
+  // 7
+  {
+    venueId: 1,
+    groupId: 6,
+    name: "Let's visit Sleepy Hollow and Kykuit and Philips Manor",
+    description:
+      "Hudson Valley is still full of fall colors. There aren't too many places that are synonyms with Halloween than Sleepy Hollow, the home of the Headless Horseman. ",
+    type: "In person",
+    capacity: 20,
+    price: 30.0,
+    startDate: new Date("2022-11-11 8:00:00"),
+    endDate: new Date("2022-11-11 17:00:00"),
+  },
+  // 8
+  {
+    venueId: 1,
+    groupId: 7,
+    name: "Let's visit Sleepy Hollow and Kykuit and Philips Manor",
+    description:
+      "Hudson Valley is still full of fall colors. There aren't too many places that are synonyms with Halloween than Sleepy Hollow, the home of the Headless Horseman. ",
+    type: "In person",
+    capacity: 20,
+    price: 30.0,
+    startDate: new Date("2022-11-11 8:00:00"),
+    endDate: new Date("2022-11-11 17:00:00"),
+  },
+  // 9
+  {
+    venueId: 3,
+    groupId: 8,
+    name: "Let's visit Sleepy Hollow and Kykuit and Philips Manor",
+    description:
+      "Hudson Valley is still full of fall colors. There aren't too many places that are synonyms with Halloween than Sleepy Hollow, the home of the Headless Horseman. ",
+    type: "In person",
+    capacity: 20,
+    price: 30.0,
+    startDate: new Date("2022-11-11 8:00:00"),
+    endDate: new Date("2022-11-11 17:00:00"),
+  },
+  // 10
+  {
+    venueId: 3,
+    groupId: 9,
+    name: "Let's visit Sleepy Hollow and Kykuit and Philips Manor",
+    description:
+      "Hudson Valley is still full of fall colors. There aren't too many places that are synonyms with Halloween than Sleepy Hollow, the home of the Headless Horseman. ",
+    type: "In person",
+    capacity: 20,
+    price: 30.0,
+    startDate: new Date("2022-11-11 8:00:00"),
+    endDate: new Date("2022-11-11 17:00:00"),
+  },
+  // 11
+  {
+    venueId: 1,
+    groupId: 10,
+    name: "Let's visit Sleepy Hollow and Kykuit and Philips Manor",
+    description:
+      "Hudson Valley is still full of fall colors. There aren't too many places that are synonyms with Halloween than Sleepy Hollow, the home of the Headless Horseman. ",
+    type: "In person",
+    capacity: 20,
+    price: 30.0,
+    startDate: new Date("2022-11-11 8:00:00"),
+    endDate: new Date("2022-11-11 17:00:00"),
+  },
 ];
 module.exports = {
   async up(queryInterface, Sequelize) {

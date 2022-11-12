@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { createGroup, editGroupThunk } from "../../store/group";
+import Footer from "../Footer";
+import Navigation from "../Navigation";
 import "./GroupForm.css";
 
 const GroupForm = ({ group, formType }) => {
@@ -128,10 +130,12 @@ const GroupForm = ({ group, formType }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="group-form">
-      {/* <div className="group-form-body"> */}
-      <h1>{formType}</h1>
-      {/* <ul className="error-messages-group-form">
+    <>
+      <Navigation window={window} />
+      <form onSubmit={handleSubmit} className="group-form">
+        {/* <div className="group-form-body"> */}
+        <h1>{formType}</h1>
+        {/* <ul className="error-messages-group-form">
         {errors.length > 0 &&
           errors.map((error) => (
             <li className="error-detail-group-form" key={error}>
@@ -139,115 +143,117 @@ const GroupForm = ({ group, formType }) => {
             </li>
           ))}
       </ul> */}
-      <label>
-        Group name
-        <input
-          type="text"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
-      </label>
-      {errors.name && (
-        <ul className="error-messages-group-form">
-          <li className="error-detail-group-form">{errors.name}</li>
-        </ul>
-      )}
-      <label>
-        About
-        <textarea
-          type="text"
-          value={about}
-          onChange={(e) => setAbout(e.target.value)}
-        />
-      </label>
-      {errors.about && (
-        <ul className="error-messages-group-form">
-          <li className="error-detail-group-form">{errors.about}</li>
-        </ul>
-      )}
-      <label className="group-label-type">
-        Type
-        <select
-          name="attendType"
-          value={type}
-          onChange={(e) => setType(e.target.value)}
-        >
-          <option value="" disabled>
-            Please select a type...
-          </option>
-          <option key={"Online"}>Online</option>
-          <option key={"In person"}>In person</option>
-        </select>
-      </label>
-      {errors.type && (
-        <ul className="error-messages-group-form">
-          <li className="error-detail-group-form">{errors.type}</li>
-        </ul>
-      )}
-      <label>
-        Private or public?
-        <select
-          name="privacy"
-          value={isPrivate}
-          onChange={(e) => setPrivate(e.target.value)}
-        >
-          <option value="" disabled>
-            Please select...
-          </option>
-          <option key={"Private"}>Private</option>
-          <option key={"Public"}>Public</option>
-        </select>
-        {errors.isPrivate && (
-          <ul className="error-messages-group-form">
-            <li className="error-detail-group-form">{errors.isPrivate}</li>
-          </ul>
-        )}
-      </label>
-      {create && (
         <label>
-          Preview image
+          Group name
           <input
             type="text"
-            value={previewImage}
-            onChange={(e) => setPreviewImg(e.target.value)}
+            value={name}
+            onChange={(e) => setName(e.target.value)}
           />
         </label>
-      )}
-      {errors.previewImg && (
-        <ul className="error-messages-group-form">
-          <li className="error-detail-group-form">{errors.previewImg}</li>
-        </ul>
-      )}
-      {/* <AddImage /> */}
-      <label>
-        City
-        <input
-          type="text"
-          value={city}
-          onChange={(e) => setCity(e.target.value)}
-        />
-      </label>
-      {errors.city && (
-        <ul className="error-messages-group-form">
-          <li className="error-detail-group-form">{errors.city}</li>
-        </ul>
-      )}
-      <label>
-        State
-        <input
-          type="text"
-          value={state}
-          onChange={(e) => setState(e.target.value)}
-        />
-      </label>
-      {errors.state && (
-        <ul className="error-messages-group-form">
-          <li className="error-detail-group-form">{errors.state}</li>
-        </ul>
-      )}
-      <button>Submit</button>
-      {/* </div> */}
-    </form>
+        {errors.name && (
+          <ul className="error-messages-group-form">
+            <li className="error-detail-group-form">{errors.name}</li>
+          </ul>
+        )}
+        <label>
+          About
+          <textarea
+            type="text"
+            value={about}
+            onChange={(e) => setAbout(e.target.value)}
+          />
+        </label>
+        {errors.about && (
+          <ul className="error-messages-group-form">
+            <li className="error-detail-group-form">{errors.about}</li>
+          </ul>
+        )}
+        <label className="group-label-type">
+          Type
+          <select
+            name="attendType"
+            value={type}
+            onChange={(e) => setType(e.target.value)}
+          >
+            <option value="" disabled>
+              Please select a type...
+            </option>
+            <option key={"Online"}>Online</option>
+            <option key={"In person"}>In person</option>
+          </select>
+        </label>
+        {errors.type && (
+          <ul className="error-messages-group-form">
+            <li className="error-detail-group-form">{errors.type}</li>
+          </ul>
+        )}
+        <label>
+          Private or public?
+          <select
+            name="privacy"
+            value={isPrivate}
+            onChange={(e) => setPrivate(e.target.value)}
+          >
+            <option value="" disabled>
+              Please select...
+            </option>
+            <option key={"Private"}>Private</option>
+            <option key={"Public"}>Public</option>
+          </select>
+          {errors.isPrivate && (
+            <ul className="error-messages-group-form">
+              <li className="error-detail-group-form">{errors.isPrivate}</li>
+            </ul>
+          )}
+        </label>
+        {create && (
+          <label>
+            Preview image
+            <input
+              type="text"
+              value={previewImage}
+              onChange={(e) => setPreviewImg(e.target.value)}
+            />
+          </label>
+        )}
+        {errors.previewImg && (
+          <ul className="error-messages-group-form">
+            <li className="error-detail-group-form">{errors.previewImg}</li>
+          </ul>
+        )}
+        {/* <AddImage /> */}
+        <label>
+          City
+          <input
+            type="text"
+            value={city}
+            onChange={(e) => setCity(e.target.value)}
+          />
+        </label>
+        {errors.city && (
+          <ul className="error-messages-group-form">
+            <li className="error-detail-group-form">{errors.city}</li>
+          </ul>
+        )}
+        <label>
+          State
+          <input
+            type="text"
+            value={state}
+            onChange={(e) => setState(e.target.value)}
+          />
+        </label>
+        {errors.state && (
+          <ul className="error-messages-group-form">
+            <li className="error-detail-group-form">{errors.state}</li>
+          </ul>
+        )}
+        <button>Submit</button>
+        {/* </div> */}
+      </form>
+      <Footer window={window} />
+    </>
   );
 };
 
