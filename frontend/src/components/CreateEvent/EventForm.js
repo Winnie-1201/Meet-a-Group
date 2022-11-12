@@ -21,8 +21,6 @@ const EventForm = ({ event, groupId, formType }) => {
 
   const dispatch = useDispatch();
 
-  // console.log("enter the EventForm component================");
-
   let create = formType === "Create Event" ? true : false;
 
   useEffect(() => {
@@ -87,8 +85,6 @@ const EventForm = ({ event, groupId, formType }) => {
       formType === "Create Event"
         ? await dispatch(createEvent(event, groupId, img))
         : await dispatch(editEvent(event));
-
-    // console.log("here is the new event created ================", newEvent);
 
     if (newEvent) return history.push(`/events/${newEvent.id}`);
   };

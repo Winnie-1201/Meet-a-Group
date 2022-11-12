@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { Modal } from "../../context/Modal";
-import { useSearch } from "../../context/search";
-import { getEvents, getSearchEvents } from "../../store/event";
+import { getSearchEvents } from "../../store/event";
 import Footer from "../Footer";
 import LoginForm from "../LoginFormModal/LoginForm";
 import Navigation from "../Navigation";
@@ -20,33 +19,20 @@ const Events = () => {
 
   const [click, setClick] = useState(false);
 
-  // const { setKeywords, setLocation } = useSearch();
-
   useEffect(() => {
-    // dispatch(getGroups());
     dispatch(getSearchEvents(keywords, location));
   }, [dispatch]);
 
   const handleReset = async (e) => {
     e.preventDefault();
 
-    // localStorage.setItem("keywords", "");
-    // localStorage.setItem("location", "");
-    // setKeywords("");
-    // setLocation("");
-
-    // const reset = await dispatch(getEvents());
-    // if (reset) history.push("/events");
     history.push("/groups");
   };
 
   const handleIfLogin = (eventId) => {
-    // console.log("---------handle login running", groupId);
     if (currentUser) {
-      // console.log("if current user working", currentUser);
       history.push(`/events/${eventId}`);
     } else {
-      // console.log("else statement is working-------");
       setClick(true);
     }
   };
@@ -123,13 +109,10 @@ const Events = () => {
                         ? 0
                         : ""}{" "}
                       {new Date(event.startDate).getHours() >= 12 ? "PM" : "AM"}
-                      {/* {event.startDate} */}
                     </p>
                     <p className="event-name">{event.name}</p>
                     <p className="event-group">{event.Group.name}</p>
-                    {/* <p className="event-location">
-             {event.Group.city}, {event.Group.state}
-           </p> */}
+
                     <p className="event-attendees">
                       {event.numAttending} attendees
                     </p>

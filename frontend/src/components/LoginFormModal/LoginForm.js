@@ -1,16 +1,13 @@
 import React, { useState } from "react";
 import * as sessionActions from "../../store/session";
 import { useDispatch, useSelector } from "react-redux";
-// import { Redirect } from "react-router-dom";
 import "./LoginForm.css";
 import { Redirect } from "react-router-dom";
 
 const LoginForm = () => {
   const dispatch = useDispatch();
-  //   const history = useHistory();
   const sessionUser = useSelector((state) => state.session.user);
 
-  console.log("in login form");
   const [credential, setCredential] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState([]);
@@ -35,7 +32,6 @@ const LoginForm = () => {
   };
 
   return (
-    // <section className="edit-form-holder centered middled">
     <form className="login-form" onSubmit={handleSubmit}>
       <div className="login-form-header">
         <div className="login-form-icon">
@@ -45,18 +41,12 @@ const LoginForm = () => {
       </div>
       <label>
         Username or email
-        <input
-          type="email"
-          // placeholder="Username or Email"
-          value={credential}
-          onChange={getCredential}
-        />
+        <input type="email" value={credential} onChange={getCredential} />
       </label>
       <label>
         Password
         <input
           type="password"
-          // placeholder="Password"
           value={password}
           onChange={getPassword}
           required
@@ -94,7 +84,6 @@ const LoginForm = () => {
         Demo user2
       </button>
     </form>
-    // </section>
   );
 };
 

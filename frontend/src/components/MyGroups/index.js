@@ -19,12 +19,6 @@ const MyGroups = () => {
   const joinedGroups = groups.filter(
     (group) => group.organizerId !== currUser.id
   );
-  // console.log(
-  //   "here is all my groups in MyGroups component!!!!=======================",
-  //   groups,
-  //   hostGroups,
-  //   joinedGroups
-  // );
 
   const dispatch = useDispatch();
 

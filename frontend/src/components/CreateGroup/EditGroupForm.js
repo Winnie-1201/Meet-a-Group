@@ -7,7 +7,6 @@ import GroupForm from "./GroupForm";
 const EditGroup = () => {
   const { groupId } = useParams();
 
-  // console.log("------------groupId", groupId);
   const dispatch = useDispatch();
 
   const group = Object.values(

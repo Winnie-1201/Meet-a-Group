@@ -1,9 +1,3 @@
-/* p,
-h2,
-h3 {
-  margin: 0;
-} */
-
 .min-height {
   min-height: 800px;
 }
@@ -18,7 +12,6 @@ h3 {
 .all-groups {
   display: flex;
   flex-direction: column;
-  /*  */
   margin: 0 auto 10px auto;
   max-width: 640px;
 }
@@ -70,12 +63,6 @@ h3 {
   font-weight: 500;
   color: #877457;
 }
-
-/* .event-attendees {
-  font-size: 14px;
-  margin-left: 5px;
-  margin-top: auto;
-} */
 
 .group-type {
   font-size: 14px;

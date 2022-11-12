@@ -23,11 +23,7 @@ export const getAllMembers = (groupId) => async (dispatch) => {
   const response = await fetch(`/api/groups/${groupId}/members`);
   const members = await response.json();
 
-  // console.log("members in get all members thunk", members);
-
   if (response.ok) {
-    // const members = await response.json();
-    // console.log(members);
     await dispatch(get(members.Members));
     return members.Members;
   } else {
@@ -41,7 +37,6 @@ export const requestMembership = (groupId) => async (dispatch) => {
     method: "POST",
   });
   const member = await response.json();
-  // console.log("new member in thunk", member);
   if (response.ok) {
     await dispatch(getAllMembers(groupId));
     return member;
@@ -54,8 +49,6 @@ export const getStatusThunk = (groupId) => async (dispatch) => {
 
   if (response.ok) {
     const status = await response.json();
-
-    // console.log("status in thunk-------", status);
     await dispatch(getStatus(status));
   }
 };
@@ -99,24 +92,14 @@ const memberReducer = (state = {}, action) => {
   switch (action.type) {
     case GET:
       const allMembers = {};
-      //   console.log(newState);
-      // console.log(action.members, "==============");
       action.members.forEach((member) => {
         allMembers[member.id] = member;
       });
       newState = { ...state, allMembers: allMembers };
       return newState;
     case STATUS:
-      // const currentState = {};
-
       newState = { ...state, status: action.status };
-      // console.log("new state in status", newState);
       return newState;
-    // case GETONE:
-    //   const singleMember = {};
-    //   singleMember[action.member.memberId] = action.member;
-    //   newState = { ...state, singleMember: singleMember };
-    //   return newState;
     default:
       return state;
   }

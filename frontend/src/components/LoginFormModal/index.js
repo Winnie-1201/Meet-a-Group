@@ -8,12 +8,6 @@ function LoginFormModal({ newGroup }) {
 
   return (
     <>
-      {/* {newGroup === "login-for-detail" && (
-       <button onClick={() => setShowModal(true)} className="start-new-group">
-       You need to login first
-     </button>
-    )
-    } */}
       {newGroup === "newGroup" && (
         <button onClick={() => setShowModal(true)} className="start-new-group">
           Start a new group

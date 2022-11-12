@@ -8,17 +8,12 @@ html {
   font-family: BlinkMacSystemFont, Arial, sans-serif;
 }
 
-/* #root {
-  position: relative;
-} */
-
 .header-bar-sticky {
   position: sticky;
   top: 0;
   background-color: white;
   padding: 0 16px;
   z-index: 50;
-  /* z-index: 100; */
 }
 
 .header {
@@ -30,11 +25,9 @@ html {
   align-items: center;
   margin-bottom: 40px;
   min-height: 64px;
-  /* position: relative; */
 }
 
 .event-groups-body {
-  /* position: relative; */
   position: sticky;
   top: 77px;
   background-color: white;
@@ -58,35 +51,11 @@ html {
   position: relative;
 }
 
-/* .header-search-bar input {
-  box-sizing: border-box;
-  min-width: 120px;
-  height: 42px;
-  outline: 2px solid transparent;
-  outline-offset: 2px;
-  padding-left: 1rem;
-  padding: 0.5rem;
-  border-color: rgb(217 217 217);
-  border-width: 1px;
-  border-radius: 0.5rem;
-} */
-
-/* .form-container-flex {
-  display: flex;
-} */
-
-/* .form-detail-one,
-.form-detail-two {
-  min-width: 150px;
-} */
-
 .form-detail-one input {
   box-sizing: border-box;
   min-width: 250px;
   height: 48px;
   width: 100%;
-  /* outline: 2px solid transparent; */
-  /* outline-offset: 2px; */
   padding-left: 5px;
   padding: 10px;
   border-color: rgb(217 217 217);
@@ -100,14 +69,10 @@ html {
   min-width: 250px;
   height: 48px;
   width: 100%;
-  /* outline: 2px solid transparent; */
-  /* outline-offset: 2px; */
   padding-left: 5px;
   padding: 10px;
   border-color: rgb(217 217 217);
   border-width: 1px;
-  /* border-top-right-radius: 5px;
-  border-bottom-right-radius: 5px; */
 }
 
 ::placeholder {
@@ -195,15 +160,9 @@ html {
   max-width: 1080px;
   margin-left: auto;
   margin-right: auto;
-  /* position: sticky; */
-  /* z-index: the larger one put on top */
-  /* z-index: 100;
-  top: 77px;
-  background-color: white; */
 }
 
 .event-groups-content {
-  /* padding: 0px 16px; */
   margin: 0 0 64px;
   padding: 0 16px;
 }
@@ -221,15 +180,6 @@ html {
   margin: 0 16px 0 0;
   cursor: pointer;
 }
-
-/* .group-link:focus,
-.event-link:focus,
-.group-link:hover,
-.event-link:hover {
-  padding-bottom: 5px;
-  color: #008294;
-  border-bottom: 4px solid #008294;
-} */
 
 .active {
   padding-bottom: 5px;

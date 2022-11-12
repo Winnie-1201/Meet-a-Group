@@ -8,10 +8,6 @@ import "./GroupForm.css";
 
 const GroupForm = ({ group, formType }) => {
   const history = useHistory();
-  // const { groupId } = useParams();
-  // console.log("group in gorupform as arg", group);
-  //   const [organizerId, setOrganizer] = useState(group.organizerId);
-  // let privacy = group.private === true ? "Private" : "Public";
   let privacy;
   if (group.private === true) privacy = "Private";
   else if (group.private === false) privacy = "Public";
@@ -24,7 +20,6 @@ const GroupForm = ({ group, formType }) => {
   const [city, setCity] = useState(group.city);
   const [state, setState] = useState(group.state);
   const [previewImage, setPreviewImg] = useState(group.previewImage);
-  // const [errors, setErrors] = useState([]);
   const [errors, setErrors] = useState({});
 
   let create = formType === "Create Group" ? true : false;
@@ -79,9 +74,6 @@ const GroupForm = ({ group, formType }) => {
     setErrors(newErrors);
   }, [name, about, type, isPrivate, previewImage, city, state]);
 
-  // console.log("========error-------------", errors.isPrivate, isPrivate);
-
-  // console.log("enter the GroupForm component======================");
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -89,15 +81,8 @@ const GroupForm = ({ group, formType }) => {
     if (isPrivate === "Public") priv = false;
     else if (isPrivate === "Private") priv = true;
 
-    // console.log(
-    //   "---------------the privacy in groupForm component---------------",
-    //   isPrivate,
-    //   priv
-    // );
-
     group = {
       ...group,
-      // id: groupId,
       name,
       about,
       type,
@@ -115,17 +100,12 @@ const GroupForm = ({ group, formType }) => {
     }
 
     setErrors([]);
-    // console.log("the group id in edit groupform", group.id);
 
     const newGroup =
       formType === "Create Group"
         ? await dispatch(createGroup(group, img))
         : await dispatch(editGroupThunk(group, group.id));
 
-    // console.log(
-    //   "here is the new group created in CreateForm component=================",
-    //   newGroup
-    // );
     if (newGroup) return history.push(`/groups/${newGroup.id}`);
   };
 
@@ -133,16 +113,7 @@ const GroupForm = ({ group, formType }) => {
     <>
       <Navigation window={window} />
       <form onSubmit={handleSubmit} className="group-form">
-        {/* <div className="group-form-body"> */}
         <h1>{formType}</h1>
-        {/* <ul className="error-messages-group-form">
-        {errors.length > 0 &&
-          errors.map((error) => (
-            <li className="error-detail-group-form" key={error}>
-              {error}
-            </li>
-          ))}
-      </ul> */}
         <label>
           Group name
           <input
@@ -222,7 +193,6 @@ const GroupForm = ({ group, formType }) => {
             <li className="error-detail-group-form">{errors.previewImg}</li>
           </ul>
         )}
-        {/* <AddImage /> */}
         <label>
           City
           <input
@@ -250,7 +220,6 @@ const GroupForm = ({ group, formType }) => {
           </ul>
         )}
         <button>Submit</button>
-        {/* </div> */}
       </form>
       <Footer window={window} />
     </>

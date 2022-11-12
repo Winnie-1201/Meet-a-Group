@@ -4,7 +4,6 @@ import { Link, NavLink, useHistory } from "react-router-dom";
 import { getEvents, getSearchEvents } from "../../store/event";
 import { getGroups, getSearchGroups } from "../../store/group";
 import LoginFormModal from "../LoginFormModal";
-import SignupFormModal from "../SingupFormModal";
 import * as sessionActions from "../../store/session";
 import "./Home.css";
 import Footer from "../Footer";
@@ -41,10 +40,7 @@ const Home = () => {
 
     await dispatch(getSearchGroups(searchThing, city));
     const searchEvents = await dispatch(getSearchEvents(searchThing, city));
-    // console.log("searching at home", searchEvents);
     if (searchEvents) history.push("/events");
-    // if (searchGroups) history.push("/groups");
-    // return the dispatch;
   };
 
   const handleLogout = (e) => {
@@ -54,7 +50,6 @@ const Home = () => {
   };
 
   if (!groups || !events) return null;
-  // console.log("getting in the navigation component======================");
   return (
     <>
       <HomeBar window={window} />
@@ -277,19 +272,13 @@ const Home = () => {
                 <div className="four-flex-one">
                   <div className="one-header-flex">
                     <h2>Upcoming events</h2>
-                    {/* put the events link here all events */}
-                    {/* <div className="explore-link">
-                      <p>Explore more events</p>
-                    </div> */}
                     <NavLink exact to="/events" className="explore-link">
                       Explore more events
                     </NavLink>
                   </div>
 
                   <div className="one-body">
-                    {/* <div className="one-body-detail"> */}
                     <ul className="detail-list-flex">
-                      {/* put the events details here later */}
                       {events.map((event) => (
                         <li key={event.id} className="detail-list-li">
                           <Link
@@ -329,14 +318,12 @@ const Home = () => {
                                   {new Date(event.startDate).getHours() >= 12
                                     ? "PM"
                                     : "AM"}
-                                  {/* {event.startDate} */}
                                 </p>
                                 <p className="event-name-home">{event.name}</p>
                                 <p className="event-group-name-home">
                                   {event.Group.name}
                                 </p>
                               </div>
-                              {/* <div className="list-detail-bottom-detail-flex"> */}
                               <p className="event-attend-home">
                                 {event.numAttending} Attend
                               </p>
@@ -345,30 +332,19 @@ const Home = () => {
                           </Link>
                         </li>
                       ))}
-                      {/* <li className="list-one"></li>
-                      <li className="list-two">list one</li>
-                      <li className="list-three">list one</li>
-                      <li className="list-four">list one</li> */}
                     </ul>
                   </div>
-                  {/* </div> */}
                 </div>
 
                 <div className="four-flex-two">
                   <div className="two-header-flex">
                     <h2>Popular groups</h2>
-                    {/* put the events link here all events */}
-                    {/* <div className="explore-groups-link">
-                      <p>Explore more groups</p>
-                    </div> */}
                     <NavLink exact to="/groups" className="explore-groups-link">
                       Explore more groups
                     </NavLink>
                   </div>
                   <div className="two-body">
-                    {/* <div className="two-body-detail-two"> */}
                     <ul className="detail-list-flex">
-                      {/* put the groups details here later */}
                       {groups.map((group) => (
                         <li key={group.id} className="detail-list-li">
                           <div className="group-container-flex">
@@ -382,91 +358,19 @@ const Home = () => {
                               />
                               <h3>{group.name}</h3>
                             </Link>
-                            {/* not sure how to get the relevant event */}
                           </div>
                         </li>
                       ))}
-                      {/* <li className="detail-list-one">list one</li>
-                        <li className="detail-list-two">list one</li>
-                        <li className="detail-list-three">list one</li> */}
                     </ul>
                   </div>
-                  {/* </div> */}
                 </div>
               </div>
             </div>
 
-            {/* the story part work on in if have time */}
             <div className="main-div-six"></div>
           </div>
         </main>
-        {/* <footer className="main-footer">
-          <div className="footer-container">
-            <div className="footer-one-flex">
-              <div className="footer-one-detail">
-                Create your own Meetup group.
-                {currentUser && (
-                  <Link to="/groups/current/new" className="footer-new-group">
-                    Get Started
-                  </Link>
-                )}
-                {!currentUser && <LoginFormModal newGroup={"getStarted"} />}
-              </div>
-            </div>
-            <div className="footer-two-flex">
-              <div className="footer-detail">
-                <span className="footer-title">Your Account</span>
-                <ul className="footer-list">
-                  {currentUser && (
-                    <>
-                      <li>
-                        <Link to="/groups/current" className="source-link">
-                          Your groups
-                        </Link>
-                        <li className="icon-logout">
-                          <button
-                            className="icon-logout-button"
-                            onClick={handleLogout}
-                          >
-                            Log Out
-                          </button>
-                        </li>
-                      </li>
-                    </>
-                  )}
-                  {!currentUser && (
-                    <>
-                      <li>
-                        <SignupFormModal prop={"footerSignup"} />
-                      </li>
-                      <li>
-                        <LoginFormModal newGroup={"footerLogin"} />
-                      </li>
-                    </>
-                  )}
-                </ul>
-              </div>
-              <div className="footer-detail">
-                <span className="footer-title">Discover</span>
-                <ul className="footer-list">
-                  <li>
-                    <Link to="/groups" className="source-link">
-                      Groups
-                    </Link>
-                  </li>
-                  <li>
-                    <Link to="/events" className="source-link">
-                      Events
-                    </Link>
-                  </li>
-                </ul>
-              </div>
-            </div>
-            <div className="footer-three-flex"></div>
-          </div>
-        </footer> */}
       </div>
-
       <Footer window={window} />
     </>
   );

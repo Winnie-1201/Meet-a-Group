@@ -4,7 +4,6 @@ import GroupForm from "./GroupForm";
 
 const CreateGroup = () => {
   const currUser = useSelector((state) => state.session.user);
-  // console.log("enter the createGroup component==================");
   const group = {
     organizerId: currUser.id,
     name: "",
@@ -13,7 +12,6 @@ const CreateGroup = () => {
     private: "",
     city: "",
     state: "",
-    // previewImage: "",
   };
   return <GroupForm group={group} formType="Create Group" />;
 };

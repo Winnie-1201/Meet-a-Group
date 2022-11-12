@@ -8,7 +8,6 @@ h3 {
   width: 100%;
   background-color: white;
   position: sticky;
-  /* z-index: the larger one put on top */
   z-index: 100;
   top: 77px;
   background-color: white;
@@ -48,7 +47,6 @@ h3 {
 
 .event-imgage {
   grid-area: pic;
-  /* position: relative; */
 }
 
 .one-event-detail {
@@ -80,7 +78,6 @@ h3 {
 }
 
 .event-group {
-  /* margin: 5px; */
   margin: 0 5px 20px 5px;
   font-size: 14px;
 }
@@ -95,7 +92,6 @@ h3 {
   font-size: 14px;
   margin-left: 5px;
   margin-top: 15px;
-  /* margin-top: auto; */
 }
 
 .event-image {

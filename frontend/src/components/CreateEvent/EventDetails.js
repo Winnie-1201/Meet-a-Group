@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory, useParams } from "react-router-dom";
-import { Modal } from "../../context/Modal";
 import {
   changeStatusThunk,
   deleteAttendanceThunk,
@@ -9,11 +8,9 @@ import {
   requestAttendance,
 } from "../../store/attendence";
 import { getEventById, deleteEvent } from "../../store/event";
-import { getGroupById, getGroupByUserThunk } from "../../store/group";
+import { getGroupById } from "../../store/group";
 import { getStatusThunk } from "../../store/member";
 import Footer from "../Footer";
-import LoginFormModal from "../LoginFormModal";
-import LoginForm from "../LoginFormModal/LoginForm";
 import Navigation from "../Navigation";
 import "./EventDetails.css";
 
@@ -37,10 +34,7 @@ const EventDetails = () => {
   const status = useSelector((state) => state.member.status);
   let attendees = useSelector((state) => state.attendee.allAttendees);
 
-  console.log("status in event details--------", status);
-
   useEffect(() => {
-    // dispatch(getEventById(eventId))
     dispatch(getAllAttendees(eventId))
       .then(() => dispatch(getEventById(eventId)))
       .then(() => setLoaded(true));
@@ -64,7 +58,6 @@ const EventDetails = () => {
     e.preventDefault();
 
     await dispatch(requestAttendance(eventId));
-    // await dispatch()
   };
 
   const handleJoinGroup = () => {
@@ -80,10 +73,6 @@ const EventDetails = () => {
     await dispatch(deleteAttendanceThunk(eventId, currentUser.id));
     await dispatch(getAllAttendees(eventId));
   };
-
-  // if (!event) return null;
-  // if (!event.EventImages) return null;
-  // if (!group) return null;
 
   let newStartDate;
   let newEndDate;
@@ -104,11 +93,8 @@ const EventDetails = () => {
   let host = false;
   let cohost = false;
   let pending = false;
-  // let groupMember = false;
 
   if (isLoaded) {
-    // const newStartDate = new Date(event.startDate);
-    // const newEndDate = new Date(event.endDate);
     newStartDate = new Date(event.startDate);
     newEndDate = new Date(event.endDate);
 
@@ -130,46 +116,15 @@ const EventDetails = () => {
       .sort((a, b) => a.firstName - b.firstName);
   }
 
-  // if (!currentUser) {
-  //   return (
-  //     <Modal>
-  //       <LoginForm />
-  //     </Modal>
-  //   );
-  // }
-
   return (
     isLoaded &&
     isLoaded1 && (
       <>
         <Navigation window={window} />
-        {/* <div className="all-event-groups-body">
-          <div className="all-groups-events">
-            <h2
-            
-              className="back-to-event-link"
-              onClick={() => history.push("/events")}
-            >
-              All events
-            </h2>
-            <h2
-              className="back-to-group-link"
-              onClick={() => history.push("/groups")}
-            >
-              All groups
-            </h2>
-          </div>
-        </div> */}
-        {/* <p>here is the event detail</p> */}
         <div className="event-details-flex">
-          {/* <div className="event-details-flex-grow"></div> */}
           <div className="event-details-top">
             <div className="event-details-top-title">
               <h1>{event.name}</h1>
-              {/* {currentUser &&
-                group &&
-                event.groupId === group.id &&
-                currentUser.id === group.organizerId && ( */}
               {host && (
                 <div className="top-title-edit-delete">
                   <Link className="edit-link" to={`/events/${eventId}/edit/`}>
@@ -206,7 +161,7 @@ const EventDetails = () => {
                     <div className="event-detail-attendees-title-flex">
                       <h2>Attendees ({memberStatus.length})</h2>
                     </div>
-                    {/* <div className="event-detail-attendees-card"> */}
+
                     <div className="card-detail-grid">
                       {memberStatus.map((attendee) => (
                         <div key={attendee.id} className="card-detail-flex">
@@ -377,7 +332,6 @@ const EventDetails = () => {
             <div className="event-details-bottom-text flex-between">
               <div className="buttom-text-flex">
                 <div className="text-event-time">
-                  {/* <time>{event.startDate}</time> */}
                   <div className="time-font">
                     {new Intl.DateTimeFormat("en-US", {
                       weekday: "short",

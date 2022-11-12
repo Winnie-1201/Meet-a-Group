@@ -4,7 +4,7 @@ import ProfileButton from "./ProfileButton";
 import "./Navigation.css";
 import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SingupFormModal";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { getSearchGroups } from "../../store/group";
 import { getSearchEvents } from "../../store/event";
 import { useSearch } from "../../context/search";
@@ -14,8 +14,6 @@ const Navigation = ({ window }) => {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  // const [keywords, setKeywords] = useState("");
-  // const [location, setLocation] = useState("");
   const { keywords, location, setKeywords, setLocation } = useSearch();
 
   useEffect(() => {
@@ -38,7 +36,6 @@ const Navigation = ({ window }) => {
     if (searchGroups) history.push("/groups");
   };
 
-  // console.log("getting in the navigation component======================");
   return (
     <div className="header-bar-sticky">
       <div className="header">
@@ -84,10 +81,6 @@ const Navigation = ({ window }) => {
             <button className="search-button-flex" onClick={handleSubmit}>
               <i className="fa-solid fa-magnifying-glass" />
             </button>
-            {/* </div> */}
-            {/* </form> */}
-            {/* <input type="text" placeholder="Search for keywords" />
-            <input type="text" placeholder="Enter location" /> */}
           </div>
         </div>
 
@@ -100,40 +93,15 @@ const Navigation = ({ window }) => {
               <ProfileButton user={currentUser} />
             </>
           )}
-          {/* {currentUser && <ProfileButton user={currentUser} />} */}
-          {/* come back here to change it for more details */}
-          {!currentUser && (
-            // <Link className="start-new-group" to="/login">
-            //   Start a new group
-            // </Link>
-            <LoginFormModal newGroup={"newGroup"} />
-          )}
+          {!currentUser && <LoginFormModal newGroup={"newGroup"} />}
           {!currentUser && (
             <div className="user">
-              {/* <Link to="/login" className="login-link">
-                Log in
-              </Link> */}
               <LoginFormModal />
               <SignupFormModal />
-              {/* <Link to="/signup" className="signup-link">
-                Sign up
-              </Link> */}
             </div>
           )}
         </div>
       </div>
-      {/* <div className="event-groups-body">
-        <div className="event-groups-content">
-          <div className="events-groups">
-            <NavLink to="/events" className="event-link">
-              Events
-            </NavLink>
-            <NavLink to="/groups" className="group-link">
-              Groups
-            </NavLink>
-          </div>
-        </div>
-      </div> */}
     </div>
   );
 };

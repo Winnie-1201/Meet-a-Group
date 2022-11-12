@@ -1,25 +1,15 @@
-import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, NavLink, useHistory } from "react-router-dom";
-
+import { Link, useHistory } from "react-router-dom";
 import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SingupFormModal";
 import * as sessionActions from "../../store/session";
-
 import "./Footer.css";
-
-// const container = document.getElementsByClassName();
 
 const Footer = ({ window }) => {
   const dispatch = useDispatch();
   const history = useHistory();
   const currentUser = useSelector((state) => state.session.user);
 
-  //   const handleLogout = (e) => {
-  //     e.preventDefault();
-  //     dispatch(sessionActions.logout());
-  //     history.push("/groups");
-  //   };
   return (
     <footer className="main-footer">
       <div className="footer-container">
@@ -56,7 +46,6 @@ const Footer = ({ window }) => {
                   <li className="icon-logout">
                     <button
                       className="icon-logout-button-footer"
-                      //   onClick={handleLogout}
                       onClick={() => {
                         dispatch(sessionActions.logout());
                         history.push("/groups");

@@ -45,7 +45,6 @@ export const createEventImage = (image, eventId) => async (dispatch) => {
   });
   if (response.ok) {
     const img = await response.json();
-    // console.log("create event image thunk", img);
     dispatch(create(img, eventId));
     return img;
   }

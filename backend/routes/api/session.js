@@ -56,7 +56,7 @@ router.delete("/", (_req, res) => {
 // Restore session user
 router.get("/", restoreUser, (req, res) => {
   const { user } = req;
-  // console.log("user in backend", user);
+
   if (user) {
     return res.json(user.toSafeObject());
   } else return res.json(null);

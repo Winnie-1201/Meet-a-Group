@@ -1,13 +1,12 @@
 // import { useEffect } from "react";
 import { useEffect, useState } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getGroups, getSearchGroups } from "../../store/group";
 import "./groups.css";
 import { useSearch } from "../../context/search";
 import Footer from "../Footer";
 import Navigation from "../Navigation";
-import LoginFormModal from "../LoginFormModal";
 import { Modal } from "../../context/Modal";
 import LoginForm from "../LoginFormModal/LoginForm";
 
@@ -34,20 +33,14 @@ const Groups = () => {
     setKeywords("");
     setLocation("");
 
-    // localStorage.setItem("keywords", "");
-    // localStorage.setItem("location", "");
-
     const reset = await dispatch(getGroups());
     if (reset) history.push("/groups");
   };
 
   const handleIfLogin = (groupId) => {
-    // console.log("---------handle login running", groupId);
     if (currentUser) {
-      // console.log("if current user working", currentUser);
       history.push(`/groups/${groupId}`);
     } else {
-      // console.log("else statement is working-------");
       setClick(true);
     }
   };
@@ -55,7 +48,6 @@ const Groups = () => {
   return (
     <>
       <Navigation window={window} />
-      {/* <div className="full-width"> */}
       <div className="event-groups-body">
         <div className="event-groups-content">
           <div className="events-groups">
@@ -73,7 +65,6 @@ const Groups = () => {
           </div>
         </div>
       </div>
-      {/* </div> */}
       {groups.length === 0 && (keywords?.length > 0 || location?.length > 0) && (
         <div className="flex-column-groups">
           <div className="not-found-image">
@@ -85,9 +76,6 @@ const Groups = () => {
             } that match
             these filters.`}
           </span>
-          {/* <span className="not-found-text">
-            Please try resetting the filters
-          </span> */}
           <button className="not-found-button" onClick={handleReset}>
             Try resetting the filters
           </button>
@@ -97,7 +85,6 @@ const Groups = () => {
       {groups.length > 0 && (
         <div className="all-groups-body">
           <div className="all-groups">
-            {/* <h2 className="group-header">All groups</h2> */}
             {groups.map((group) => (
               <div
                 className="one-group"
@@ -123,7 +110,6 @@ const Groups = () => {
             ))}
           </div>
           <div></div>
-          {/* </div> */}
         </div>
       )}
       {!currentUser && click && (
@@ -131,7 +117,6 @@ const Groups = () => {
           <LoginForm />
         </Modal>
       )}
-      {/* <div className="event-groups-content"> */}
       <Footer window={window} />
     </>
   );

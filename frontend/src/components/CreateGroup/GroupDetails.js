@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, Redirect, useHistory, useParams } from "react-router-dom";
+import { Link, useHistory, useParams } from "react-router-dom";
 import { getEventByGroup } from "../../store/event";
 import { getGroupById, removeGroup } from "../../store/group";
 import {
@@ -33,7 +33,6 @@ const GroupDetails = () => {
   const [showMembers, setMembers] = useState(false);
   const [showAllMembers, setAllMembers] = useState(true);
   const [showLeader, setLeader] = useState(false);
-  const [updateMembership, setMembership] = useState("");
   const [isLoaded, setLoaded] = useState(false);
 
   const group = Object.values(
@@ -72,16 +71,10 @@ const GroupDetails = () => {
   };
 
   const handleChangeMembership = async (updates) => {
-    // e.preventDefault();
     await dispatch(changeStatusThunk(groupId, updates));
     await dispatch(getStatusThunk(groupId));
     await dispatch(getAllMembers(groupId));
   };
-
-  // const handleEditMembership = async (e) => {
-  //   e.preventDefault();
-  //   await dispatch(changeStatusThunk())
-  // }
 
   let allMembers;
   let memberStatus;
@@ -123,32 +116,7 @@ const GroupDetails = () => {
       .sort((a, b) => a.firstName - b.firstName);
   }
 
-  //   for (let [key, value] of Object.entries(members)) {
-  //     if (currentUser.id == key) groupMember = true;
-  //     if (currentUser.id == key && value.status === "pending") pending = true;
-  //   }
-
-  //   allMembers = Object.values(members);
-  //   allMembers.forEach((member) => {
-  //     if (
-  //       member.Memberships[0].status === "co-host" ||
-  //       member.Memberships[0].status === "host"
-  //     ) {
-  //       leaders.push(member);
-  //     }
-  //   });
-  //   if (currentUser.id === group.organizerId) host = true;
-  // }
-
-  // let isEvent = false;
-  // if (!events) isEvent = true;
-  // // let pending = false;
-  // if (status && status[0].status === "pending" && status[0].groupId == groupId)
-  //   pending = true;
-
-  // console.log(status);
   return (
-
     isLoaded && (
       <>
         <Navigation window={window} />
@@ -169,7 +137,6 @@ const GroupDetails = () => {
                   </p>
                   <p className="group-detail-type">
                     {allMembers.length - pendingStatus.length} members{" "}
-                    {/* {group.numMembers} members{" "} */}
                     {group.private === true ? "Private" : "Public"} group
                   </p>
                   <p className="group-detail-host">
@@ -179,10 +146,8 @@ const GroupDetails = () => {
                     </span>
                   </p>
                 </div>
-
               </div>
             </div>
-            {/* <div className="group-detail-middle-bar-container"> */}
           </div>
           <div className="middle-bar-container">
             <div className="margin-auto">
@@ -234,8 +199,6 @@ const GroupDetails = () => {
                         Members
                       </button>
                     </li>
-
-                    {/* {currentUser && currentUser.id === group.organizerId && ( */}
                     {host && (
                       <li>
                         <Link
@@ -246,18 +209,14 @@ const GroupDetails = () => {
                         </Link>
                       </li>
                     )}
-                    {/* {currentUser && currentUser.id === group.organizerId && ( */}
                     {host && (
                       <li>
-                        {/* // <> */}
-                        {/* <Link to={`/groups/current/${groupId}/edit`}>Edit</Link> */}
                         <button
                           onClick={handleDelete}
                           className="group-detail-delete-button"
                         >
                           Delete
                         </button>
-                        {/* </> */}
                       </li>
                     )}
                   </ul>
@@ -290,15 +249,9 @@ const GroupDetails = () => {
                         {host && <p>You are the host</p>}
                       </li>
                     )}
-                    {/* <li></li> */}
                     {pending && (
                       <li className="pending-status">
-                        {/* <button
-                          className="request-to-join"
-                          onClick={handleJoinGroup}
-                        > */}
                         Your member status: {status[0].status}
-                        {/* </button> */}
                       </li>
                     )}
                   </ul>
@@ -349,7 +302,6 @@ const GroupDetails = () => {
                   <div className="all-events-group-detail">
                     {events?.map((event) => (
                       <div key={event.id} className="event-detail-group-detail">
-                        {/* <Link to={`/events/${event.id}`}> */}
                         <div className="events-show">
                           <div className="events-show-pics">
                             <img src={event?.previewImage} />
@@ -370,7 +322,6 @@ const GroupDetails = () => {
                             </div>
                           </div>
                         </div>
-                        {/* </Link> */}
                       </div>
                     ))}
                   </div>
@@ -445,8 +396,6 @@ const GroupDetails = () => {
                       </nav>
                     </div>
                     <div className="member-right">
-                      {/* {currentUser &&
-                        currentUser.id === group.organizerId && */}
                       {groupMember && showAllMembers && (
                         <ul className="flex flex-column member-right-detail">
                           {leaders?.map((member) => (
@@ -469,12 +418,10 @@ const GroupDetails = () => {
                                 </span>
                                 <p>{member.Membership.status}</p>
                               </div>
-                              {/* </div> */}
                             </li>
                           ))}
                           {memberStatus?.map((member) => (
                             <li key={member.id} className="member-name">
-                              {/* <div className="member-name"> */}
                               <div
                                 className="member-image"
                                 style={{
@@ -507,14 +454,12 @@ const GroupDetails = () => {
                                   )}
                                 </div>
                               </div>
-                              {/* </div> */}
                             </li>
                           ))}
 
                           {(host || cohost) &&
                             pendingStatus?.map((member) => (
                               <li key={member.id} className="member-name">
-                                {/* <div className="member-name"> */}
                                 <div
                                   className="member-image"
                                   style={{
@@ -548,32 +493,8 @@ const GroupDetails = () => {
                                 {/* </div> */}
                               </li>
                             ))}
-
-                          {/* {allMembers?.map((member) => (
-                            <li key={member.id} className="member-name">
-                              <div
-                                className="member-image"
-                                style={{
-                                  backgroundColor: getRandomColor(),
-                                }}
-                              >
-                                <span>
-                                  {member.firstName[0]}
-                                  {member.lastName[0]}
-                                </span>
-                              </div>
-                              <div className="member-status">
-                                <span>
-                                  {member.firstName} {member.lastName}
-                                </span>
-                                <p>{member.Memberships[0].status}</p>
-                              </div>
-                    
-                            </li>
-                          ))} */}
                         </ul>
                       )}
-                      {/* {(!currentUser || currentUser.id !== group.organizerId) && */}
                       {!groupMember && (showAllMembers || showLeader) && (
                         <div className="flex flex-column no-current-user">
                           <div className="member-right-icon">
@@ -587,13 +508,10 @@ const GroupDetails = () => {
                           </div>
                         </div>
                       )}
-                      {/* {currentUser &&
-                        currentUser.id === group.organizerId && */}
                       {groupMember && showLeader && (
                         <ul className="flex flex-column member-right-detail">
                           {leaders.map((leader) => (
                             <li key={leader.id} className="member-name">
-                              {/* <div className="member-name"> */}
                               <div
                                 className="member-image"
                                 style={{
@@ -611,7 +529,6 @@ const GroupDetails = () => {
                                 </span>
                                 <p>{leader.Membership.status}</p>
                               </div>
-                              {/* </div> */}
                             </li>
                           ))}
                         </ul>

@@ -44,7 +44,6 @@ export const restoreUser = () => async (dispatch) => {
 
   if (response.ok) {
     const user = await response.json();
-    // console.log("user in thunk!!", user);
     dispatch(load(user));
     return response;
   }

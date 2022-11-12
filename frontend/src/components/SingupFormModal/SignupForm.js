@@ -63,23 +63,14 @@ const SignupForm = () => {
 
   return (
     <form className="signup-form" onSubmit={handleSubmit}>
-      {/* {errors.length > 0 && (
-        <ul>
-          {errors.map((error, idx) => (
-            <li key={idx}>{error}</li>
-          ))}
-        </ul>
-      )} */}
       <div className="signup-form-header">
         <h1 className="signup-header-h1">Finish signing up</h1>
       </div>
       <div className="signup-form-body">
-        {/* <div className="body-name"> */}
         <label>
           First Name
           <input
             type="text"
-            // placeholder="Username or Email"
             value={firstName}
             onChange={(e) => setFirstName(e.target.value)}
             required
@@ -88,12 +79,10 @@ const SignupForm = () => {
         {errors.firstName && (
           <p className="error-detail-signup-form">{errors.firstName}</p>
         )}
-        {/* </div> */}
         <label>
           Last Name
           <input
             type="text"
-            // placeholder="Username or Email"
             value={lastName}
             onChange={(e) => setLastName(e.target.value)}
             required
@@ -106,7 +95,6 @@ const SignupForm = () => {
           Email
           <input
             type="text"
-            // placeholder="Username or Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
@@ -119,7 +107,6 @@ const SignupForm = () => {
           Username
           <input
             type="text"
-            // placeholder="Username or Email"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             required
@@ -135,7 +122,6 @@ const SignupForm = () => {
           Password
           <input
             type="password"
-            // placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
@@ -148,7 +134,6 @@ const SignupForm = () => {
           Confirm Password
           <input
             type="password"
-            // placeholder="Password"
             value={confirm}
             onChange={(e) => setConfirm(e.target.value)}
             required

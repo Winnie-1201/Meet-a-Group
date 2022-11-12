@@ -17,7 +17,6 @@ const EditEvent = () => {
 
   if (!event) return null;
   const groupId = event.groupId;
-  // console.log("event details in edit event comp========", event);
   return <EventForm event={event} groupId={groupId} formType="Update Event" />;
 };
 

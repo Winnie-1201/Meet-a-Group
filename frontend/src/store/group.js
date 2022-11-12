@@ -1,5 +1,4 @@
 import { csrfFetch } from "./csrf";
-// import { LOAD_EVENTS } from "./event";
 import { createImg } from "./image";
 import { requestMembership } from "./member";
 
@@ -54,7 +53,6 @@ export const getGroups = () => async (dispatch) => {
   const response = await fetch("/api/groups");
   if (response.ok) {
     const groups = await response.json();
-    // console.log("getting all groups in thunk", groups.Groups);
     dispatch(load(groups.Groups));
     return groups;
   }
@@ -87,7 +85,6 @@ export const getSearchGroups = (keywords, location) => async (dispatch) => {
         return group;
       }
     });
-    // console.log(searchResult);
     await dispatch(load(searchResult));
     return searchResult;
   }
@@ -99,7 +96,6 @@ export const getGroupById = (groupId) => async (dispatch) => {
 
   if (response.ok) {
     const group = await response.json();
-    // console.log("getting group details by id in thunk", group);
     await dispatch(loadOne(group));
     return group;
   }
@@ -111,7 +107,6 @@ export const getGroupByUserThunk = () => async (dispatch) => {
 
   if (response.ok) {
     const groups = await response.json();
-    // console.log("getting current user's groups in thunk", groups.Groups);
     await dispatch(load(groups.Groups));
     return groups;
   }
@@ -130,9 +125,7 @@ export const createGroup = (group, image) => async (dispatch) => {
   if (response.ok) {
     const groupData = await response.json();
     const groupId = groupData.id;
-    // console.log("creating a new group thunk!!", groupData);
     dispatch(create(group));
-    // console.log("adding the img to the new created group in thunk", image);
     dispatch(createImg(image, groupId));
     dispatch(requestMembership(groupId));
     return groupData;
@@ -141,7 +134,6 @@ export const createGroup = (group, image) => async (dispatch) => {
 
 //Edit a group action thunk;
 export const editGroupThunk = (group, groupId) => async (dispatch) => {
-  // console.log("in edit gorup thunk", group, groupId);
   const response = await csrfFetch(`/api/groups/${groupId}`, {
     method: "PUT",
     headers: {
@@ -150,10 +142,8 @@ export const editGroupThunk = (group, groupId) => async (dispatch) => {
     body: JSON.stringify(group),
   });
 
-  // console.log("the response in edit gorup thunk", response);
   if (response.ok) {
     const data = await response.json();
-    // console.log("editing group in thunk", data);
     dispatch(edit(data));
     return data;
   }
@@ -166,7 +156,6 @@ export const removeGroup = (groupId) => async (dispatch) => {
   });
   if (response.ok) {
     const data = await response.json();
-    // console.log("deleting group by id in thunk", data);
     dispatch(remove(groupId));
     return data;
   }
@@ -186,30 +175,24 @@ const groupsReducer = (state = initialState, action) => {
         allGroups[group.id] = group;
       });
       newState.allGroups = allGroups;
-      // console.log("LOAD: new state in reducer", newState);
       return newState;
     case LOAD_ONE:
       newState = { allGroups: {}, singleGroup: {} };
       const singleGroup = {};
       singleGroup[action.group.id] = action.group;
       newState.singleGroup = singleGroup;
-      // console.log("loading one group: new state in reducer", newState);
       return newState;
     case CREATE:
       newState = { allGroups: {}, singleGroup: {} };
       newState.singleGroup[action.group.id] = action.group;
-      // console.log("CREATE new state in reducer", newState);
       return newState;
     case EDIT:
       newState = { ...state };
-      // console.log("new state in edit reducer", newState);
       newState.singleGroup = action.group;
-      // console.log("editing new state in reducer", newState);
       return newState;
     case REMOVE:
       newState = { ...state };
       delete newState.singleGroup[action.groupId];
-      // console.log("removing new state in reducer", newState);
       return newState;
     default:
       return state;

@@ -9,7 +9,6 @@ const ProfileButton = ({ user }) => {
   const [openMenu, setOpenMenu] = useState(false);
   const dispatch = useDispatch();
   const history = useHistory();
-  // console.log("now in profilebutton component======================");
 
   const onClick = (e) => {
     e.preventDefault();
@@ -38,7 +37,6 @@ const ProfileButton = ({ user }) => {
     <>
       <div className="icon-container">
         <button className="header-bar-icon-button" onClick={onClick}>
-          {/* <i className="fa-regular fa-circle-user" /> */}
           <div className="button-detail">{user.firstName[0]}</div>
         </button>
         {openMenu && (

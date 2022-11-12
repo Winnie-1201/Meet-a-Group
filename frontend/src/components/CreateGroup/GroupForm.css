@@ -74,9 +74,7 @@
   border: 0.5px rgb(145, 143, 143) solid;
   border-radius: 8px;
   margin-top: 40px;
-  /* so the button is clickable */
   cursor: pointer;
-  /* outline: none; */
 }
 
 form .fa-cannabis {

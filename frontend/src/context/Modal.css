@@ -4,10 +4,8 @@
   right: 0;
   left: 0;
   z-index: 100;
-  /* bottom: 20px; */
   display: flex;
   justify-content: center;
-  /* align-items: center; */
 }
 
 #modal-background {
