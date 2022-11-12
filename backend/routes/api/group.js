@@ -135,9 +135,9 @@ router.get("/", async (req, res, next) => {
     const numMembers = await Membership.findAll({
       where: {
         groupId: id,
-        // status: {
-        //   [Op.in]: ["member", "co-host"],
-        // },
+        status: {
+          [Op.not]: "pending",
+        },
       },
     });
     group.numMembers = numMembers.length;
@@ -290,9 +290,9 @@ router.get("/current", requireAuth, async (req, res, next) => {
       where: {
         // CHANGE!!!
         // userId: currUserId,
-        // status: {
-        //   [Op.in]: ["member", "co-host"],
-        // },
+        status: {
+          [Op.not]: "pending",
+        },
         groupId,
       },
     });

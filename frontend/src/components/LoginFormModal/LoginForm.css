@@ -78,7 +78,7 @@ h1 {
 
 .login-button:hover {
   padding-bottom: 5px;
-  background-color: white;
+  background-color: transparent;
   border-bottom: 4px solid #008294;
 }
 

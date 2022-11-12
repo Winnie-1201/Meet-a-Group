@@ -184,7 +184,8 @@ const GroupDetails = () => {
                     {group.city}, {group.state}
                   </p>
                   <p className="group-detail-type">
-                    {group.numMembers} members{" "}
+                    {allMembers.length - pendingStatus.length} members{" "}
+                    {/* {group.numMembers} members{" "} */}
                     {group.private === true ? "Private" : "Public"} group
                   </p>
                   <p className="group-detail-host">
