@@ -148,6 +148,7 @@ const GroupDetails = () => {
 
   // console.log(status);
   return (
+
     isLoaded && (
       <>
         <Navigation window={window} />
@@ -178,6 +179,7 @@ const GroupDetails = () => {
                     </span>
                   </p>
                 </div>
+
               </div>
             </div>
             {/* <div className="group-detail-middle-bar-container"> */}
