@@ -13,7 +13,6 @@ const Footer = ({ window }) => {
   const handleLogout = async (e) => {
     e.preventDefault();
     const logout = await dispatch(sessionActions.logout());
-    console.log("------", logout);
     if (logout) {
       window.scrollTo(0, 0);
       history.push("/");
