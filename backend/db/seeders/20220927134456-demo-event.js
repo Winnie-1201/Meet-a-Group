@@ -13,8 +13,8 @@ const events = [
     type: "Online",
     capacity: 20,
     price: 0.0,
-    startDate: new Date("2022-11-02 8:00:00"),
-    endDate: new Date("2022-11-02 17:00:00"),
+    startDate: new Date("2023-11-02 8:00:00"),
+    endDate: new Date("2023-11-02 17:00:00"),
   },
   // 2
   {
@@ -25,8 +25,8 @@ const events = [
     type: "In person",
     capacity: 5,
     price: 0.0,
-    startDate: new Date("2022-11-04 7:00:00"),
-    endDate: new Date("2022-11-04 9:00:00"),
+    startDate: new Date("2023-11-04 7:00:00"),
+    endDate: new Date("2023-11-04 9:00:00"),
   },
   // 3
   {
@@ -38,8 +38,8 @@ const events = [
     type: "In person",
     capacity: 20,
     price: 30.0,
-    startDate: new Date("2022-11-11 8:00:00"),
-    endDate: new Date("2022-11-11 17:00:00"),
+    startDate: new Date("2023-11-11 8:00:00"),
+    endDate: new Date("2023-11-11 17:00:00"),
   },
   // 4
   {
@@ -51,8 +51,8 @@ const events = [
     type: "In person",
     capacity: 20,
     price: 30.0,
-    startDate: new Date("2022-11-11 8:00:00"),
-    endDate: new Date("2022-11-11 17:00:00"),
+    startDate: new Date("2023-11-11 8:00:00"),
+    endDate: new Date("2023-11-11 17:00:00"),
   },
   // 5
   {
@@ -64,8 +64,8 @@ const events = [
     type: "In person",
     capacity: 20,
     price: 30.0,
-    startDate: new Date("2022-11-11 8:00:00"),
-    endDate: new Date("2022-11-11 17:00:00"),
+    startDate: new Date("2023-11-11 8:00:00"),
+    endDate: new Date("2023-11-11 17:00:00"),
   },
   // 6
   {
@@ -77,8 +77,8 @@ const events = [
     type: "In person",
     capacity: 20,
     price: 30.0,
-    startDate: new Date("2022-11-11 8:00:00"),
-    endDate: new Date("2022-11-11 17:00:00"),
+    startDate: new Date("2023-11-11 8:00:00"),
+    endDate: new Date("2023-11-11 17:00:00"),
   },
   // 7
   {
@@ -90,8 +90,8 @@ const events = [
     type: "In person",
     capacity: 20,
     price: 30.0,
-    startDate: new Date("2022-11-11 8:00:00"),
-    endDate: new Date("2022-11-11 17:00:00"),
+    startDate: new Date("2023-11-11 8:00:00"),
+    endDate: new Date("2023-11-11 17:00:00"),
   },
   // 8
   {
@@ -103,8 +103,8 @@ const events = [
     type: "In person",
     capacity: 20,
     price: 30.0,
-    startDate: new Date("2022-11-11 8:00:00"),
-    endDate: new Date("2022-11-11 17:00:00"),
+    startDate: new Date("2023-11-11 8:00:00"),
+    endDate: new Date("2023-11-11 17:00:00"),
   },
   // 9
   {
@@ -116,8 +116,8 @@ const events = [
     type: "In person",
     capacity: 20,
     price: 30.0,
-    startDate: new Date("2022-11-11 8:00:00"),
-    endDate: new Date("2022-11-11 17:00:00"),
+    startDate: new Date("2023-11-11 8:00:00"),
+    endDate: new Date("2023-11-11 17:00:00"),
   },
   // 10
   {
@@ -129,8 +129,8 @@ const events = [
     type: "In person",
     capacity: 20,
     price: 30.0,
-    startDate: new Date("2022-11-11 8:00:00"),
-    endDate: new Date("2022-11-11 17:00:00"),
+    startDate: new Date("2023-11-11 8:00:00"),
+    endDate: new Date("2023-11-11 17:00:00"),
   },
   // 11
   {
@@ -142,8 +142,8 @@ const events = [
     type: "In person",
     capacity: 20,
     price: 30.0,
-    startDate: new Date("2022-11-11 8:00:00"),
-    endDate: new Date("2022-11-11 17:00:00"),
+    startDate: new Date("2023-11-11 8:00:00"),
+    endDate: new Date("2023-11-11 17:00:00"),
   },
 ];
 module.exports = {
