@@ -3,7 +3,7 @@ import { Modal } from "../../context/Modal";
 import SignupForm from "./SignupForm";
 import "./SignupForm.css";
 
-function SignupFormModal({ prop }) {
+function SignupFormModal({ prop, window }) {
   const [showModal, setShowModal] = useState(false);
 
   return (
@@ -20,7 +20,7 @@ function SignupFormModal({ prop }) {
       )}
       {showModal && (
         <Modal onClose={() => setShowModal(false)}>
-          <SignupForm />
+          <SignupForm window={window} />
         </Modal>
       )}
     </>

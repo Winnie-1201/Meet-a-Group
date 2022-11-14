@@ -60,7 +60,10 @@ const Events = () => {
       {events.length === 0 && (keywords?.length > 0 || location?.length > 0) && (
         <div className="flex-column-groups">
           <div className="not-found-image">
-            <img src="https://secure.meetupstatic.com/next/images/find/emptyResultsIcon.svg?w=384" />
+            <img
+              src="https://secure.meetupstatic.com/next/images/find/emptyResultsIcon.svg?w=384"
+              alt="result not found image"
+            />
           </div>
           <span className="not-found-text">
             {`Sorry, there are no events results for "${keywords}" near you.`}
@@ -82,7 +85,11 @@ const Events = () => {
               >
                 <div className="one-event-link">
                   <div className="event-image">
-                    <img src={event.previewImage} className="event-img" />
+                    <img
+                      src={event.previewImage}
+                      className="event-img"
+                      alt="event preview image"
+                    />
                     <div className="event-type">
                       <div className="event-type-icon">
                         <i className="fa-solid fa-video" />

@@ -157,6 +157,11 @@ form .fa-cannabis {
   padding: 0;
   color: red;
   font-size: 14px;
+  margin-top: 15px;
+}
+
+.error-messages li {
+  padding-top: 3px;
 }
 /* change it back to class later */
 input:focus {

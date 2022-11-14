@@ -27,10 +27,10 @@ const ProfileButton = ({ user }) => {
     return () => document.removeEventListener("click", closeMenu);
   }, [openMenu]);
 
-  const handleLogout = (e) => {
+  const handleLogout = async (e) => {
     e.preventDefault();
-    dispatch(sessionActions.logout());
-    history.push("/");
+    const logout = await dispatch(sessionActions.logout());
+    if (logout) history.push("/");
   };
 
   return (

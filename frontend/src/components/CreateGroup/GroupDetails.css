@@ -188,6 +188,7 @@
 .group-detail-hidden-container {
   background-color: rgb(246 247 248);
   min-height: 50vh;
+  padding-bottom: 120px;
 }
 
 .group-detail-hidden {

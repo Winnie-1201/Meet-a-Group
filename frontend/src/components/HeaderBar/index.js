@@ -4,7 +4,7 @@ import ProfileButton from "../Navigation/ProfileButton";
 import "./HomeBar.css";
 import LoginFormModal from "../LoginFormModal";
 
-import SignupFormModal from "../SingupFormModal";
+import SignupFormModal from "../SignupFormModal";
 
 const HomeBar = ({ window }) => {
   const currentUser = useSelector((state) => state.session.user);
@@ -36,8 +36,8 @@ const HomeBar = ({ window }) => {
           {currentUser && <ProfileButton user={currentUser} />}
           {!currentUser && (
             <div className="user">
-              <LoginFormModal />
-              <SignupFormModal />
+              <LoginFormModal window={window} />
+              <SignupFormModal window={window} />
             </div>
           )}
         </div>

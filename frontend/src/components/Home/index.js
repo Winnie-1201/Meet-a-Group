@@ -8,6 +8,8 @@ import * as sessionActions from "../../store/session";
 import "./Home.css";
 import Footer from "../Footer";
 import HomeBar from "../HeaderBar";
+import { Modal } from "../../context/Modal";
+import LoginForm from "../LoginFormModal/LoginForm";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -16,6 +18,7 @@ const Home = () => {
 
   const [searchThing, setSearchThing] = useState("");
   const [city, setCity] = useState("");
+  const [click, setClick] = useState(false);
 
   const events = Object.values(
     useSelector((state) => state.event.allEvents)
@@ -35,12 +38,28 @@ const Home = () => {
     dispatch(getGroups());
   }, [dispatch]);
 
+  if (currentUser) {
+    window.scrollTo(0, 0);
+    history.push("/groups");
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     await dispatch(getSearchGroups(searchThing, city));
     const searchEvents = await dispatch(getSearchEvents(searchThing, city));
-    if (searchEvents) history.push("/events");
+    if (searchEvents) {
+      window.scrollTo(0, 0);
+      history.push("/events");
+    }
+  };
+
+  const handleIfLogin = (groupId) => {
+    if (currentUser) {
+      history.push(`/groups/${groupId}`);
+    } else {
+      setClick(true);
+    }
   };
 
   const handleLogout = (e) => {
@@ -272,7 +291,12 @@ const Home = () => {
                 <div className="four-flex-one">
                   <div className="one-header-flex">
                     <h2>Upcoming events</h2>
-                    <NavLink exact to="/events" className="explore-link">
+                    <NavLink
+                      exact
+                      to="/events"
+                      className="explore-link"
+                      onClick={() => window.scrollTo(0, 0)}
+                    >
                       Explore more events
                     </NavLink>
                   </div>
@@ -280,9 +304,13 @@ const Home = () => {
                   <div className="one-body">
                     <ul className="detail-list-flex">
                       {events.map((event) => (
-                        <li key={event.id} className="detail-list-li">
-                          <Link
-                            to={`/events/${event.id}`}
+                        <li
+                          key={event.id}
+                          className="detail-list-li"
+                          onClick={() => handleIfLogin(event.id)}
+                        >
+                          <div
+                            // to={`/events/${event.id}`}
                             className="list-detail-flex"
                           >
                             <div className="list-detail-top">
@@ -329,7 +357,7 @@ const Home = () => {
                               </p>
                               {/* </div> */}
                             </div>
-                          </Link>
+                          </div>
                         </li>
                       ))}
                     </ul>
@@ -339,17 +367,26 @@ const Home = () => {
                 <div className="four-flex-two">
                   <div className="two-header-flex">
                     <h2>Popular groups</h2>
-                    <NavLink exact to="/groups" className="explore-groups-link">
+                    <NavLink
+                      exact
+                      to="/groups"
+                      className="explore-groups-link"
+                      onClick={() => window.scrollTo(0, 0)}
+                    >
                       Explore more groups
                     </NavLink>
                   </div>
                   <div className="two-body">
                     <ul className="detail-list-flex">
                       {groups.map((group) => (
-                        <li key={group.id} className="detail-list-li">
+                        <li
+                          key={group.id}
+                          className="detail-list-li"
+                          onClick={() => handleIfLogin(group.id)}
+                        >
                           <div className="group-container-flex">
-                            <Link
-                              to={`/groups/${group.id}`}
+                            <div
+                              // to={`/groups/${group.id}`}
                               className="container-top-flex  detail-list-group"
                             >
                               <img
@@ -357,7 +394,7 @@ const Home = () => {
                                 className="container-top-img"
                               />
                               <h3>{group.name}</h3>
-                            </Link>
+                            </div>
                           </div>
                         </li>
                       ))}
@@ -371,6 +408,11 @@ const Home = () => {
           </div>
         </main>
       </div>
+      {!currentUser && click && (
+        <Modal onClose={() => setClick(false)}>
+          <LoginForm />
+        </Modal>
+      )}
       <Footer window={window} />
     </>
   );

@@ -147,7 +147,10 @@ const EventDetails = () => {
               <div className="event-detail-flex">
                 <div className="event-detail-left-flex">
                   <div className="event-detail-img">
-                    <img src={`${event.EventImages[0].url}`} />
+                    <img
+                      src={`${event.EventImages[0].url}`}
+                      alt="event preview image"
+                    />
                   </div>
                   <div className="event-detail-text">
                     <div className="event-detail-text-top-flex">
@@ -268,7 +271,10 @@ const EventDetails = () => {
                       >
                         <div className="group-info-link-flex">
                           <div className="group-info-img">
-                            <img src={group.GroupImages[0].url} />
+                            <img
+                              src={group.GroupImages[0].url}
+                              alt="group preview image"
+                            />
                           </div>
                           <div className="group-info-text">
                             <div className="group-info-title">{group.name}</div>
@@ -315,9 +321,12 @@ const EventDetails = () => {
                         </div>
 
                         <div className="event-info-bottom-two-flex">
-                          <i className="fa-solid fa-video" />
+                          <i className="fa-solid fa-location-dot" />
                           <div className="event-info-type">
-                            <p>{event.type} event</p>
+                            <p>
+                              {event.Venue.address} · {event.Venue.city},{" "}
+                              {event.Venue.state}
+                            </p>
                           </div>
                         </div>
                       </div>
@@ -360,7 +369,7 @@ const EventDetails = () => {
                 <div className="price">
                   {event.price === 0 ? "FREE" : `$${event.price}`}
                 </div>
-                {status.length <= 0 && (
+                {(status.length <= 0 || status[0].status === "pending") && (
                   <button className="attend-button" onClick={handleJoinGroup}>
                     Join the group to attend
                   </button>
@@ -370,11 +379,16 @@ const EventDetails = () => {
                     Attend
                   </button>
                 )}
-                {(eventMember || pending) && !host && (
-                  <button className="attend-button" onClick={handleLeaveEvent}>
-                    Leave the event
-                  </button>
-                )}
+                {(eventMember || pending) &&
+                  !host &&
+                  status[0].status !== "pending" && (
+                    <button
+                      className="attend-button"
+                      onClick={handleLeaveEvent}
+                    >
+                      Leave the event
+                    </button>
+                  )}
                 {eventMember && (
                   <p>
                     You are{" "}
