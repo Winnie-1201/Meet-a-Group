@@ -10,10 +10,14 @@ const Footer = ({ window }) => {
   const history = useHistory();
   const currentUser = useSelector((state) => state.session.user);
 
-  const handleLogout = () => {
-    // e.preventDefault();
-    dispatch(sessionActions.logout());
-    history.push("/");
+  const handleLogout = async (e) => {
+    e.preventDefault();
+    const logout = await dispatch(sessionActions.logout());
+    console.log("------", logout);
+    if (logout) {
+      window.scrollTo(0, 0);
+      history.push("/");
+    }
   };
 
   return (
@@ -52,15 +56,7 @@ const Footer = ({ window }) => {
                   <li className="icon-logout">
                     <button
                       className="icon-logout-button-footer"
-                      onClick={
-                        // handleLogout()
-                        () => {
-                          dispatch(sessionActions.logout());
-
-                          // history.push("/");
-                          window.scrollTo(0, 0);
-                        }
-                      }
+                      onClick={handleLogout}
                     >
                       Log out
                     </button>

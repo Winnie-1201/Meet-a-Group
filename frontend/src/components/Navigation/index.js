@@ -96,8 +96,8 @@ const Navigation = ({ window }) => {
           {!currentUser && <LoginFormModal newGroup={"newGroup"} />}
           {!currentUser && (
             <div className="user">
-              <LoginFormModal />
-              <SignupFormModal />
+              <LoginFormModal window={window} />
+              <SignupFormModal window={window} />
             </div>
           )}
         </div>
