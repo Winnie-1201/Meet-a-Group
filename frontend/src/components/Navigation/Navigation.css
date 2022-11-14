@@ -56,12 +56,13 @@ html {
   min-width: 250px;
   height: 48px;
   width: 100%;
-  padding-left: 5px;
-  padding: 10px;
+  /* padding-left: 5px; */
+  padding: 8px;
   border-color: rgb(217 217 217);
   border-width: 1px;
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
+  font-size: 18px;
 }
 
 .form-detail-two input {
@@ -69,10 +70,11 @@ html {
   min-width: 250px;
   height: 48px;
   width: 100%;
-  padding-left: 5px;
-  padding: 10px;
+  /* padding-left: 5px; */
+  padding: 8px;
   border-color: rgb(217 217 217);
   border-width: 1px;
+  font-size: 18px;
 }
 
 ::placeholder {

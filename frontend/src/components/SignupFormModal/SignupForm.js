@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import "./SignupForm.css";
 
-const SignupForm = () => {
+const SignupForm = ({ window, setLogin }) => {
   const dispatch = useDispatch();
   const history = useHistory();
   const sessionUser = useSelector((state) => state.session.user);
@@ -16,6 +16,8 @@ const SignupForm = () => {
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
   const [errors, setErrors] = useState({});
+
+  const [enterFirstName, setEnterFirstName] = useState(true);
 
   useEffect(() => {
     const newErrors = {};
@@ -65,6 +67,10 @@ const SignupForm = () => {
     <form className="signup-form" onSubmit={handleSubmit}>
       <div className="signup-form-header">
         <h1 className="signup-header-h1">Finish signing up</h1>
+        {/* <p>
+          Already a member?
+          <span onClick={() => setLogin(true)}> Login</span>
+        </p> */}
       </div>
       <div className="signup-form-body">
         <label>
@@ -73,10 +79,11 @@ const SignupForm = () => {
             type="text"
             value={firstName}
             onChange={(e) => setFirstName(e.target.value)}
+            onClick={() => setEnterFirstName(true)}
             required
           />
         </label>
-        {errors.firstName && (
+        {errors.firstName && enterFirstName && (
           <p className="error-detail-signup-form">{errors.firstName}</p>
         )}
         <label>
@@ -145,7 +152,9 @@ const SignupForm = () => {
         {errors.samePw && (
           <p className="error-detail-signup-form">{errors.samePw}</p>
         )}
-        <button type="submit">Sign Up</button>
+        <button type="submit" onClick={() => window.scrollTo(0, 0)}>
+          Sign Up
+        </button>
       </div>
     </form>
   );

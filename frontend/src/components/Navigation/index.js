@@ -3,7 +3,7 @@ import { Link, useHistory } from "react-router-dom";
 import ProfileButton from "./ProfileButton";
 import "./Navigation.css";
 import LoginFormModal from "../LoginFormModal";
-import SignupFormModal from "../SingupFormModal";
+import SignupFormModal from "../SignupFormModal";
 import { useEffect } from "react";
 import { getSearchGroups } from "../../store/group";
 import { getSearchEvents } from "../../store/event";

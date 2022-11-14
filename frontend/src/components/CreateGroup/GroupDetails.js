@@ -304,7 +304,10 @@ const GroupDetails = () => {
                       <div key={event.id} className="event-detail-group-detail">
                         <div className="events-show">
                           <div className="events-show-pics">
-                            <img src={event?.previewImage} />
+                            <img
+                              src={event?.previewImage}
+                              alt="event preview image"
+                            />
                           </div>
                           <div className="events-show-details">
                             <h2>{event.name}</h2>

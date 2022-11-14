@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import LoginFormModal from "../LoginFormModal";
-import SignupFormModal from "../SingupFormModal";
+import SignupFormModal from "../SignupFormModal";
 import * as sessionActions from "../../store/session";
 import "./Footer.css";
 
@@ -9,6 +9,12 @@ const Footer = ({ window }) => {
   const dispatch = useDispatch();
   const history = useHistory();
   const currentUser = useSelector((state) => state.session.user);
+
+  const handleLogout = () => {
+    // e.preventDefault();
+    dispatch(sessionActions.logout());
+    history.push("/");
+  };
 
   return (
     <footer className="main-footer">
@@ -46,11 +52,15 @@ const Footer = ({ window }) => {
                   <li className="icon-logout">
                     <button
                       className="icon-logout-button-footer"
-                      onClick={() => {
-                        dispatch(sessionActions.logout());
-                        history.push("/groups");
-                        window.scrollTo(0, 0);
-                      }}
+                      onClick={
+                        // handleLogout()
+                        () => {
+                          dispatch(sessionActions.logout());
+
+                          // history.push("/");
+                          window.scrollTo(0, 0);
+                        }
+                      }
                     >
                       Log out
                     </button>
@@ -60,10 +70,10 @@ const Footer = ({ window }) => {
               {!currentUser && (
                 <>
                   <li>
-                    <SignupFormModal prop={"footerSignup"} />
+                    <SignupFormModal prop={"footerSignup"} window={window} />
                   </li>
                   <li>
-                    <LoginFormModal newGroup={"footerLogin"} />
+                    <LoginFormModal newGroup={"footerLogin"} window={window} />
                   </li>
                 </>
               )}

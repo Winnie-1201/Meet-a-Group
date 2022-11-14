@@ -4,6 +4,7 @@
   justify-content: space-between;
   align-items: center;
   flex-grow: 1;
+  /* margin-bottom: 180px; */
 }
 
 .event-details-flex-grow {
@@ -68,7 +69,7 @@
 
 .event-details-middle-flex {
   display: flex;
-  padding: 0 20px 24px 20px;
+  padding: 0 20px 40px 20px;
   background-color: rgb(246 247 248);
   justify-content: space-between;
   align-items: center;
@@ -252,12 +253,13 @@ attendees cards detail here
   background-color: white;
   box-sizing: border-box;
   line-height: 1.375rem;
+  /* border-bottom: 1px solid rgb(104, 104, 104); */
 }
 
 .event-details-bottom-text {
-  max-width: 1120px;
+  /* max-width: 1120px;
   margin-left: auto;
-  margin-right: auto;
+  margin-right: auto; */
   box-sizing: border-box;
 }
 
@@ -293,13 +295,15 @@ attendees cards detail here
 .bottom-right-flex p {
   font-size: 18px;
   font-weight: 600;
-  margin-left: 5px;
+  /* margin-left: 5px; */
+  padding-right: 16px;
 }
 
 .buttom-text-flex {
   display: flex;
   justify-content: center;
   flex-direction: column;
+  padding-left: 16px;
 }
 
 .time-font {
@@ -318,7 +322,7 @@ attendees cards detail here
 
 .event-detail-right-sticky {
   position: sticky;
-  top: 6rem;
+  top: 140px;
   box-sizing: border-box;
 }
 
@@ -399,7 +403,7 @@ attendees cards detail here
 }
 
 .fa-clock,
-.fa-video {
+.fa-location-dot {
   display: flex;
   justify-content: center;
   align-items: center;

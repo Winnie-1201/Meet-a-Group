@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { Modal } from "../../context/Modal";
+import SignupForm from "../SignupFormModal/SignupForm";
 import LoginForm from "./LoginForm";
 import "./LoginForm.css";
 
-function LoginFormModal({ newGroup }) {
+function LoginFormModal({ newGroup, window }) {
   const [showModal, setShowModal] = useState(false);
+  const [login, setLogin] = useState(true);
 
   return (
     <>
@@ -48,7 +50,12 @@ function LoginFormModal({ newGroup }) {
 
       {showModal && (
         <Modal onClose={() => setShowModal(false)}>
-          <LoginForm />
+          <LoginForm window={window} />
+          {/* {login ? (
+            <LoginForm window={window} login={login} setLogin={setLogin} />
+          ) : (
+            <SignupForm window={window} login={login} setLogin={setLogin} />
+          )} */}
         </Modal>
       )}
     </>
