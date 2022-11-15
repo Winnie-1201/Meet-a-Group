@@ -31,6 +31,10 @@ that is related to the group they joined.
 
 <img src="./recording/search.gif" alt="searching page recording" height="500" >
 
+### Join and Leave a group
+
+<img src="./recording/joining-group.gif" alt="joining group recording" height="500" >
+
 ## Tech Stack
 
 Frameworks, Platforms, and Libraries:
