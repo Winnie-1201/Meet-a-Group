@@ -47,6 +47,8 @@ Hosting:
 
 ![Heroku](https://img.shields.io/badge/heroku-%23430098.svg?style=for-the-badge&logo=heroku&logoColor=white)
 
+<!-- code block -->
+
 ## Run locally
 
 Here is the get started section with instruction on how to set up the repo ro run the project locally
