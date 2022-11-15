@@ -29,13 +29,8 @@ const ProfileButton = ({ user }) => {
 
   const handleLogout = async (e) => {
     e.preventDefault();
-    console.log("------test");
     const logout = await dispatch(sessionActions.logout());
-    // dispatch(sessionActions.logout());
-    // history.push("/");
-    // history.push("/events");
 
-    // console.log("------", logout);
     if (logout.ok) history.push("/");
   };
 
