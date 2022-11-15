@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, Redirect, useHistory } from "react-router-dom";
 import { getGroupByUserThunk } from "../../store/group";
 import Footer from "../Footer";
 import Navigation from "../Navigation";
@@ -8,37 +8,27 @@ import "./MyGroups.css";
 
 const MyGroups = () => {
   const currUser = useSelector((state) => state.session.user);
+  const groups = Object.values(useSelector((state) => state.group.allGroups));
 
   const [showJoinedGroups, setJoinGroups] = useState(false);
   const [showHostedGroups, setHostGroups] = useState(true);
 
-  const groups = Object.values(useSelector((state) => state.group.allGroups));
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getGroupByUserThunk());
+  }, [dispatch]);
+
+  if (currUser === null) {
+    return <Redirect to="/" />;
+  }
+
   const hostGroups = groups.filter(
     (group) => group.organizerId === currUser.id
   );
   const joinedGroups = groups.filter(
     (group) => group.organizerId !== currUser.id
   );
-
-  const dispatch = useDispatch();
-
-  const helpDelay = async () => {
-    await dispatch(getGroupByUserThunk());
-  };
-
-  useEffect(() => {
-    helpDelay();
-  }, [dispatch]);
-
-  // if (!groups.length > 0)
-  //   return (
-  //     <div className="mygroup-nogroup">
-  //       <p>You don't have any group yet.</p>
-  //       <Link className="create-group-nav-link" to="/groups/current/new">
-  //         Go to create your first group!
-  //       </Link>
-  //     </div>
-  //   );
 
   return (
     <>
