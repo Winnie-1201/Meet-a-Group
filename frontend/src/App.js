@@ -12,6 +12,7 @@ import CreateEvent from "./components/CreateEvent";
 import EventDetails from "./components/CreateEvent/EventDetails";
 import EditEvent from "./components/CreateEvent/EditEvent";
 import Home from "./components/Home";
+import Navigation from "./components/Navigation";
 
 function App() {
   const dispatch = useDispatch();
@@ -55,6 +56,12 @@ function App() {
             </Route>
             <Route exact path="/groups/current/:groupId/edit">
               <EditGroup />
+            </Route>
+            <Route>
+              {/* <Navigation /> */}
+              <div className="page-not-found-container">
+                <h1 className="page-not-found">Page Not Found</h1>
+              </div>
             </Route>
           </Switch>
         </>
