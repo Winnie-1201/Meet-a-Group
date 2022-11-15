@@ -17,25 +17,32 @@ const SignupForm = ({ window, setLogin }) => {
   const [confirm, setConfirm] = useState("");
   const [errors, setErrors] = useState({});
 
-  const [enterFirstName, setEnterFirstName] = useState(true);
+  // const [enterFirstName, setEnterFirstName] = useState(true);
 
   useEffect(() => {
     const newErrors = {};
-    if (firstName?.length === 0)
-      newErrors.firstName = "Please provide a first name";
-    if (lastName?.length === 0)
-      newErrors.lastName = "Please provide a last name";
-    if (email.length === 0) newErrors.email = "Please provide an email";
-    if (username.length === 0)
-      newErrors.username = "Please provide an username";
-    if (username === email) newErrors.same = "Username cannot be an email";
-    if (password?.length === 0) newErrors.password = "Please set your password";
-    if (confirm?.length === 0)
-      newErrors.confirm = "Please confirm your password";
-    if (password !== confirm)
+    // if (firstName && firstName.length === 0)
+    //   newErrors.firstName = "Please provide a first name";
+    // if (lastName && lastName?.length === 0)
+    //   newErrors.lastName = "Please provide a last name";
+    // if (email && email.length === 0)
+    //   newErrors.email = "Please provide an email";
+    // if (username && username.length === 0)
+    //   newErrors.username = "Please provide an username";
+    if (username && email && username === email)
+      newErrors.same = "Username cannot be an email";
+    // if (password && password.length === 0)
+    //   newErrors.password = "Please set your password";
+    // if (confirm && confirm.length === 0)
+    //   newErrors.confirm = "Please confirm your password";
+    if (password && confirm && password !== confirm)
       newErrors.samePw = "Please enter the same password";
-    if (password.length < 6)
+    if (password && password.length < 6)
       newErrors.password = "Password must be 6 characters or more.";
+    if (email && !email.split("").includes("@"))
+      newErrors.validEmail = "Please provide a valid email.";
+    if (username && username.length < 6)
+      newErrors.validUsername = "Username needs to be 6 characters or more";
 
     setErrors(newErrors);
   }, [firstName, lastName, username, email, password, confirm]);
@@ -79,13 +86,13 @@ const SignupForm = ({ window, setLogin }) => {
             type="text"
             value={firstName}
             onChange={(e) => setFirstName(e.target.value)}
-            onClick={() => setEnterFirstName(true)}
+            // onClick={() => setEnterFirstName(true)}
             required
           />
         </label>
-        {errors.firstName && enterFirstName && (
+        {/* {errors.firstName && enterFirstName && (
           <p className="error-detail-signup-form">{errors.firstName}</p>
-        )}
+        )} */}
         <label>
           Last Name
           <input
@@ -95,9 +102,9 @@ const SignupForm = ({ window, setLogin }) => {
             required
           />
         </label>
-        {errors.lastName && (
+        {/* {errors.lastName && (
           <p className="error-detail-signup-form">{errors.lastName}</p>
-        )}
+        )} */}
         <label>
           Email
           <input
@@ -107,8 +114,11 @@ const SignupForm = ({ window, setLogin }) => {
             required
           />
         </label>
-        {errors.email && (
+        {/* {errors.email && (
           <p className="error-detail-signup-form">{errors.email}</p>
+        )} */}
+        {errors.validEmail && (
+          <p className="error-detail-signup-form">{errors.validEmail}</p>
         )}
         <label>
           Username
@@ -119,11 +129,14 @@ const SignupForm = ({ window, setLogin }) => {
             required
           />
         </label>
-        {errors.username && (
+        {/* {errors.username && (
           <p className="error-detail-signup-form">{errors.username}</p>
-        )}
+        )} */}
         {errors.same && (
           <p className="error-detail-signup-form">{errors.same}</p>
+        )}
+        {errors.validUsername && (
+          <p className="error-detail-signup-form">{errors.validUsername}</p>
         )}
         <label>
           Password
@@ -134,21 +147,20 @@ const SignupForm = ({ window, setLogin }) => {
             required
           />
         </label>
-        {errors.password && (
+        {/* {errors.password && (
           <p className="error-detail-signup-form">{errors.password}</p>
-        )}
+        )} */}
         <label>
           Confirm Password
           <input
             type="password"
             value={confirm}
             onChange={(e) => setConfirm(e.target.value)}
-            required
           />
         </label>
-        {errors.confirm && (
+        {/* {errors.confirm && (
           <p className="error-detail-signup-form">{errors.confirm}</p>
-        )}
+        )} */}
         {errors.samePw && (
           <p className="error-detail-signup-form">{errors.samePw}</p>
         )}

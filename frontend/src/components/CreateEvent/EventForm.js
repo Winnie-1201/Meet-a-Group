@@ -25,27 +25,28 @@ const EventForm = ({ event, groupId, formType }) => {
 
   useEffect(() => {
     const newErrors = {};
-    if (name?.length < 5)
+    if (name && name.length < 5)
       newErrors.name = "Event name needs to be at 5 least characters";
-    if (type !== "Online" && type !== "In person")
+    if (type && type !== "Online" && type !== "In person")
       newErrors.type = "Please choose the type of the event";
-    if (capacity.length === 0 || capacity < 0)
+    if (capacity && capacity < 0)
       newErrors.capacity = "Please enter the valid capacity of the event";
-    if (price.length === 0 || price < 0)
+    if (price && price < 0)
       newErrors.price = "Please enter the valid price of the event";
-    if (description?.length === 0)
-      newErrors.description = "Please enter the description of the event";
-    if (!startDate)
-      newErrors.startDate = "Please enter the start date of the event";
-    if (!endDate) newErrors.endDate = "Please enter the end date of the event";
-    if (new Date(startDate) < new Date())
+    // if (description && description.length === 0)
+    //   newErrors.description = "Please enter the description of the event";
+    if (startDate && new Date(startDate) == "Invalid Date")
+      newErrors.startDate = "Please enter the valid start date of the event";
+    if (endDate && new Date(endDate) == "Invalid Date")
+      newErrors.endDate = "Please enter the valid end date of the event";
+    if (startDate && new Date(startDate) < new Date())
       newErrors.validStartDate =
         "Please enter the valid start date for the event";
-    if (new Date(endDate) <= new Date(startDate))
+    if (endDate && new Date(endDate) <= new Date(startDate))
       newErrors.validEndDate = "Please enter the valid end date for the event";
-    if (create && previewImage?.length === 0)
-      newErrors.previewImage =
-        "Please enter the url of the first image for the event";
+    // if (create && previewImage && previewImage.length === 0)
+    //   newErrors.previewImage =
+    //     "Please enter the url of the first image for the event";
 
     setErrors(newErrors);
   }, [
@@ -100,17 +101,19 @@ const EventForm = ({ event, groupId, formType }) => {
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
+            required
           />
         </label>
-        {errors.name && (
+        {/* {errors.name && (
           <p className="error-message-event-form">{errors.name}</p>
-        )}
+        )} */}
         <label>
           Type
           <select
             name="attendType"
             value={type}
             onChange={(e) => setType(e.target.value)}
+            required
           >
             <option value="" disabled>
               Please select a type...
@@ -119,31 +122,33 @@ const EventForm = ({ event, groupId, formType }) => {
             <option>In person</option>
           </select>
         </label>
-        {errors.type && (
+        {/* {errors.type && (
           <p className="error-message-event-form">{errors.type}</p>
-        )}
+        )} */}
         <label>
           Capacity
           <input
             type="number"
             value={capacity}
             onChange={(e) => setCapacity(e.target.value)}
+            required
           />
         </label>
-        {errors.capacity && (
+        {/* {errors.capacity && (
           <p className="error-message-event-form">{errors.capacity}</p>
-        )}
+        )} */}
         <label>
           Price
           <input
             type="number"
             value={price}
             onChange={(e) => setPrice(e.target.value)}
+            required
           />
         </label>
-        {errors.price && (
+        {/* {errors.price && (
           <p className="error-message-event-form">{errors.price}</p>
-        )}
+        )} */}
         {create && (
           <label>
             Preview image
@@ -151,29 +156,32 @@ const EventForm = ({ event, groupId, formType }) => {
               type="text"
               value={previewImage}
               onChange={(e) => setPreviewImg(e.target.value)}
+              required
             />
           </label>
         )}
-        {create && errors.previewImage && (
+        {/* {create && errors.previewImage && (
           <p className="error-message-event-form">{errors.previewImage}</p>
-        )}
+        )} */}
         <label>
           Description
           <textarea
             type="text"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
+            required
           />
         </label>
-        {errors.description && (
+        {/* {errors.description && (
           <p className="error-message-event-form">{errors.description}</p>
-        )}
+        )} */}
         <label>
           Start Date (i.e. 2023-11-19 20:00:00)
           <input
             type="text"
             value={startDate}
             onChange={(e) => setStartDate(e.target.value)}
+            required
           />
         </label>
         {errors.startDate && (
@@ -188,6 +196,7 @@ const EventForm = ({ event, groupId, formType }) => {
             type="text"
             value={endDate}
             onChange={(e) => setEndDate(e.target.value)}
+            required
           />
         </label>
         {errors.endDate && (

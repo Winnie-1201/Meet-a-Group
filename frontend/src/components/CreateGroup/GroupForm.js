@@ -27,49 +27,31 @@ const GroupForm = ({ group, formType }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    // const newErrors = [];
-    // if (name?.length > 60) newErrors.push("Name must be 60 characters or less");
-    // if (name?.length === 0)
-    //   newErrors.push("You must enter the name for your group");
-    // if (about?.length < 50)
-    //   newErrors.push("About must be 50 characters or more");
-    // if (about?.length === 0)
-    //   newErrors.push("You must enter the about for your group");
-    // if (type !== "Online" && type !== "In person")
-    //   newErrors.push("Type must be 'Online' or 'In person'");
-    // if (isPrivate !== true || false)
-    //   newErrors.push("You need to set the privacy of your group");
-    // if (create && previewImage?.length === 0)
-    //   newErrors.push("You need to upload your first image for your group");
-    // if (city?.length === 0)
-    //   newErrors.push("You need to set the city of your group");
-    // if (state?.length === 0)
-    //   newErrors.push("You need to set the state of your group");
     const newErrors = {};
-    if (name?.length > 60)
+    if (name && name.length > 60)
       newErrors.name = "Name must be 60 characters or less";
-    if (name?.length === 0)
-      newErrors.name = "You must enter the name for your group";
-    if (about?.length < 50)
+    // if (name?.length === 0)
+    //   newErrors.name = "You must enter the name for your group";
+    if (about && about.length < 50)
       newErrors.about = "About must be 50 characters or more";
-    if (about?.length === 0)
-      newErrors.about = "You must enter the about for your group";
-    if (type !== "Online" && type !== "In person")
-      newErrors.type = "Type must be 'Online' or 'In person'";
-    if (
-      isPrivate !== true &&
-      isPrivate !== false &&
-      isPrivate !== "Public" &&
-      isPrivate !== "Private"
-    )
-      newErrors.isPrivate = "You need to set the privacy of your group";
-    if (create && !previewImage)
-      newErrors.previewImg =
-        "You need to upload your first image for your group";
-    if (city?.length === 0)
-      newErrors.city = "You need to set the city of your group";
-    if (state?.length === 0)
-      newErrors.state = "You need to set the state of your group";
+    // if (about?.length === 0)
+    //   newErrors.about = "You must enter the about for your group";
+    // if (type !== "Online" && type !== "In person")
+    //   newErrors.type = "Type must be 'Online' or 'In person'";
+    // if (
+    //   isPrivate !== true &&
+    //   isPrivate !== false &&
+    //   isPrivate !== "Public" &&
+    //   isPrivate !== "Private"
+    // )
+    //   newErrors.isPrivate = "You need to set the privacy of your group";
+    // if (create && !previewImage)
+    //   newErrors.previewImg =
+    //     "You need to upload your first image for your group";
+    // if (city?.length === 0)
+    //   newErrors.city = "You need to set the city of your group";
+    // if (state?.length === 0)
+    //   newErrors.state = "You need to set the state of your group";
 
     setErrors(newErrors);
   }, [name, about, type, isPrivate, previewImage, city, state]);
@@ -120,6 +102,7 @@ const GroupForm = ({ group, formType }) => {
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
+            required
           />
         </label>
         {errors.name && (
@@ -133,6 +116,7 @@ const GroupForm = ({ group, formType }) => {
             type="text"
             value={about}
             onChange={(e) => setAbout(e.target.value)}
+            required
           />
         </label>
         {errors.about && (
@@ -146,6 +130,7 @@ const GroupForm = ({ group, formType }) => {
             name="attendType"
             value={type}
             onChange={(e) => setType(e.target.value)}
+            required
           >
             <option value="" disabled>
               Please select a type...
@@ -154,17 +139,18 @@ const GroupForm = ({ group, formType }) => {
             <option key={"In person"}>In person</option>
           </select>
         </label>
-        {errors.type && (
+        {/* {errors.type && (
           <ul className="error-messages-group-form">
             <li className="error-detail-group-form">{errors.type}</li>
           </ul>
-        )}
+        )} */}
         <label>
           Private or public?
           <select
             name="privacy"
             value={isPrivate}
             onChange={(e) => setPrivate(e.target.value)}
+            required
           >
             <option value="" disabled>
               Please select...
@@ -172,11 +158,11 @@ const GroupForm = ({ group, formType }) => {
             <option key={"Private"}>Private</option>
             <option key={"Public"}>Public</option>
           </select>
-          {errors.isPrivate && (
+          {/* {errors.isPrivate && (
             <ul className="error-messages-group-form">
               <li className="error-detail-group-form">{errors.isPrivate}</li>
             </ul>
-          )}
+          )} */}
         </label>
         {create && (
           <label>
@@ -185,40 +171,43 @@ const GroupForm = ({ group, formType }) => {
               type="text"
               value={previewImage}
               onChange={(e) => setPreviewImg(e.target.value)}
+              required
             />
           </label>
         )}
-        {errors.previewImg && (
+        {/* {errors.previewImg && (
           <ul className="error-messages-group-form">
             <li className="error-detail-group-form">{errors.previewImg}</li>
           </ul>
-        )}
+        )} */}
         <label>
           City
           <input
             type="text"
             value={city}
             onChange={(e) => setCity(e.target.value)}
+            required
           />
         </label>
-        {errors.city && (
+        {/* {errors.city && (
           <ul className="error-messages-group-form">
             <li className="error-detail-group-form">{errors.city}</li>
           </ul>
-        )}
+        )} */}
         <label>
           State
           <input
             type="text"
             value={state}
             onChange={(e) => setState(e.target.value)}
+            required
           />
         </label>
-        {errors.state && (
+        {/* {errors.state && (
           <ul className="error-messages-group-form">
             <li className="error-detail-group-form">{errors.state}</li>
           </ul>
-        )}
+        )} */}
         <button>Submit</button>
       </form>
       <Footer window={window} />
