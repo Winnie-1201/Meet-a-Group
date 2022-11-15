@@ -13,23 +13,23 @@ that is related to the group they joined.
 
 ### Homepage
 
-<img src="./recording/homepage.gif" alt="homepage recording" height="500">
+<img src="./recording/home-page.gif" alt="homepage recording" height="500">
 
 ### Login modal
 
-<img src="./recording/login.gif" alt="login recording" height="500">
+<img src="./recording/login-page.gif" alt="login recording" height="500">
 
 ### All groups and group details
 
-<img src="./recording/group-details.gif" alt="group details recording" height="500" >
+<img src="./recording/group-page.gif" alt="group details recording" height="500" >
 
 ### All events and event details
 
-<img src="./recording/event-details.gif" alt="event details recording" height="500" >
+<img src="./recording/event-page.gif" alt="event details recording" height="500" >
 
 ### Searching page
 
-<img src="./recording/searching.gif" alt="searching page recording" height="500" >
+<img src="./recording/search.gif" alt="searching page recording" height="500" >
 
 ## Tech Stack
 
