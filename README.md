@@ -33,7 +33,7 @@ that is related to the group they joined.
 
 ### Join and Leave a group
 
-<img src="./recording/joining-group.gif" alt="joining group recording" height="500" >
+<img src="./recording/join-group.gif" alt="joining group recording" height="500" >
 
 ## Tech Stack
 
