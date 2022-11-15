@@ -35,16 +35,55 @@ that is related to the group they joined.
 
 Frameworks, Platforms, and Libraries:
 
-![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)
+![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E) ![Express.js](https://img.shields.io/badge/express.js-%23404d59.svg?style=for-the-badge&logo=express&logoColor=%2361DAFB) ![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
 
-![Express.js](https://img.shields.io/badge/express.js-%23404d59.svg?style=for-the-badge&logo=express&logoColor=%2361DAFB)
-
-![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
-
-![Redux](https://img.shields.io/badge/redux-%23593d88.svg?style=for-the-badge&logo=redux&logoColor=white)
-
-![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)
-
-![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)
-
+![Redux](https://img.shields.io/badge/redux-%23593d88.svg?style=for-the-badge&logo=redux&logoColor=white)  
+![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)  
+![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)  
 ![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white)
+
+Database:
+
+![SQLite](https://img.shields.io/badge/sqlite-%2307405e.svg?style=for-the-badge&logo=sqlite&logoColor=white)
+
+Hosting:
+
+![Heroku](https://img.shields.io/badge/heroku-%23430098.svg?style=for-the-badge&logo=heroku&logoColor=white)
+
+## Run locally
+
+Here is the get started section with instruction on how to set up the repo ro run the project locally
+
+### Clone the repo
+
+### Set up Environment Variables
+
+To run the project locally, you will need to create the .env file in the backend folder with the following environment variables.
+
+```
+PORT=8000
+DB_FILE=db/dev.db
+JWT_SECRET=<<generate_strong_secret_here>>
+JWT_EXPIRES_IN=604800
+```
+
+### Set up Database
+
+You will need to run the following codes in the backend repository.
+
+```
+npx dotenv sequelize db:migrate
+npx dotenv sequelize db:seed:all
+```
+
+## To do list for future features
+
+- Add Calendar on the event page
+
+- Add Calendar for all evnets in search results
+
+- Add Google Maps for events details
+
+- Improve the searching algorithm
+
+- Refactor the backend routes
