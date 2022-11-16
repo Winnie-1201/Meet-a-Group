@@ -17,8 +17,6 @@ const SignupForm = ({ window, setLogin }) => {
   const [confirm, setConfirm] = useState("");
   const [errors, setErrors] = useState({});
 
-  // const [enterFirstName, setEnterFirstName] = useState(true);
-
   useEffect(() => {
     const newErrors = {};
     // if (firstName && firstName.length === 0)
@@ -70,6 +68,7 @@ const SignupForm = ({ window, setLogin }) => {
     });
   };
 
+  console.log(errors);
   return (
     <form className="signup-form" onSubmit={handleSubmit}>
       <div className="signup-form-header">
@@ -114,9 +113,9 @@ const SignupForm = ({ window, setLogin }) => {
             required
           />
         </label>
-        {/* {errors.email && (
+        {errors.email && (
           <p className="error-detail-signup-form">{errors.email}</p>
-        )} */}
+        )}
         {errors.validEmail && (
           <p className="error-detail-signup-form">{errors.validEmail}</p>
         )}

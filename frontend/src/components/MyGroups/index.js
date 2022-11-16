@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, Redirect, useHistory } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { getGroupByUserThunk } from "../../store/group";
 import Footer from "../Footer";
 import Navigation from "../Navigation";

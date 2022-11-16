@@ -1,9 +1,14 @@
 // import { nanoid } from 'nanoid';
 import { useSelector } from "react-redux";
+import { Redirect } from "react-router-dom";
 import GroupForm from "./GroupForm";
 
 const CreateGroup = () => {
   const currUser = useSelector((state) => state.session.user);
+
+  if (currUser === null) {
+    return <Redirect to="/" />;
+  }
   const group = {
     organizerId: currUser.id,
     name: "",

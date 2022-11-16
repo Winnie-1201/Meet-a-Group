@@ -4,10 +4,14 @@ import { useHistory } from "react-router-dom";
 import { createEvent, editEvent } from "../../store/event";
 import Footer from "../Footer";
 import Navigation from "../Navigation";
+import { Redirect } from "react-router-dom";
+import { useSelector } from "react-redux";
+
 import "./EventForm.css";
 
 const EventForm = ({ event, groupId, formType }) => {
   const history = useHistory();
+  const currUser = useSelector((state) => state.session.user);
 
   const [name, setName] = useState(event.name);
   const [type, setType] = useState(event.type);
@@ -17,6 +21,7 @@ const EventForm = ({ event, groupId, formType }) => {
   const [startDate, setStartDate] = useState(event.startDate);
   const [endDate, setEndDate] = useState(event.endDate);
   const [previewImage, setPreviewImg] = useState(event.previewImage);
+  const [submit, setSubmit] = useState(false);
   const [errors, setErrors] = useState({});
 
   const dispatch = useDispatch();
@@ -27,14 +32,20 @@ const EventForm = ({ event, groupId, formType }) => {
     const newErrors = {};
     if (name && name.length < 5)
       newErrors.name = "Event name needs to be at 5 least characters";
-    if (type && type !== "Online" && type !== "In person")
-      newErrors.type = "Please choose the type of the event";
+    if (!name) newErrors.noName = "Please enter the name for your event";
+    // if (type && type !== "Online" && type !== "In person")
+    //   newErrors.type = "Please choose the type of the event";
+    if (type !== "Online" && type !== "In person")
+      newErrors.type = "Please choose the type for the event";
     if (capacity && capacity < 0)
-      newErrors.capacity = "Please enter the valid capacity of the event";
-    if (price && price < 0)
-      newErrors.price = "Please enter the valid price of the event";
-    // if (description && description.length === 0)
-    //   newErrors.description = "Please enter the description of the event";
+      newErrors.capacity = "Please enter the valid capacity for the event";
+    if (!capacity)
+      newErrors.noCapacity = "Please enter the capacity for the event";
+    if (price < 0)
+      newErrors.price = "Please enter the valid price for the event";
+    if (!price) newErrors.price = "Please enter the price for the event";
+    if (description.length === 0)
+      newErrors.description = "Please enter the description of the event";
     if (startDate && new Date(startDate) == "Invalid Date")
       newErrors.startDate = "Please enter the valid start date of the event";
     if (endDate && new Date(endDate) == "Invalid Date")
@@ -44,10 +55,14 @@ const EventForm = ({ event, groupId, formType }) => {
         "Please enter the valid start date for the event";
     if (endDate && new Date(endDate) <= new Date(startDate))
       newErrors.validEndDate = "Please enter the valid end date for the event";
-    // if (create && previewImage && previewImage.length === 0)
-    //   newErrors.previewImage =
-    //     "Please enter the url of the first image for the event";
-
+    if (create && !previewImage)
+      newErrors.previewImage =
+        "Please enter the url of the first image for the event";
+    if (!startDate)
+      newErrors.noStartDate = "Please enter the start date for your event";
+    if (!endDate)
+      newErrors.noEnddate = "Please enter the end date for the event";
+    setSubmit(false);
     setErrors(newErrors);
   }, [
     name,
@@ -60,9 +75,14 @@ const EventForm = ({ event, groupId, formType }) => {
     endDate,
   ]);
 
+  if (currUser === null) {
+    return <Redirect to="/" />;
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    setSubmit(true);
     event = {
       ...event,
       name,
@@ -101,19 +121,22 @@ const EventForm = ({ event, groupId, formType }) => {
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            required
+            // required
           />
         </label>
-        {/* {errors.name && (
+        {errors.name && (
           <p className="error-message-event-form">{errors.name}</p>
-        )} */}
+        )}
+        {submit && errors.noName && (
+          <p className="error-message-event-form">{errors.noName}</p>
+        )}
         <label>
           Type
           <select
             name="attendType"
             value={type}
             onChange={(e) => setType(e.target.value)}
-            required
+            // required
           >
             <option value="" disabled>
               Please select a type...
@@ -122,33 +145,36 @@ const EventForm = ({ event, groupId, formType }) => {
             <option>In person</option>
           </select>
         </label>
-        {/* {errors.type && (
+        {submit && errors.type && (
           <p className="error-message-event-form">{errors.type}</p>
-        )} */}
+        )}
         <label>
           Capacity
           <input
             type="number"
             value={capacity}
             onChange={(e) => setCapacity(e.target.value)}
-            required
+            // required
           />
         </label>
-        {/* {errors.capacity && (
+        {errors.capacity && (
           <p className="error-message-event-form">{errors.capacity}</p>
-        )} */}
+        )}
+        {submit && errors.noCapacity && (
+          <p className="error-message-event-form">{errors.noCapacity}</p>
+        )}
         <label>
           Price
           <input
             type="number"
             value={price}
             onChange={(e) => setPrice(e.target.value)}
-            required
+            // required
           />
         </label>
-        {/* {errors.price && (
+        {submit && errors.price && (
           <p className="error-message-event-form">{errors.price}</p>
-        )} */}
+        )}
         {create && (
           <label>
             Preview image
@@ -156,32 +182,33 @@ const EventForm = ({ event, groupId, formType }) => {
               type="text"
               value={previewImage}
               onChange={(e) => setPreviewImg(e.target.value)}
-              required
+              // required
             />
           </label>
         )}
-        {/* {create && errors.previewImage && (
+        {submit && errors.previewImage && (
           <p className="error-message-event-form">{errors.previewImage}</p>
-        )} */}
+        )}
         <label>
           Description
           <textarea
             type="text"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            required
+            // required
           />
         </label>
-        {/* {errors.description && (
+        {submit && errors.description && (
           <p className="error-message-event-form">{errors.description}</p>
-        )} */}
+        )}
+
         <label>
           Start Date (i.e. 2023-11-19 20:00:00)
           <input
             type="text"
             value={startDate}
             onChange={(e) => setStartDate(e.target.value)}
-            required
+            // required
           />
         </label>
         {errors.startDate && (
@@ -190,13 +217,16 @@ const EventForm = ({ event, groupId, formType }) => {
         {errors.validStartDate && (
           <p className="error-message-event-form">{errors.validStartDate}</p>
         )}
+        {submit && errors.noStartDate && (
+          <p className="error-message-event-form">{errors.noStartDate}</p>
+        )}
         <label>
           End Date (i.e. 2023-11-19 21:00:00)
           <input
             type="text"
             value={endDate}
             onChange={(e) => setEndDate(e.target.value)}
-            required
+            // required
           />
         </label>
         {errors.endDate && (
@@ -204,6 +234,9 @@ const EventForm = ({ event, groupId, formType }) => {
         )}
         {errors.validEndDate && (
           <p className="error-message-event-form">{errors.validEndDate}</p>
+        )}
+        {submit && errors.noEnddate && (
+          <p className="error-message-event-form">{errors.noEnddate}</p>
         )}
         <button>Submit</button>
       </form>
