@@ -116,6 +116,8 @@ const EventDetails = () => {
       .sort((a, b) => a.firstName - b.firstName);
   }
 
+  if (!event || !group) return null;
+
   return (
     isLoaded &&
     isLoaded1 && (

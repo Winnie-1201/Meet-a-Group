@@ -115,7 +115,7 @@ const GroupDetails = () => {
       .filter((member) => member.Membership.status === "pending")
       .sort((a, b) => a.firstName - b.firstName);
   }
-
+  if (!group) return null;
   return (
     isLoaded && (
       <>
@@ -126,7 +126,7 @@ const GroupDetails = () => {
               <div className="top-detail">
                 <div className="group-detail-image flex-grow-three">
                   <img
-                    src={`${group.GroupImages[0].url}`}
+                    src={`${group?.GroupImages[0].url}`}
                     className="group-detail-img"
                   />
                 </div>
