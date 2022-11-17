@@ -30,11 +30,12 @@ const Navigation = ({ window, event, group }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const searchGroups = dispatch(getSearchGroups(keywords, location));
-    const searchEvents = dispatch(getSearchEvents(keywords, location));
+    const searchGroups = await dispatch(getSearchGroups(keywords, location));
+    const searchEvents = await dispatch(getSearchEvents(keywords, location));
 
-    if (searchEvents && event) history.push("/events");
-    if (searchGroups && group) history.push("/groups");
+    if (event) history.push("/events");
+    else if (group) history.push("/groups");
+    else if (searchEvents || searchGroups) history.push("/events");
   };
 
   const handleReset = async (e) => {
