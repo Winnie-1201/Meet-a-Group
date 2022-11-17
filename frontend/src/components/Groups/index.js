@@ -21,6 +21,9 @@ const Groups = () => {
   const { setKeywords, setLocation } = useSearch();
   const [click, setClick] = useState(false);
 
+  const [selectEvent, setSelectEvent] = useState(false);
+  const [selectGroup, setSelectGroup] = useState(true);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -47,7 +50,7 @@ const Groups = () => {
 
   return (
     <>
-      <Navigation window={window} />
+      <Navigation window={window} event={selectEvent} group={selectGroup} />
       <div className="event-groups-body">
         <div className="event-groups-content">
           <div className="events-groups">
@@ -55,6 +58,8 @@ const Groups = () => {
               // to="/events"
               className="event-link"
               onClick={() => {
+                setSelectEvent(true);
+                setSelectGroup(false);
                 window.scrollTo(0, 0);
                 history.push("/events");
               }}
