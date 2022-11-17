@@ -3,11 +3,12 @@ import { Link, useHistory } from "react-router-dom";
 import ProfileButton from "./ProfileButton";
 import "./Navigation.css";
 import LoginFormModal from "../LoginFormModal";
-import SignupFormModal from "../SignupFormModal";
+// import SignupFormModal from "../SignupFormModal";
 import { useEffect } from "react";
 import { getGroups, getSearchGroups } from "../../store/group";
 import { getSearchEvents } from "../../store/event";
 import { useSearch } from "../../context/search";
+import LoginSignup from "../LoginSignup";
 
 const Navigation = ({ window, event, group }) => {
   const currentUser = useSelector((state) => state.session.user);
@@ -105,8 +106,9 @@ const Navigation = ({ window, event, group }) => {
           {!currentUser && <LoginFormModal newGroup={"newGroup"} />}
           {!currentUser && (
             <div className="user">
-              <LoginFormModal window={window} />
-              <SignupFormModal window={window} />
+              <LoginSignup window={window} />
+              {/* <LoginFormModal window={window} />
+              <SignupFormModal window={window} /> */}
             </div>
           )}
         </div>

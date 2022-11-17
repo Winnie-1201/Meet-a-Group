@@ -96,11 +96,14 @@ const SignupForm = ({ window, setLogin }) => {
   return (
     <form className="signup-form" onSubmit={handleSubmit}>
       <div className="signup-form-header">
-        <h1 className="signup-header-h1">Finish signing up</h1>
-        {/* <p>
+        <h1 className="signup-header-h1">Sign up</h1>
+        <p>
           Already a member?
-          <span onClick={() => setLogin(true)}> Login</span>
-        </p> */}
+          <span onClick={() => setLogin(true)} className="member-yet">
+            {" "}
+            Login
+          </span>
+        </p>
       </div>
       <div className="signup-form-body">
         <label>

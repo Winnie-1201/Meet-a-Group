@@ -1,9 +1,10 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
-import LoginFormModal from "../LoginFormModal";
-import SignupFormModal from "../SignupFormModal";
+// import LoginFormModal from "../LoginFormModal";
+// import SignupFormModal from "../SignupFormModal";
 import * as sessionActions from "../../store/session";
 import "./Footer.css";
+import LoginSignup from "../LoginSignup";
 
 const Footer = ({ window }) => {
   const dispatch = useDispatch();
@@ -34,7 +35,7 @@ const Footer = ({ window }) => {
                 Get Started
               </Link>
             )}
-            {!currentUser && <LoginFormModal newGroup={"getStarted"} />}
+            {!currentUser && <LoginSignup newGroup={"getStarted"} />}
           </div>
         </div>
         <div className="footer-two-flex">
@@ -65,10 +66,10 @@ const Footer = ({ window }) => {
               {!currentUser && (
                 <>
                   <li>
-                    <SignupFormModal prop={"footerSignup"} window={window} />
+                    <LoginSignup newGroup={"footerSignup"} window={window} />
                   </li>
                   <li>
-                    <LoginFormModal newGroup={"footerLogin"} window={window} />
+                    <LoginSignup newGroup={"footerLogin"} window={window} />
                   </li>
                 </>
               )}

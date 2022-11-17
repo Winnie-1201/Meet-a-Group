@@ -6,7 +6,7 @@ import "./LoginForm.css";
 
 function LoginFormModal({ newGroup, window }) {
   const [showModal, setShowModal] = useState(false);
-  const [login, setLogin] = useState(true);
+  // const [login, setLogin] = useState(true);
 
   return (
     <>
