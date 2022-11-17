@@ -55,7 +55,7 @@ const LoginForm = ({ window, login, setLogin }) => {
         <label>
           Username or email
           <input
-            type="email"
+            type="text"
             value={credential}
             onChange={getCredential}
             required
