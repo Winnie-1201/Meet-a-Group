@@ -18,6 +18,8 @@ const Events = () => {
   const location = localStorage.getItem("location");
 
   const [click, setClick] = useState(false);
+  const [selectEvent, setSelectEvent] = useState(true);
+  const [selectGroup, setSelectGroup] = useState(false);
 
   useEffect(() => {
     dispatch(getSearchEvents(keywords, location));
@@ -39,7 +41,7 @@ const Events = () => {
 
   return (
     <>
-      <Navigation window={window} />
+      <Navigation window={window} event={selectEvent} group={selectGroup} />
       <div className="event-groups-body">
         <div className="event-groups-content">
           <div className="events-groups">
@@ -48,6 +50,8 @@ const Events = () => {
               // to="/groups"
               className="group-link"
               onClick={() => {
+                setSelectGroup(true);
+                setSelectEvent(false);
                 window.scrollTo(0, 0);
                 history.push("/groups");
               }}

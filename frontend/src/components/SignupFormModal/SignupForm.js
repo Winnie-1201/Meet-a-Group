@@ -4,6 +4,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import "./SignupForm.css";
 
+const checkValidName = (name) => {
+  // console.log(name.split("").filter((el) => !isNaN(el)))
+  return name.split("").filter((el) => !isNaN(el)).length > 0;
+};
+
 const SignupForm = ({ window, setLogin }) => {
   const dispatch = useDispatch();
   const history = useHistory();
@@ -15,10 +20,16 @@ const SignupForm = ({ window, setLogin }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
+  const [submit, setSubmit] = useState(false);
   const [errors, setErrors] = useState({});
 
   useEffect(() => {
     const newErrors = {};
+
+    if (firstName && checkValidName(firstName))
+      newErrors.validFirstName = "Please provide a valid first name";
+    if (lastName && checkValidName(lastName))
+      newErrors.validLastName = "Please provide a valid last name";
     // if (firstName && firstName.length === 0)
     //   newErrors.firstName = "Please provide a first name";
     // if (lastName && lastName?.length === 0)
@@ -27,8 +38,12 @@ const SignupForm = ({ window, setLogin }) => {
     //   newErrors.email = "Please provide an email";
     // if (username && username.length === 0)
     //   newErrors.username = "Please provide an username";
-    if (username && email && username === email)
+    if (
+      (username && email && username === email) ||
+      username.split("").includes("@")
+    )
       newErrors.same = "Username cannot be an email";
+
     // if (password && password.length === 0)
     //   newErrors.password = "Please set your password";
     // if (confirm && confirm.length === 0)
@@ -42,12 +57,16 @@ const SignupForm = ({ window, setLogin }) => {
     if (username && username.length < 6)
       newErrors.validUsername = "Username needs to be 6 characters or more";
 
+    setSubmit(false);
     setErrors(newErrors);
   }, [firstName, lastName, username, email, password, confirm]);
 
   if (sessionUser) return history.push("/");
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    setSubmit(true);
 
     const payload = {
       firstName,
@@ -57,18 +76,23 @@ const SignupForm = ({ window, setLogin }) => {
       password,
     };
 
-    if (confirm !== password) {
-      return setErrors(["Please enter the same password."]);
-    }
+    // console.log("goin first");
+    // if (confirm !== password) {
+    //   return setErrors(["Please enter the same password."]);
+    // }
 
-    setErrors([]);
+    // setErrors([]);
+    // dispatch(sessionActions.signup(payload));
     return dispatch(sessionActions.signup(payload)).catch(async (res) => {
       const data = await res.json();
-      if (data && data.errors) setErrors(data.errors);
+      // console.log(data.errors);
+      if (data && data.errors.email) {
+        setErrors(data.errors);
+      }
     });
   };
 
-  console.log(errors);
+  // console.log(errors);
   return (
     <form className="signup-form" onSubmit={handleSubmit}>
       <div className="signup-form-header">
@@ -89,9 +113,9 @@ const SignupForm = ({ window, setLogin }) => {
             required
           />
         </label>
-        {/* {errors.firstName && enterFirstName && (
-          <p className="error-detail-signup-form">{errors.firstName}</p>
-        )} */}
+        {errors.validFirstName && (
+          <p className="error-detail-signup-form">{errors.validFirstName}</p>
+        )}
         <label>
           Last Name
           <input
@@ -101,9 +125,9 @@ const SignupForm = ({ window, setLogin }) => {
             required
           />
         </label>
-        {/* {errors.lastName && (
-          <p className="error-detail-signup-form">{errors.lastName}</p>
-        )} */}
+        {errors.validLastName && (
+          <p className="error-detail-signup-form">{errors.validLastName}</p>
+        )}
         <label>
           Email
           <input
@@ -137,6 +161,9 @@ const SignupForm = ({ window, setLogin }) => {
         {errors.validUsername && (
           <p className="error-detail-signup-form">{errors.validUsername}</p>
         )}
+        {submit && errors.validUsername && (
+          <p className="error-detail-signup-form">{errors.validUsername}</p>
+        )}
         <label>
           Password
           <input
@@ -146,7 +173,10 @@ const SignupForm = ({ window, setLogin }) => {
             required
           />
         </label>
-        {/* {errors.password && (
+        {errors.password && (
+          <p className="error-detail-signup-form">{errors.password}</p>
+        )}
+        {/* {submit && errors.password && (
           <p className="error-detail-signup-form">{errors.password}</p>
         )} */}
         <label>

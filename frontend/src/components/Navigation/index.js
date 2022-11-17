@@ -5,11 +5,11 @@ import "./Navigation.css";
 import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SignupFormModal";
 import { useEffect } from "react";
-import { getSearchGroups } from "../../store/group";
+import { getGroups, getSearchGroups } from "../../store/group";
 import { getSearchEvents } from "../../store/event";
 import { useSearch } from "../../context/search";
 
-const Navigation = ({ window }) => {
+const Navigation = ({ window, event, group }) => {
   const currentUser = useSelector((state) => state.session.user);
   const dispatch = useDispatch();
   const history = useHistory();
@@ -32,8 +32,21 @@ const Navigation = ({ window }) => {
     const searchGroups = dispatch(getSearchGroups(keywords, location));
     const searchEvents = dispatch(getSearchEvents(keywords, location));
 
-    if (searchEvents) history.push("/events");
-    if (searchGroups) history.push("/groups");
+    if (searchEvents && event) history.push("/events");
+    if (searchGroups && group) history.push("/groups");
+  };
+
+  const handleReset = async (e) => {
+    e.preventDefault();
+
+    setKeywords("");
+    setLocation("");
+
+    const reset = await dispatch(getGroups());
+    if (reset) {
+      window.scrollTo(0, 0);
+      history.push("/groups");
+    }
   };
 
   return (
@@ -41,11 +54,7 @@ const Navigation = ({ window }) => {
       <div className="header">
         <div className="header-left">
           {currentUser && (
-            <Link
-              to="/groups"
-              className="home-title"
-              onClick={() => window.scrollTo(0, 0)}
-            >
+            <Link to="/groups" className="home-title" onClick={handleReset}>
               MeetaGroup
             </Link>
           )}
