@@ -3,8 +3,8 @@ import * as sessionActions from "../../store/session";
 import { useDispatch, useSelector } from "react-redux";
 import "./LoginForm.css";
 import { Redirect } from "react-router-dom";
-import SignupFormModal from "../SignupFormModal";
-import { Modal } from "../../context/Modal";
+// import SignupFormModal from "../SignupFormModal";
+// import { Modal } from "../../context/Modal";
 
 const LoginForm = ({ window, login, setLogin }) => {
   const dispatch = useDispatch();
@@ -44,10 +44,13 @@ const LoginForm = ({ window, login, setLogin }) => {
             <i className="fa-solid fa-cannabis fa-xl" />
           </div>
           <h1 className="login-header-h1">Log in</h1>
-          {/* <p>
+          <p>
             Not a member yet?
-            <span onClick={() => setLogin(false)}> Sign up</span>
-          </p> */}
+            <span onClick={() => setLogin(false)} className="member-yet">
+              {" "}
+              Sign up
+            </span>
+          </p>
         </div>
         <label>
           Username or email
@@ -103,11 +106,6 @@ const LoginForm = ({ window, login, setLogin }) => {
           Demo user2
         </button>
       </form>
-      {/* {signup && (
-        <Modal onClose={() => setSignup(false)}>
-          <SignupFormModal />
-        </Modal>
-      )} */}
     </>
   );
 };

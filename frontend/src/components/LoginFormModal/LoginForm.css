@@ -109,8 +109,14 @@ h1 {
 .login-header-h1 {
   font-weight: 600;
   line-height: 36px;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
   font-size: 36px;
+}
+
+.member-yet {
+  cursor: pointer;
+  margin-left: 4px;
+  color: #008294;
 }
 
 .login-form label {

@@ -39,6 +39,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       organizerId: DataTypes.INTEGER,
       name: DataTypes.STRING,
+      // TEXT: unlimited length
       about: DataTypes.STRING,
       type: DataTypes.STRING,
       private: DataTypes.BOOLEAN,
