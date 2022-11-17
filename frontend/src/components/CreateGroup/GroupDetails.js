@@ -51,6 +51,7 @@ const GroupDetails = () => {
       .then(() => setLoaded(true));
   }, [dispatch]);
 
+  if (!group) return null;
   const handleDelete = async (e) => {
     e.preventDefault();
     const deleted = await dispatch(removeGroup(groupId));
@@ -79,6 +80,7 @@ const GroupDetails = () => {
   let allMembers;
   let memberStatus;
   let pendingStatus;
+  let privateGroup;
 
   let groupMember = false;
   let host = false;
@@ -114,8 +116,10 @@ const GroupDetails = () => {
     pendingStatus = allMembers
       .filter((member) => member.Membership.status === "pending")
       .sort((a, b) => a.firstName - b.firstName);
+
+    privateGroup = group.private;
   }
-  if (!group) return null;
+
   return (
     isLoaded && (
       <>
@@ -269,7 +273,7 @@ const GroupDetails = () => {
                       <h2>
                         <span>What we're about</span>
                       </h2>
-                      <div>
+                      <div className="group-about-overflow">
                         <p>{group?.about}</p>
                       </div>
                     </div>
@@ -399,69 +403,32 @@ const GroupDetails = () => {
                       </nav>
                     </div>
                     <div className="member-right">
-                      {groupMember && showAllMembers && (
-                        <ul className="flex flex-column member-right-detail">
-                          {leaders?.map((member) => (
-                            <li key={member.id} className="member-name">
-                              {/* <div className="member-name"> */}
-                              <div
-                                className="member-image"
-                                style={{
-                                  backgroundColor: getRandomColor(),
-                                }}
-                              >
-                                <span>
-                                  {member.firstName[0]}
-                                  {member.lastName[0]}
-                                </span>
-                              </div>
-                              <div className="member-status">
-                                <span>
-                                  {member.firstName} {member.lastName}
-                                </span>
-                                <p>{member.Membership.status}</p>
-                              </div>
-                            </li>
-                          ))}
-                          {memberStatus?.map((member) => (
-                            <li key={member.id} className="member-name">
-                              <div
-                                className="member-image"
-                                style={{
-                                  backgroundColor: getRandomColor(),
-                                }}
-                              >
-                                <span>
-                                  {member.firstName[0]}
-                                  {member.lastName[0]}
-                                </span>
-                              </div>
-                              <div className="member-status">
-                                <span>
-                                  {member.firstName} {member.lastName}
-                                </span>
-                                <div className="status-change">
-                                  <p>{member.Membership.status}</p>
-                                  {host && (
-                                    <button
-                                      className="status-change-button"
-                                      onClick={() =>
-                                        handleChangeMembership({
-                                          memberId: member.id,
-                                          status: "co-host",
-                                        })
-                                      }
-                                    >
-                                      Change to co-host
-                                    </button>
-                                  )}
+                      {(!privateGroup || (privateGroup && groupMember)) &&
+                        showAllMembers && (
+                          <ul className="flex flex-column member-right-detail">
+                            {leaders?.map((member) => (
+                              <li key={member.id} className="member-name">
+                                {/* <div className="member-name"> */}
+                                <div
+                                  className="member-image"
+                                  style={{
+                                    backgroundColor: getRandomColor(),
+                                  }}
+                                >
+                                  <span>
+                                    {member.firstName[0]}
+                                    {member.lastName[0]}
+                                  </span>
                                 </div>
-                              </div>
-                            </li>
-                          ))}
-
-                          {(host || cohost) &&
-                            pendingStatus?.map((member) => (
+                                <div className="member-status">
+                                  <span>
+                                    {member.firstName} {member.lastName}
+                                  </span>
+                                  <p>{member.Membership.status}</p>
+                                </div>
+                              </li>
+                            ))}
+                            {memberStatus?.map((member) => (
                               <li key={member.id} className="member-name">
                                 <div
                                   className="member-image"
@@ -480,38 +447,78 @@ const GroupDetails = () => {
                                   </span>
                                   <div className="status-change">
                                     <p>{member.Membership.status}</p>
-                                    <button
-                                      className="status-change-button"
-                                      onClick={() =>
-                                        handleChangeMembership({
-                                          memberId: member.id,
-                                          status: "member",
-                                        })
-                                      }
-                                    >
-                                      Change to member
-                                    </button>
+                                    {host && (
+                                      <button
+                                        className="status-change-button"
+                                        onClick={() =>
+                                          handleChangeMembership({
+                                            memberId: member.id,
+                                            status: "co-host",
+                                          })
+                                        }
+                                      >
+                                        Change to co-host
+                                      </button>
+                                    )}
                                   </div>
                                 </div>
-                                {/* </div> */}
                               </li>
                             ))}
-                        </ul>
-                      )}
-                      {!groupMember && (showAllMembers || showLeader) && (
-                        <div className="flex flex-column no-current-user">
-                          <div className="member-right-icon">
-                            <i className="fa-solid fa-user-lock" />
+
+                            {(host || cohost) &&
+                              pendingStatus?.map((member) => (
+                                <li key={member.id} className="member-name">
+                                  <div
+                                    className="member-image"
+                                    style={{
+                                      backgroundColor: getRandomColor(),
+                                    }}
+                                  >
+                                    <span>
+                                      {member.firstName[0]}
+                                      {member.lastName[0]}
+                                    </span>
+                                  </div>
+                                  <div className="member-status">
+                                    <span>
+                                      {member.firstName} {member.lastName}
+                                    </span>
+                                    <div className="status-change">
+                                      <p>{member.Membership.status}</p>
+                                      <button
+                                        className="status-change-button"
+                                        onClick={() =>
+                                          handleChangeMembership({
+                                            memberId: member.id,
+                                            status: "member",
+                                          })
+                                        }
+                                      >
+                                        Change to member
+                                      </button>
+                                    </div>
+                                  </div>
+                                  {/* </div> */}
+                                </li>
+                              ))}
+                          </ul>
+                        )}
+                      {privateGroup &&
+                        !groupMember &&
+                        (showAllMembers || showLeader) && (
+                          <div className="flex flex-column no-current-user">
+                            <div className="member-right-icon">
+                              <i className="fa-solid fa-user-lock" />
+                            </div>
+                            <div className="member-right-text">
+                              <h1>This content is available only to members</h1>
+                              <span>
+                                You can still join the group to learn more
+                              </span>
+                            </div>
                           </div>
-                          <div className="member-right-text">
-                            <h1>This content is available only to members</h1>
-                            <span>
-                              You can still join the group to learn more
-                            </span>
-                          </div>
-                        </div>
-                      )}
-                      {groupMember && showLeader && (
+                        )}
+                      {!privateGroup && showLeader && (
                         <ul className="flex flex-column member-right-detail">
                           {leaders.map((leader) => (
                             <li key={leader.id} className="member-name">

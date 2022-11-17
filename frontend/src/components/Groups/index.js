@@ -110,7 +110,8 @@ const Groups = () => {
                     </p>
                     <p className="group-about">{group.about}</p>
                     <p className="group-type">
-                      {group.numMembers} members · {group.type}
+                      {group.numMembers} members ·{" "}
+                      {group.private === true ? "Private" : "Public"}
                     </p>
                   </div>
                 </div>
