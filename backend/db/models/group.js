@@ -40,7 +40,7 @@ module.exports = (sequelize, DataTypes) => {
       organizerId: DataTypes.INTEGER,
       name: DataTypes.STRING,
       // TEXT: unlimited length
-      about: DataTypes.STRING,
+      about: DataTypes.TEXT,
       type: DataTypes.STRING,
       private: DataTypes.BOOLEAN,
       city: DataTypes.STRING,
