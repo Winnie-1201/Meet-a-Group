@@ -28,6 +28,7 @@ const EventForm = ({ event, groupId, formType }) => {
 
   let create = formType === "Create Event" ? true : false;
 
+  console.log("price", price === "", !price, price);
   useEffect(() => {
     const newErrors = {};
     if (name && name.length < 5)
@@ -39,11 +40,11 @@ const EventForm = ({ event, groupId, formType }) => {
       newErrors.type = "Please choose the type for the event";
     if (capacity && capacity < 0)
       newErrors.capacity = "Please enter the valid capacity for the event";
-    if (!capacity)
+    if (capacity === "")
       newErrors.noCapacity = "Please enter the capacity for the event";
     if (price < 0)
       newErrors.invalidPrice = "Please enter the valid price for the event";
-    if (!price) newErrors.price = "Please enter the price for the event";
+    if (price === "") newErrors.price = "Please enter the price for the event";
     if (description.length === 0)
       newErrors.description = "Please enter the description of the event";
     if (startDate && new Date(startDate) == "Invalid Date")
@@ -102,12 +103,15 @@ const EventForm = ({ event, groupId, formType }) => {
         preview: true,
       };
     }
+
+    // if (Object.keys(errors).length === 0) {
     const newEvent =
       formType === "Create Event"
         ? await dispatch(createEvent(event, groupId, img))
         : await dispatch(editEvent(event));
 
     if (newEvent) return history.push(`/events/${newEvent.id}`);
+    // } else return null;
   };
 
   return (
