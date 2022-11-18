@@ -42,7 +42,7 @@ const EventForm = ({ event, groupId, formType }) => {
     if (!capacity)
       newErrors.noCapacity = "Please enter the capacity for the event";
     if (price < 0)
-      newErrors.price = "Please enter the valid price for the event";
+      newErrors.invalidPrice = "Please enter the valid price for the event";
     if (!price) newErrors.price = "Please enter the price for the event";
     if (description.length === 0)
       newErrors.description = "Please enter the description of the event";
@@ -174,6 +174,9 @@ const EventForm = ({ event, groupId, formType }) => {
         </label>
         {submit && errors.price && (
           <p className="error-message-event-form">{errors.price}</p>
+        )}
+        {errors.invalidPrice && (
+          <p className="error-message-event-form">{errors.invalidPrice}</p>
         )}
         {create && (
           <label>
