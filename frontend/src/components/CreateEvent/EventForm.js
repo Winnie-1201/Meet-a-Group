@@ -179,7 +179,7 @@ const EventForm = ({ event, groupId, formType }) => {
           <label>
             Preview image
             <input
-              type="text"
+              type="url"
               value={previewImage}
               onChange={(e) => setPreviewImg(e.target.value)}
               // required

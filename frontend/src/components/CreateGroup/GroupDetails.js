@@ -13,6 +13,28 @@ import {
 import Footer from "../Footer";
 import Navigation from "../Navigation";
 import "./GroupDetails.css";
+import axios from "axios";
+
+// function checkImage(path) {
+//   axios
+//     .get(path)
+//     .then(() => {
+//       return true;
+//     })
+//     .catch(() => {
+//       return false;
+//     });
+// }
+
+// const defaultImg =
+//   "https://lh3.googleusercontent.com/p/AF1QipNVlM5lo7fIJrmvjN4EOrTMiQjDgDyTfw7ATdV6=s1360-w1360-h1020";
+// new Promise(resolve => {
+//   const img = new Image()
+//   img.onload = () => resolve({path, status: "ok"});
+//   img.onerror = () => resolve({path, status: "error"})
+
+//   img.src = path;
+// })
 
 function getRandomColor() {
   var letters = "ABCDEF0123456789";
@@ -131,6 +153,11 @@ const GroupDetails = () => {
                 <div className="group-detail-image flex-grow-three">
                   <img
                     src={`${group?.GroupImages[0].url}`}
+                    // src={
+                    //   checkImage(group?.GroupImages[0].url)
+                    //     ? group?.GroupImages[0].url
+                    //     : defaultImg
+                    // }
                     className="group-detail-img"
                   />
                 </div>
