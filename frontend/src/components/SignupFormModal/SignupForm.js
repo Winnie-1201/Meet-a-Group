@@ -196,7 +196,11 @@ const SignupForm = ({ window, setLogin }) => {
         {errors.samePw && (
           <p className="error-detail-signup-form">{errors.samePw}</p>
         )}
-        <button type="submit" onClick={() => window.scrollTo(0, 0)}>
+        <button
+          className="signup-form-button"
+          type="submit"
+          onClick={() => window.scrollTo(0, 0)}
+        >
           Sign Up
         </button>
       </div>

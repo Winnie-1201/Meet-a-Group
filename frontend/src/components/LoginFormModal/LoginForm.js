@@ -82,10 +82,15 @@ const LoginForm = ({ window, login, setLogin }) => {
             <li key={idx}>{error}</li>
           ))}
         </ul> */}
-        <button type="submit" onClick={() => window.scrollTo(0, 0)}>
+        <button
+          className="login-form-button"
+          type="submit"
+          onClick={() => window.scrollTo(0, 0)}
+        >
           Log in
         </button>
         <button
+          className="login-form-button"
           type="submit"
           onClick={() => {
             setCredential("demo@user.io");
@@ -96,6 +101,7 @@ const LoginForm = ({ window, login, setLogin }) => {
           Demo user1
         </button>
         <button
+          className="login-form-button"
           type="submit"
           onClick={() => {
             setCredential("user1@user.io");

@@ -72,8 +72,11 @@ const LoginFormPage = () => {
           <li key={idx}>{error}</li>
         ))}
       </ul>
-      <button type="submit">Log in</button>
+      <button className="login-form-button" type="submit">
+        Log in
+      </button>
       <button
+        className="login-form-button"
         type="submit"
         onClick={() => {
           setCredential("demo@user.io");

@@ -6,7 +6,7 @@ import Footer from "../Footer";
 import Navigation from "../Navigation";
 import { Redirect } from "react-router-dom";
 import { useSelector } from "react-redux";
-
+import PickDate from "./DatePicker";
 import "./EventForm.css";
 
 const EventForm = ({ event, groupId, formType }) => {
@@ -18,8 +18,8 @@ const EventForm = ({ event, groupId, formType }) => {
   const [capacity, setCapacity] = useState(event.capacity);
   const [price, setPrice] = useState(event.price);
   const [description, setDescription] = useState(event.description);
-  const [startDate, setStartDate] = useState(event.startDate);
-  const [endDate, setEndDate] = useState(event.endDate);
+  const [startDate, setStartDate] = useState(new Date(event.startDate));
+  const [endDate, setEndDate] = useState(new Date(event.endDate));
   const [previewImage, setPreviewImg] = useState(event.previewImage);
   const [submit, setSubmit] = useState(false);
   const [errors, setErrors] = useState({});
@@ -28,7 +28,6 @@ const EventForm = ({ event, groupId, formType }) => {
 
   let create = formType === "Create Event" ? true : false;
 
-  console.log("price", price === "", !price, price);
   useEffect(() => {
     const newErrors = {};
     if (name && name.length < 5)
@@ -54,6 +53,8 @@ const EventForm = ({ event, groupId, formType }) => {
     if (startDate && new Date(startDate) < new Date())
       newErrors.validStartDate =
         "Please enter the valid start date for the event";
+    if (endDate && new Date(endDate) < new Date())
+      newErrors.validEndDate = "Please enter the valid end date for the event";
     if (endDate && new Date(endDate) <= new Date(startDate))
       newErrors.validEndDate = "Please enter the valid end date for the event";
     if (create && !previewImage)
@@ -137,6 +138,7 @@ const EventForm = ({ event, groupId, formType }) => {
         <label>
           Type
           <select
+            className="event-form-select"
             name="attendType"
             value={type}
             onChange={(e) => setType(e.target.value)}
@@ -210,13 +212,16 @@ const EventForm = ({ event, groupId, formType }) => {
         )}
 
         <label>
-          Start Date (i.e. 2023-11-19 20:00:00)
-          <input
-            type="text"
+          {/* Start Date (i.e. 2023-11-19 20:00:00) */}
+          Start Date
+          {/* <input
+            type="datetime"
             value={startDate}
             onChange={(e) => setStartDate(e.target.value)}
             // required
-          />
+
+          /> */}
+          <PickDate startDate={startDate} setStartDate={setStartDate} />
         </label>
         {errors.startDate && (
           <p className="error-message-event-form">{errors.startDate}</p>
@@ -228,13 +233,15 @@ const EventForm = ({ event, groupId, formType }) => {
           <p className="error-message-event-form">{errors.noStartDate}</p>
         )}
         <label>
-          End Date (i.e. 2023-11-19 21:00:00)
-          <input
-            type="text"
+          {/* End Date (i.e. 2023-11-19 21:00:00) */}
+          End Date
+          {/* <input
+            type="datetime"
             value={endDate}
             onChange={(e) => setEndDate(e.target.value)}
             // required
-          />
+          /> */}
+          <PickDate startDate={endDate} setStartDate={setEndDate} />
         </label>
         {errors.endDate && (
           <p className="error-message-event-form">{errors.endDate}</p>
@@ -245,8 +252,9 @@ const EventForm = ({ event, groupId, formType }) => {
         {submit && errors.noEnddate && (
           <p className="error-message-event-form">{errors.noEnddate}</p>
         )}
-        <button>Submit</button>
+        <button className="event-form-button">Submit</button>
       </form>
+
       <Footer window={window} />
     </>
   );

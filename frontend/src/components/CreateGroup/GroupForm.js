@@ -249,7 +249,7 @@ const GroupForm = ({ group, formType }) => {
             <li className="error-detail-group-form">{errors.noState}</li>
           </ul>
         )}
-        <button>Submit</button>
+        <button className="group-form-button">Submit</button>
       </form>
       <Footer window={window} />
     </>

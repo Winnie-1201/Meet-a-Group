@@ -4,6 +4,7 @@ import EventForm from "./EventForm";
 const CreateEvent = () => {
   const { groupId } = useParams();
 
+  // console.log("CreateEvent component: groupId", groupId);
   const event = {
     venueId: 1,
     name: "",
@@ -11,8 +12,10 @@ const CreateEvent = () => {
     capacity: "",
     price: "",
     description: "",
-    startDate: "",
-    endDate: "",
+    startDate: new Date(),
+    endDate: new Date(),
+    // startDate: "",
+    // endDate: "",
     previewImage: "",
   };
   return <EventForm event={event} groupId={groupId} formType="Create Event" />;

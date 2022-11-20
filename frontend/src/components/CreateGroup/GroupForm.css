@@ -92,14 +92,8 @@ textarea:focus {
   outline: 1px solid #55b7e1;
 }
 
-button:hover {
+.group-form-button:hover {
   background-color: rgb(230, 104, 104);
-}
-
-ul,
-li {
-  padding: 0;
-  margin: 0;
 }
 
 .error-messages-group-form {

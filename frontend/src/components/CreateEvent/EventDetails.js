@@ -98,6 +98,7 @@ const EventDetails = () => {
     newStartDate = new Date(event.startDate);
     newEndDate = new Date(event.endDate);
 
+    console.log(newStartDate.getMinutes(), newEndDate.getMinutes() === 0);
     attendees = Object.values(attendees);
 
     if (status?.length > 0) {
@@ -316,7 +317,7 @@ const EventDetails = () => {
                               {newEndDate.getDate()}, {newEndDate.getFullYear()}{" "}
                               at {newEndDate.getHours()} :{" "}
                               {newEndDate.getMinutes()}
-                              {newStartDate.getMinutes() == 0 ? 0 : ""}{" "}
+                              {newEndDate.getMinutes() == 0 ? 0 : ""}{" "}
                               {newEndDate.getHours() >= 12 ? "PM" : "AM"}
                             </div>
                           </div>

@@ -160,7 +160,9 @@ const SignupFormPage = () => {
         {errors.samePw && (
           <p className="error-detail-signup-form">{errors.samePw}</p>
         )}
-        <button type="submit">Sign Up</button>
+        <button className="signup-form-button" type="submit">
+          Sign Up
+        </button>
       </div>
     </form>
   );
