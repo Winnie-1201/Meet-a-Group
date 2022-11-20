@@ -12,10 +12,10 @@ const CreateEvent = () => {
     capacity: "",
     price: "",
     description: "",
-    startDate: new Date(),
-    endDate: new Date(),
-    // startDate: "",
-    // endDate: "",
+    // startDate: new Date(),
+    // endDate: new Date(),
+    startDate: "",
+    endDate: "",
     previewImage: "",
   };
   return <EventForm event={event} groupId={groupId} formType="Create Event" />;
