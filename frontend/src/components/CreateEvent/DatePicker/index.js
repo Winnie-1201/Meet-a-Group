@@ -77,6 +77,7 @@ const PickDate = ({ startDate, setStartDate }) => {
       placeholderText="Please enter the date"
       selected={startDate}
       onChange={(date) => setStartDate(date)}
+      minDate={new Date()}
     />
   );
 };
