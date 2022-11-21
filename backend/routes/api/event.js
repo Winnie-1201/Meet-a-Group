@@ -39,7 +39,7 @@ const validateEvent = [
     .withMessage("Capacity must be an integer"),
   check("price")
     .exists({ checkFalsy: true })
-    .isNumeric({ min: 0.0 })
+    .isNumeric({ min: 0 })
     .withMessage("Price is invalid"),
   check("description")
     .exists({ checkFalsy: true })
