@@ -30,6 +30,7 @@ export const requestAttendance = (eventId) => async (dispatch) => {
   });
   const attendee = await response.json();
   if (response.ok) {
+    console.log("eeeee", attendee);
     await dispatch(getAllAttendees(eventId));
     return attendee;
   }

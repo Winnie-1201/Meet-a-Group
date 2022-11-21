@@ -54,10 +54,13 @@ const EventDetails = () => {
     if (deleted) return history.push(`/groups/current`);
   };
 
+  let pending = false;
+
   const handleAttendEvent = async (e) => {
     e.preventDefault();
-
-    await dispatch(requestAttendance(eventId));
+    const result = await dispatch(requestAttendance(eventId));
+    pending = result.status === "pending" ? true : false;
+    // await dispatch(getAllAttendees(eventId));
   };
 
   const handleJoinGroup = () => {
@@ -92,21 +95,34 @@ const EventDetails = () => {
   let eventMember = false;
   let host = false;
   let cohost = false;
-  let pending = false;
 
   if (isLoaded) {
     newStartDate = new Date(event.startDate);
     newEndDate = new Date(event.endDate);
 
-    console.log(newStartDate.getMinutes(), newEndDate.getMinutes() === 0);
+    // console.log(newStartDate.getMinutes(), newEndDate.getMinutes() === 0);
     attendees = Object.values(attendees);
+    // console.log(
+    //   attendees.filter((attendee) => attendee.id === currentUser.id),
+    //   currentUser
+    // );
+    eventMember =
+      attendees.filter((attendee) => attendee.id === currentUser.id).length > 0
+        ? true
+        : false;
 
+    // pending =
+    //   attendees.filter((attendee) => attendee.Attendances.status === "pending")
+    //     .length > 0
+    //     ? true
+    //     : false;
+    // console.log("eventMember", pending);
     if (status?.length > 0) {
       host = status[0].status === "host" ? true : false;
       cohost = status[0].status === "co-host" ? true : false;
-      eventMember =
-        status[0].status === "member" || host || cohost ? true : false;
-      pending = status[0].status === "pending" ? true : false;
+      // eventMember =
+      //   status[0].status === "member" || host || cohost ? true : false;
+      // pending = status[0].status === "pending" ? true : false;
     }
 
     memberStatus = attendees
@@ -119,6 +135,7 @@ const EventDetails = () => {
 
   if (!event || !group) return null;
 
+  console.log(eventMember, pending, host);
   return (
     isLoaded &&
     isLoaded1 && (
@@ -377,21 +394,23 @@ const EventDetails = () => {
                     Join the group to attend
                   </button>
                 )}
-                {!eventMember && !pending && status.length > 0 && (
-                  <button className="attend-button" onClick={handleAttendEvent}>
-                    Attend
-                  </button>
-                )}
-                {(eventMember || pending) &&
-                  !host &&
-                  status[0].status !== "pending" && (
+
+                {/* {!eventMember && !pending && status.length > 0 && ( */}
+                {!eventMember ||
+                  (!pending && (
                     <button
                       className="attend-button"
-                      onClick={handleLeaveEvent}
+                      onClick={handleAttendEvent}
                     >
-                      Leave the event
+                      Attend
                     </button>
-                  )}
+                  ))}
+                {(eventMember || pending) && !host && (
+                  // status[0].status !== "pending" && (
+                  <button className="attend-button" onClick={handleLeaveEvent}>
+                    Leave the event
+                  </button>
+                )}
                 {eventMember && (
                   <p>
                     You are{" "}
