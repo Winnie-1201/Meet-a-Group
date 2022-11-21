@@ -21,6 +21,17 @@ const validateSignup = [
     .withMessage("Please provide a last name"),
   check("lastName").isAlpha().withMessage("Please provide a valid last name."),
   check("username").not().isEmail().withMessage("Username cannot be an email."),
+  // check("username")
+  //   .exists({ checkFalsy: true })
+  //   .custom(async (value) => {
+  //     const usernameFound = await User.findAll({
+  //       where: { username: value },
+  //     });
+  //     console.log("errorsssss", usernameFound.length);
+  //     if (usernameFound.length > 0) return false;
+  //     return true;
+  //   })
+  //   .withMessage("Usename already exist"),
   check("password")
     .exists({ checkFalsy: true })
     .isLength({ min: 6 })
@@ -35,11 +46,24 @@ router.post("/", validateSignup, async (req, res, next) => {
     where: { email },
   });
 
+  const usernameFound = await User.findAll({
+    where: { username },
+  });
+
   if (emailFound.length) {
     const err = new Error("User already exists");
     // err.message = "User already exists";
     err.errors = {
       email: "User with that email already exists.",
+    };
+    err.status = 403;
+    next(err);
+  }
+  if (usernameFound.length) {
+    const err = new Error("User already exists");
+    // err.message = "User already exists";
+    err.errors = {
+      username: "User with that username already exists.",
     };
     err.status = 403;
     next(err);

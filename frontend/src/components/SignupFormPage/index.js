@@ -16,6 +16,7 @@ const SignupFormPage = () => {
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
   const [errors, setErrors] = useState({});
+  console.log("ddddd");
 
   useEffect(() => {
     const newErrors = {};
@@ -25,7 +26,7 @@ const SignupFormPage = () => {
       newErrors.lastName = "Please provide a last name";
     if (email.length === 0) newErrors.email = "Please provide an email";
     if (username.length === 0)
-      newErrors.username = "Please provide an username";
+      newErrors.noUsername = "Please provide an username";
     if (username === email) newErrors.same = "Username cannot be an email";
     if (password?.length === 0) newErrors.password = "Please set your password";
     if (confirm?.length === 0)
@@ -38,6 +39,7 @@ const SignupFormPage = () => {
     setErrors(newErrors);
   }, [firstName, lastName, username, email, password, confirm]);
 
+  console.log("errors", errors);
   if (sessionUser) return history.push("/");
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -50,16 +52,19 @@ const SignupFormPage = () => {
       password,
     };
 
-    if (confirm !== password) {
-      return setErrors(["Please enter the same password."]);
-    }
+    // if (confirm !== password) {
+    //   return setErrors(["Please enter the same password."]);
+    // }
 
-    setErrors([]);
+    // setErrors([]);
     return dispatch(sessionActions.signup(payload)).catch(async (res) => {
       const data = await res.json();
+      console.log("errors", data.errors);
       if (data && data.errors) setErrors(data.errors);
     });
   };
+
+  console.log("user ddd", errors.email);
 
   return (
     <form className="signup-form" onSubmit={handleSubmit}>
@@ -127,6 +132,9 @@ const SignupFormPage = () => {
         </label>
         {errors.username && (
           <p className="error-detail-signup-form">{errors.username}</p>
+        )}
+        {errors.noUsername && (
+          <p className="error-detail-signup-form">{errors.noUsername}</p>
         )}
         {errors.same && (
           <p className="error-detail-signup-form">{errors.same}</p>

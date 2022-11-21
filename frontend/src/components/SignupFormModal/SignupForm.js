@@ -86,13 +86,12 @@ const SignupForm = ({ window, setLogin }) => {
     return dispatch(sessionActions.signup(payload)).catch(async (res) => {
       const data = await res.json();
       // console.log(data.errors);
-      if (data && data.errors.email) {
+      if (data && data.errors) {
         setErrors(data.errors);
       }
     });
   };
 
-  // console.log(errors);
   return (
     <form className="signup-form" onSubmit={handleSubmit}>
       <div className="signup-form-header">
@@ -166,6 +165,9 @@ const SignupForm = ({ window, setLogin }) => {
         )}
         {submit && errors.validUsername && (
           <p className="error-detail-signup-form">{errors.validUsername}</p>
+        )}
+        {errors.username && (
+          <p className="error-detail-signup-form">{errors.username}</p>
         )}
         <label>
           Password
