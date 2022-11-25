@@ -26,6 +26,7 @@ const EventForm = ({ event, groupId, formType }) => {
   const [submit, setSubmit] = useState(false);
   const [errors, setErrors] = useState({});
 
+  console.log("event price", price === 0);
   const dispatch = useDispatch();
 
   let create = formType === "Create Event" ? true : false;

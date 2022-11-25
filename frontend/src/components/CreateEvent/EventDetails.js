@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useHistory, useParams } from "react-router-dom";
+import { Link, Redirect, useHistory, useParams } from "react-router-dom";
 import {
   changeStatusThunk,
   deleteAttendanceThunk,
   getAllAttendees,
+  getAttendStatus,
   requestAttendance,
 } from "../../store/attendence";
 import { getEventById, deleteEvent } from "../../store/event";
@@ -33,9 +34,11 @@ const EventDetails = () => {
 
   const status = useSelector((state) => state.member.status);
   let attendees = useSelector((state) => state.attendee.allAttendees);
-
+  const attendStatus = useSelector((state) => state.attendee.status);
+  console.log(attendStatus);
   useEffect(() => {
     dispatch(getAllAttendees(eventId))
+      .then(() => dispatch(getAttendStatus(eventId)))
       .then(() => dispatch(getEventById(eventId)))
       .then(() => setLoaded(true));
   }, [dispatch]);
@@ -48,19 +51,18 @@ const EventDetails = () => {
     // add event to re-render
   }, [dispatch, event]);
 
+  if (!currentUser) return <Redirect to="/" />;
+
   const handleDelete = async (e) => {
     e.preventDefault();
     const deleted = await dispatch(deleteEvent(eventId));
     if (deleted) return history.push(`/groups/current`);
   };
 
-  let pending = false;
-
   const handleAttendEvent = async (e) => {
     e.preventDefault();
-    const result = await dispatch(requestAttendance(eventId));
-    pending = result.status === "pending" ? true : false;
-    // await dispatch(getAllAttendees(eventId));
+    await dispatch(requestAttendance(eventId));
+    await dispatch(getAttendStatus(eventId));
   };
 
   const handleJoinGroup = () => {
@@ -69,11 +71,13 @@ const EventDetails = () => {
 
   const handleChangeAttendance = async (updates) => {
     await dispatch(changeStatusThunk(eventId, updates));
+    await dispatch(getAttendStatus(eventId));
     await dispatch(getAllAttendees(eventId));
   };
 
   const handleLeaveEvent = async () => {
     await dispatch(deleteAttendanceThunk(eventId, currentUser.id));
+    await dispatch(getAttendStatus(eventId));
     await dispatch(getAllAttendees(eventId));
   };
 
@@ -95,10 +99,12 @@ const EventDetails = () => {
   let eventMember = false;
   let host = false;
   let cohost = false;
+  let pending = false;
 
-  if (isLoaded) {
+  if (isLoaded && currentUser) {
     newStartDate = new Date(event.startDate);
     newEndDate = new Date(event.endDate);
+    pending = attendStatus[0]?.status === "pending" ? true : false;
 
     // console.log(newStartDate.getMinutes(), newEndDate.getMinutes() === 0);
     attendees = Object.values(attendees);
@@ -135,7 +141,7 @@ const EventDetails = () => {
 
   if (!event || !group) return null;
 
-  console.log(eventMember, pending, host);
+  // console.log(eventMember, pending, host, attendees);
   return (
     isLoaded &&
     isLoaded1 && (
@@ -389,35 +395,41 @@ const EventDetails = () => {
                 <div className="price">
                   {event.price === 0 ? "FREE" : `$${event.price}`}
                 </div>
+                {pending && (
+                  <span className="attend-status">Your request is pending</span>
+                )}
+                {eventMember && (
+                  <span className="attend-status">
+                    You are{" "}
+                    {attendStatus[0].status === "member"
+                      ? "a member"
+                      : `the ${attendStatus[0].status}`}
+                  </span>
+                )}
                 {(status.length <= 0 || status[0].status === "pending") && (
                   <button className="attend-button" onClick={handleJoinGroup}>
                     Join the group to attend
                   </button>
                 )}
-
                 {/* {!eventMember && !pending && status.length > 0 && ( */}
-                {!eventMember ||
-                  (!pending && (
+                {!eventMember &&
+                  !pending &&
+                  status.length > 0 &&
+                  status[0].status !== "pending" && (
                     <button
                       className="attend-button"
                       onClick={handleAttendEvent}
                     >
                       Attend
                     </button>
-                  ))}
+                  )}
+
                 {(eventMember || pending) && !host && (
                   // status[0].status !== "pending" && (
+
                   <button className="attend-button" onClick={handleLeaveEvent}>
                     Leave the event
                   </button>
-                )}
-                {eventMember && (
-                  <p>
-                    You are{" "}
-                    {status[0].status === "member"
-                      ? "a member"
-                      : `the ${status[0].status}`}
-                  </p>
                 )}
               </div>
             </div>
