@@ -299,6 +299,11 @@ attendees cards detail here
   padding-right: 16px;
 }
 
+.attend-status {
+  font-size: 14px;
+  margin-right: 6px;
+}
+
 .buttom-text-flex {
   display: flex;
   justify-content: center;
