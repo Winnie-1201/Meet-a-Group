@@ -1,6 +1,9 @@
 {
   "name": "authenticate-me",
   "version": "1.0.0",
+  "engines": {
+    "node": "18.x"
+  },
   "description": "## Database Schema Design",
   "main": "index.js",
   "dependencies": {
