@@ -2,6 +2,7 @@
 import { useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
 import GroupForm from "./GroupForm";
+import React from "react";
 
 const CreateGroup = () => {
   const currUser = useSelector((state) => state.session.user);
