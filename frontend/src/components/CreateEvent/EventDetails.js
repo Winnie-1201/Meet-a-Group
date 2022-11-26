@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useHistory, useParams } from "react-router-dom";
+import { Link, Redirect, useHistory, useParams } from "react-router-dom";
 import {
   changeStatusThunk,
   deleteAttendanceThunk,
   getAllAttendees,
+  getAttendStatus,
   requestAttendance,
 } from "../../store/attendence";
 import { getEventById, deleteEvent } from "../../store/event";
@@ -33,9 +34,11 @@ const EventDetails = () => {
 
   const status = useSelector((state) => state.member.status);
   let attendees = useSelector((state) => state.attendee.allAttendees);
-
+  const attendStatus = useSelector((state) => state.attendee.status);
+  console.log(attendStatus);
   useEffect(() => {
     dispatch(getAllAttendees(eventId))
+      .then(() => dispatch(getAttendStatus(eventId)))
       .then(() => dispatch(getEventById(eventId)))
       .then(() => setLoaded(true));
   }, [dispatch]);
@@ -48,6 +51,8 @@ const EventDetails = () => {
     // add event to re-render
   }, [dispatch, event]);
 
+  if (!currentUser) return <Redirect to="/" />;
+
   const handleDelete = async (e) => {
     e.preventDefault();
     const deleted = await dispatch(deleteEvent(eventId));
@@ -56,8 +61,8 @@ const EventDetails = () => {
 
   const handleAttendEvent = async (e) => {
     e.preventDefault();
-
     await dispatch(requestAttendance(eventId));
+    await dispatch(getAttendStatus(eventId));
   };
 
   const handleJoinGroup = () => {
@@ -66,11 +71,13 @@ const EventDetails = () => {
 
   const handleChangeAttendance = async (updates) => {
     await dispatch(changeStatusThunk(eventId, updates));
+    await dispatch(getAttendStatus(eventId));
     await dispatch(getAllAttendees(eventId));
   };
 
   const handleLeaveEvent = async () => {
     await dispatch(deleteAttendanceThunk(eventId, currentUser.id));
+    await dispatch(getAttendStatus(eventId));
     await dispatch(getAllAttendees(eventId));
   };
 
@@ -94,19 +101,34 @@ const EventDetails = () => {
   let cohost = false;
   let pending = false;
 
-  if (isLoaded) {
+  if (isLoaded && currentUser) {
     newStartDate = new Date(event.startDate);
     newEndDate = new Date(event.endDate);
+    pending = attendStatus[0]?.status === "pending" ? true : false;
 
-    console.log(newStartDate.getMinutes(), newEndDate.getMinutes() === 0);
+    // console.log(newStartDate.getMinutes(), newEndDate.getMinutes() === 0);
     attendees = Object.values(attendees);
+    // console.log(
+    //   attendees.filter((attendee) => attendee.id === currentUser.id),
+    //   currentUser
+    // );
+    eventMember =
+      attendees.filter((attendee) => attendee.id === currentUser.id).length > 0
+        ? true
+        : false;
 
+    // pending =
+    //   attendees.filter((attendee) => attendee.Attendances.status === "pending")
+    //     .length > 0
+    //     ? true
+    //     : false;
+    // console.log("eventMember", pending);
     if (status?.length > 0) {
       host = status[0].status === "host" ? true : false;
       cohost = status[0].status === "co-host" ? true : false;
-      eventMember =
-        status[0].status === "member" || host || cohost ? true : false;
-      pending = status[0].status === "pending" ? true : false;
+      // eventMember =
+      //   status[0].status === "member" || host || cohost ? true : false;
+      // pending = status[0].status === "pending" ? true : false;
     }
 
     memberStatus = attendees
@@ -119,6 +141,7 @@ const EventDetails = () => {
 
   if (!event || !group) return null;
 
+  // console.log(eventMember, pending, host, attendees);
   return (
     isLoaded &&
     isLoaded1 && (
@@ -372,33 +395,41 @@ const EventDetails = () => {
                 <div className="price">
                   {event.price === 0 ? "FREE" : `$${event.price}`}
                 </div>
+                {pending && (
+                  <span className="attend-status">Your request is pending</span>
+                )}
+                {eventMember && (
+                  <span className="attend-status">
+                    You are{" "}
+                    {attendStatus[0].status === "member"
+                      ? "a member"
+                      : `the ${attendStatus[0].status}`}
+                  </span>
+                )}
                 {(status.length <= 0 || status[0].status === "pending") && (
                   <button className="attend-button" onClick={handleJoinGroup}>
                     Join the group to attend
                   </button>
                 )}
-                {!eventMember && !pending && status.length > 0 && (
-                  <button className="attend-button" onClick={handleAttendEvent}>
-                    Attend
-                  </button>
-                )}
-                {(eventMember || pending) &&
-                  !host &&
+                {/* {!eventMember && !pending && status.length > 0 && ( */}
+                {!eventMember &&
+                  !pending &&
+                  status.length > 0 &&
                   status[0].status !== "pending" && (
                     <button
                       className="attend-button"
-                      onClick={handleLeaveEvent}
+                      onClick={handleAttendEvent}
                     >
-                      Leave the event
+                      Attend
                     </button>
                   )}
-                {eventMember && (
-                  <p>
-                    You are{" "}
-                    {status[0].status === "member"
-                      ? "a member"
-                      : `the ${status[0].status}`}
-                  </p>
+
+                {(eventMember || pending) && !host && (
+                  // status[0].status !== "pending" && (
+
+                  <button className="attend-button" onClick={handleLeaveEvent}>
+                    Leave the event
+                  </button>
                 )}
               </div>
             </div>

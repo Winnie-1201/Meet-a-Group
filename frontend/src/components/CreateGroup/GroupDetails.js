@@ -13,7 +13,8 @@ import {
 import Footer from "../Footer";
 import Navigation from "../Navigation";
 import "./GroupDetails.css";
-import axios from "axios";
+// import axios from "axios";
+import { deleteAttendanceThunk } from "../../store/attendence";
 
 // function checkImage(path) {
 //   axios
@@ -91,6 +92,9 @@ const GroupDetails = () => {
     await dispatch(deleteMembershipThunk(groupId, currentUser.id));
     await dispatch(getStatusThunk(groupId));
     await dispatch(getAllMembers(groupId));
+    for (let i = 0; i < events.length; i++) {
+      await dispatch(deleteAttendanceThunk(events[i].id, currentUser.id));
+    }
   };
 
   const handleChangeMembership = async (updates) => {

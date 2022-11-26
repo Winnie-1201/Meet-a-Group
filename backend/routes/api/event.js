@@ -39,7 +39,7 @@ const validateEvent = [
     .withMessage("Capacity must be an integer"),
   check("price")
     .exists({ checkFalsy: true })
-    .isNumeric({ min: 0.0 })
+    .isDecimal({ min: 0 })
     .withMessage("Price is invalid"),
   check("description")
     .exists({ checkFalsy: true })
@@ -413,6 +413,27 @@ router.put("/:eventId/attendance", requireAuth, async (req, res, next) => {
     err.status = 403;
     next(err);
   }
+});
+
+// Get current user's status in an event specified by its id;
+router.get("/:eventId/status", requireAuth, async (req, res, next) => {
+  const eventId = req.params.eventId;
+  const userId = req.user.id;
+
+  const event = await Event.findByPk(eventId);
+
+  if (!event) {
+    res.status(404).json({
+      message: "Event couldn't be found",
+      statusCode: 404,
+    });
+  }
+
+  const attendee = await Attendance.findAll({
+    where: { eventId, userId },
+  });
+
+  return res.json(attendee);
 });
 
 // Get all attendees of an event specified by its id;
