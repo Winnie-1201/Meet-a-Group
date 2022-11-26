@@ -23,10 +23,6 @@
     "xtend": "^4.0.2"
     
   },
-  "engines": {
-    "node": ">=16.13.1",
-    "npm": ">=8.2.0"
-  },
   "scripts": {
     "heroku-postbuild": "npm run build --prefix frontend",
     "install": "npm --prefix backend install backend && npm --prefix frontend install frontend",
@@ -38,13 +34,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Winnie-1201/mod4-API-project.git"
+    "url": "git+https://github.com/Winnie-1201/Meet-a-Group.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Winnie-1201/mod4-API-project/issues"
+    "url": "https://github.com/Winnie-1201/Meet-a-Group.git/issues"
   },
-  "homepage": "https://github.com/Winnie-1201/mod4-API-project#readme"
+  "homepage": "https://github.com/Winnie-1201/Meet-a-Group.git#readme"
 }
