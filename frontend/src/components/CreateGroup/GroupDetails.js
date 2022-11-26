@@ -13,7 +13,7 @@ import {
 import Footer from "../Footer";
 import Navigation from "../Navigation";
 import "./GroupDetails.css";
-import axios from "axios";
+// import axios from "axios";
 import { deleteAttendanceThunk } from "../../store/attendence";
 
 // function checkImage(path) {
