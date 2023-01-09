@@ -18,6 +18,8 @@ const app = express();
 // responses:
 app.use(morgan("dev"));
 
+// demo
+
 //Add the `cookie-parser` middleware for parsing cookies
 app.use(cookieParser());
 
