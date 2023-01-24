@@ -209,19 +209,20 @@ const EventDetails = () => {
                               : attendee.Attendances.status}
                           </div>
                           <div className="card-detail-status">
-                            {host && attendee.Attendances.status === "member" && (
-                              <button
-                                className="status-change-button"
-                                onClick={() =>
-                                  handleChangeAttendance({
-                                    userId: attendee.id,
-                                    status: "co-host",
-                                  })
-                                }
-                              >
-                                change to co-host
-                              </button>
-                            )}
+                            {host &&
+                              attendee.Attendances.status === "member" && (
+                                <button
+                                  className="status-change-button"
+                                  onClick={() =>
+                                    handleChangeAttendance({
+                                      userId: attendee.id,
+                                      status: "co-host",
+                                    })
+                                  }
+                                >
+                                  change to co-host
+                                </button>
+                              )}
                           </div>
                         </div>
                       ))}
@@ -395,42 +396,51 @@ const EventDetails = () => {
                 <div className="price">
                   {event.price === 0 ? "FREE" : `$${event.price}`}
                 </div>
-                {pending && (
-                  <span className="attend-status">Your request is pending</span>
-                )}
-                {eventMember && (
-                  <span className="attend-status">
-                    You are{" "}
-                    {attendStatus[0].status === "member"
-                      ? "a member"
-                      : `the ${attendStatus[0].status}`}
-                  </span>
-                )}
+
                 {(status.length <= 0 || status[0].status === "pending") && (
                   <button className="attend-button" onClick={handleJoinGroup}>
                     Join the group to attend
                   </button>
                 )}
                 {/* {!eventMember && !pending && status.length > 0 && ( */}
-                {!eventMember &&
-                  !pending &&
-                  status.length > 0 &&
-                  status[0].status !== "pending" && (
+                <div className="flex-column">
+                  {!eventMember &&
+                    !pending &&
+                    status.length > 0 &&
+                    status[0].status !== "pending" && (
+                      <button
+                        className="attend-button"
+                        onClick={handleAttendEvent}
+                      >
+                        Attend
+                      </button>
+                    )}
+                  {eventMember && (
+                    <span className="attend-status">
+                      You are{" "}
+                      {attendStatus[0].status === "member"
+                        ? "a member"
+                        : `the ${attendStatus[0].status}`}
+                    </span>
+                  )}
+                </div>
+                <div className="flex-column">
+                  {(eventMember || pending) && !host && (
+                    // status[0].status !== "pending" && (
+
                     <button
                       className="attend-button"
-                      onClick={handleAttendEvent}
+                      onClick={handleLeaveEvent}
                     >
-                      Attend
+                      Leave the event
                     </button>
                   )}
-
-                {(eventMember || pending) && !host && (
-                  // status[0].status !== "pending" && (
-
-                  <button className="attend-button" onClick={handleLeaveEvent}>
-                    Leave the event
-                  </button>
-                )}
+                  {pending && (
+                    <span className="attend-status">
+                      Your request is pending
+                    </span>
+                  )}
+                </div>
               </div>
             </div>
           </div>

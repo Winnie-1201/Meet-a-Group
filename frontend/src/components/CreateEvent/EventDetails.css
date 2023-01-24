@@ -301,7 +301,9 @@ attendees cards detail here
 
 .attend-status {
   font-size: 14px;
-  margin-right: 6px;
+  /* margin-right: 6px; */
+  color: #717171;
+  margin-left: 6px;
 }
 
 .buttom-text-flex {
@@ -426,4 +428,9 @@ attendees cards detail here
   font-size: 0.875rem;
   line-height: 1.25rem;
   margin-top: 20px;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
 }

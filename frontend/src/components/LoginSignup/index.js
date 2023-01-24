@@ -80,24 +80,28 @@ export default function LoginSignup({ window, newGroup }) {
           Sign up
         </button>
       )}
-      <button
-        onClick={() => {
-          setShowModal(true);
-          setLogin(true);
-        }}
-        className="login-button"
-      >
-        Log in
-      </button>
-      <button
-        onClick={() => {
-          setShowModal(true);
-          setLogin(false);
-        }}
-        className="login-button"
-      >
-        Signup
-      </button>
+      {!newGroup && (
+        <>
+          <button
+            onClick={() => {
+              setShowModal(true);
+              setLogin(true);
+            }}
+            className="login-button"
+          >
+            Log in
+          </button>
+          <button
+            onClick={() => {
+              setShowModal(true);
+              setLogin(false);
+            }}
+            className="login-button"
+          >
+            Signup
+          </button>
+        </>
+      )}
 
       {showModal && (
         <Modal onClose={() => setShowModal(false)}>
