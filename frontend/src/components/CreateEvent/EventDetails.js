@@ -175,6 +175,9 @@ const EventDetails = () => {
                   <div className="event-detail-img">
                     <img
                       src={`${event.EventImages[0].url}`}
+                      onError={(e) => {
+                        e.currentTarget.src = "/event.png";
+                      }}
                       alt="event preview image"
                     />
                   </div>
@@ -268,7 +271,14 @@ const EventDetails = () => {
                     </div>
                     <div className="event-detail-photos-grid">
                       {event.EventImages.map((img) => (
-                        <img key={img.id} src={img.url} />
+                        <img
+                          key={img.id}
+                          src={img.url}
+                          onError={(e) => {
+                            e.currentTarget.src = "/event.png";
+                          }}
+                          alt="event"
+                        />
                       ))}
                       {event.EventImages.length === 2 && (
                         <div className="sample-photo-flex">
@@ -301,6 +311,9 @@ const EventDetails = () => {
                             <img
                               src={group.GroupImages[0].url}
                               alt="group preview image"
+                              onError={(e) => {
+                                e.currentTarget.src = "/group.webp";
+                              }}
                             />
                           </div>
                           <div className="group-info-text">

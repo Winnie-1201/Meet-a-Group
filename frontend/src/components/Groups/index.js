@@ -70,25 +70,29 @@ const Groups = () => {
           </div>
         </div>
       </div>
-      {groups.length === 0 && (keywords?.length > 0 || location?.length > 0) && (
-        <div className="flex-column-groups">
-          <div className="not-found-image">
-            <img
-              src="https://secure.meetupstatic.com/next/images/find/emptyResultsIcon.svg?w=384"
-              alt="result not found image"
-            />
-          </div>
-          <span className="not-found-text">
-            {`Sorry, there are no groups results for "${keywords}" ${
-              location?.length > 0 ? `in ${location}` : ""
-            } that match
+      {groups.length === 0 &&
+        (keywords?.length > 0 || location?.length > 0) && (
+          <div className="flex-column-groups">
+            <div className="not-found-image">
+              <img
+                src="https://secure.meetupstatic.com/next/images/find/emptyResultsIcon.svg?w=384"
+                alt="result not found image"
+                onError={(e) => {
+                  e.currentTarget.src = "/group.webp";
+                }}
+              />
+            </div>
+            <span className="not-found-text">
+              {`Sorry, there are no groups results for "${keywords}" ${
+                location?.length > 0 ? `in ${location}` : ""
+              } that match
             these filters.`}
-          </span>
-          <button className="not-found-button" onClick={handleReset}>
-            Try resetting the filters
-          </button>
-        </div>
-      )}
+            </span>
+            <button className="not-found-button" onClick={handleReset}>
+              Try resetting the filters
+            </button>
+          </div>
+        )}
       {groups.length == 0 && <div className="min-height"></div>}
       {groups.length > 0 && (
         <div className="all-groups-body">
@@ -101,7 +105,13 @@ const Groups = () => {
               >
                 <div className="one-group-link">
                   <div className="group-image">
-                    <img className="group-img" src={`${group?.previewImage}`} />
+                    <img
+                      className="group-img"
+                      src={`${group?.previewImage}`}
+                      onError={(e) => {
+                        e.currentTarget.src = "/group.webp";
+                      }}
+                    />
                   </div>
                   <div className="one-group-detail">
                     <p className="group-name">{group.name}</p>
