@@ -157,6 +157,9 @@ const GroupDetails = () => {
                 <div className="group-detail-image flex-grow-three">
                   <img
                     src={`${group?.GroupImages[0].url}`}
+                    onError={(e) => {
+                      e.currentTarget.src = "/group.webp";
+                    }}
                     // src={
                     //   checkImage(group?.GroupImages[0].url)
                     //     ? group?.GroupImages[0].url
@@ -342,6 +345,9 @@ const GroupDetails = () => {
                             <img
                               src={event?.previewImage}
                               alt="event preview image"
+                              onError={(e) => {
+                                e.currentTarget.src = "/event.png";
+                              }}
                             />
                           </div>
                           <div className="events-show-details">

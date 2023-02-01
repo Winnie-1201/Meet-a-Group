@@ -321,6 +321,9 @@ const Home = () => {
                               <img
                                 src={`${event.previewImage}`}
                                 className="list-detail-top-img"
+                                onError={(e) => {
+                                  e.currentTarget.src = "/event.png";
+                                }}
                               />
                             </div>
                             <div className="list-detail-middle-flex">
@@ -392,6 +395,9 @@ const Home = () => {
                               <img
                                 src={group.previewImage}
                                 className="container-top-img"
+                                onError={(e) => {
+                                  e.currentTarget.src = "/group.webp";
+                                }}
                               />
                               <h3>{group.name}</h3>
                             </div>

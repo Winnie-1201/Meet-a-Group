@@ -83,6 +83,9 @@ const MyGroups = () => {
                       <img
                         className="mygroup-img"
                         src={`${group?.previewImage}`}
+                        onError={(e) => {
+                          e.currentTarget.src = "/group.webp";
+                        }}
                       />
                     </div>
                     <div className="text-detail">
@@ -111,6 +114,9 @@ const MyGroups = () => {
                     <img
                       className="mygroup-img"
                       src={`${group?.previewImage}`}
+                      onError={(e) => {
+                        e.currentTarget.src = "/group.webp";
+                      }}
                     />
                   </div>
                   <div className="text-detail">
