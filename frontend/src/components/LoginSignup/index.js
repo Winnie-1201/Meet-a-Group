@@ -98,7 +98,7 @@ export default function LoginSignup({ window, newGroup }) {
             }}
             className="login-button"
           >
-            Signup
+            Sign up
           </button>
         </>
       )}
